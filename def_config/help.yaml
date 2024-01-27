@@ -1,0 +1,9 @@
+- group: 反击相关
+  list:
+    - icon: icon_28
+      title: "#反击"
+      desc: '被戳一戳之后很生气？那就反击回去！'
+    - icon: icon_28
+      title: "#反击更新"
+      desc: "更新你的反击插件"
+
