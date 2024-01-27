@@ -36,7 +36,7 @@ let uping = false
 export class Update extends plugin {
     constructor() {
         super({
-            name: '更新HIT插件',
+            name: '更新Fanji插件',
             dsc: '更新插件',
             event: 'message',
             priority: -10,
@@ -49,7 +49,7 @@ export class Update extends plugin {
         })
     }
     /**
-     * rule - 更新HIT插件
+     * rule - 更新Fanji插件
      * @returns
      */
     async update() {
@@ -79,7 +79,7 @@ export class Update extends plugin {
      * @returns
      */
     async runUpdate(isForce) {
-        const _path = './plugins/HIT-plugin/'
+        const _path = './plugins/Fanji-plugin/'
         let command = `git -C ${_path} pull`
         if (isForce) {
             command = `git -C ${_path} reset --hard origin && ${command}`
@@ -88,29 +88,27 @@ export class Update extends plugin {
             this.e.reply('正在执行更新操作，请稍等')
         }
         /** 获取上次提交的commitId，用于获取日志时判断新增的更新日志 */
-        this.oldCommitId = await this.getcommitId('HIT-plugin')
+        this.oldCommitId = await this.getcommitId('Fanji-plugin')
         uping = true
         let ret = await this.execSync(command)
         uping = false
 
         if (ret.error) {
-            logger.mark(`${this.e.logFnc} 更新失败：Hit插件`)
+            logger.mark(`${this.e.logFnc} 更新失败：Fanji插件`)
             this.gitErr(ret.error, ret.stdout)
             return false
         }
         /** 获取插件提交的最新时间 */
-        let time = await this.getTime('HIT-plugin')
+        let time = await this.getTime('Fanji-plugin')
 
         if (/(Already up[ -]to[ -]date|已经是最新的)/.test(ret.stdout)) {
-            await this.reply(`HIT插件已经是最新版本\n最后更新时间：${time}`)
+            await this.reply(`Fanji插件已经是最新版本\n最后更新时间：${time}`)
         } else {
-            await this.reply(`HIT插件\n最后更新时间：${time}`)
+            await this.reply(`Fanji插件\n最后更新时间：${time}`)
             this.isUp = true
-            /** 获取HIT组件的更新日志 */
-            let log = await this.getLog('HIT-plugin')
+            /** 获取Fanji组件的更新日志 */
+            let log = await this.getLog('Fanji-plugin')
             await this.reply(log.log2)
-         await  common.relpyPrivate(1773798610, log.log)
-   await   common.relpyPrivate(2173302144, log.log)
         }
         logger.mark(`${this.e.logFnc} 最后更新时间：${time}`)
         return true
@@ -141,7 +139,7 @@ export class Update extends plugin {
         let line = log.length
         log = log.join('\n\n')
         if (log.length <= 0) return ''
-        let end = '更多详细信息，请前往gitee查看\nhttps://gitee.com/adrae/Hit-plugin'
+        let end = '更多详细信息，请前往gitee查看\nhttps://gitee.com/adrae/Fanji-plugin'
 let log2 = await common.makeForwardMsg(this.e, [log, end], `${plugin}更新日志，共${line}条`)
         return { log2, log, end }
     }
