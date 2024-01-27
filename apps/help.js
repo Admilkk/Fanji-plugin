@@ -14,7 +14,7 @@ export class help extends plugin {
             priority: 500,
             rule: [
                 {
-                    reg: /^#?((FANJI)|反击)(命令|帮助|菜单)$",
+                    reg: /^#?((FANJI)|反击)(命令|帮助|菜单)$/gi",
                     fnc: "help",
                 },
                 {
