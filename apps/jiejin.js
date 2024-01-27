@@ -2,7 +2,7 @@ import cm from '../lib/common/CM.js'
 import common from '../lib/common/common.js'
 import yaml from 'js-yaml';
 import fs from 'fs'
-const filepath = '../config/config.yaml'
+const filepath = '../configs/config.yaml'
 ////////////////////////////////////////////////////////////////////
 //                          _ooOoo_                               //
 //                         o8888888o                              //

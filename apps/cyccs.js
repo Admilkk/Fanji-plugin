@@ -1,5 +1,4 @@
-﻿import plugin from '../../../lib/plugins/plugin.js';
-import Redis from 'ioredis';
+﻿import Redis from 'ioredis';
 
 const redis = new Redis({
   port: 6379,
