@@ -72,7 +72,7 @@ export class hitsomeone extends plugin {
 
   async hit(e) {
     const yamlData = fs.readFileSync(filepath, 'utf8');
-    const data = yaml.Load(yamlData);
+    const data = yaml.load(yamlData);
     const msg2 = ['无权限用户尝试反击! ', e.user_id, e.nickname];
     const isHitEnabled = await redis.get('hitset') === 'true';
     if (!isHitEnabled) {
@@ -98,7 +98,7 @@ export class hitsomeone extends plugin {
 
   async enableHit(e) {
     const yamlData = fs.readFileSync(filepath, 'utf8');
-    const data = yaml.Load(yamlData);
+    const data = yaml.load(yamlData);
 
     const msg = ['无权限用户尝试开启反击！', e.user_id, e.nickname];
     if (!(await cm.check(e.user_id) || e.isMaster || e.member.is_admin || e.member.is_owner)) {
@@ -115,7 +115,7 @@ export class hitsomeone extends plugin {
 
   async disableHit(e) {
     const yamlData = fs.readFileSync(filepath, 'utf8');
-    const data = yaml.Load(yamlData);
+    const data = yaml.load(yamlData);
     const msg = ['无权限用户尝试开启反击！', e.user_id, e.nickname];
     if (!(await cm.check(e.user_id) || e.isMaster || e.member.is_admin || e.member.is_owner)) {
       logger.info('无权限用户尝试开启反击！:', e.user_id, e.nickname);
