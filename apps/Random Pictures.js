@@ -94,11 +94,11 @@ async r18(e) {
 
         const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath)], '你要的色图来啦');
 
-        try {
-          await this.reply(forwardMsg);
-        } catch (error) {
-          await e.reply('别等了，太涩了发不出来');
+        let aw = await this.reply(forwardMsg);
+        if (aw) {
           return;
+        } else {
+          await this.reply([`被吞了，图链:${url.pics}`]);
         }
       } else {
         // 多张图片的情况
@@ -121,11 +121,12 @@ async r18(e) {
 
         const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
 
-        try {
-          await this.reply(forwardMsg);
-        } catch (error) {
-          await e.reply('别等了，太涩了发不出来');
+        let aw = await this.reply(forwardMsg);
+        if (aw) {
           return;
+        } else {
+          const allImageLinks = url.pics.join('\n');
+          await this.reply([`被吞了，图链:\n${allImageLinks}`]);
         }
       }
     } else {
