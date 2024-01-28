@@ -53,10 +53,12 @@ export class apisetu extends plugin {
 
   async r18(e) {
 	  try {
-    const keys = await redis.keys('*:cyctimes');
+		  // let data = await fetch(`https://moe.jitsu.top/img/?sort=r18&type=json`)
+		  // data = data.json()
+		  // data.pics = data.pics.replace('https', 'http')
     const messages = ['你的涩图来啦'];
 
-    messages.push(segment.image('https://moe.jitsu.top/img/?sort=r18'));
+    messages.push(segment.image(https://moe.jitsu.top/img/?sort=r18&proxy=i.pixiv.re));
     const forward = messages;
     const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
 
