@@ -110,7 +110,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
         fs.writeFileSync(imagePath, buffer, 'binary');
 
         const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath),'\nfrom fanji-plugin'], '你要的色图来啦');
-		if (e.msg.includes('封号版') & cm.check(e.user_id)){
+		if (e.msg.includes('\u5c01\u53f7\u7248') && cm.check(e.user_id)){
 			await e.reply(imagePath)
 		}else{
         let aw = await this.reply(forwardMsg);
@@ -137,7 +137,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
         const messages = ['你的涩图来啦'];
         messages.push(...imagePaths.map(imagePath => segment.image(imagePath)));
-				message.push('from 反击插件')
+				messages.push('from 反击插件')
         const forward = messages;
 
         const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
