@@ -6,6 +6,7 @@ import yaml from 'js-yaml';
 import cm from '../lib/common/CM.js';
 import common from '../lib/common/common.js';
 import { fileURLToPath } from 'url';
+import https from 'https';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -67,9 +68,17 @@ async r18(e) {
     const pixivEnabled = config.pixiv;
     let fw = pixivEnabled ? '&proxy=imgaz.pixiv.net' : '';
 
-    let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json`);
-    url = await url.json();
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // 禁用证书验证
+      rejectUnauthorized: false,
+    };
 
+    let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json`, requestOptions);
+    url = await url.json();
     if (url.code === 200 && url.pics && url.pics.length > 0) {
       if (url.pics.length === 1) {
         // 只有一张图片的情况
