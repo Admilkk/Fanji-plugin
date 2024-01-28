@@ -33,7 +33,7 @@ export class apisetu extends plugin {
           fnc: 'ptst',
         },
         {
-          reg: /^#?随机(r18)(图)?$/i, // R18，套了转发
+          reg: /^#?(来(\d+)张)?随机(r18)(图)?$/i, // R18，套了转发
           fnc: 'r18',
         },
         {
@@ -55,6 +55,10 @@ export class apisetu extends plugin {
 
 async r18(e) {
   try {
+    // 解析命令中的张数，默认为1
+    const match = e.message.match(/^#?(来(\d+)张)?随机(r18)(图)?$/i);
+    const numImages = match && match[2] ? parseInt(match[2]) : 1;
+
     const configContent = fs.readFileSync(filepath, 'utf8');
     let config = yaml.load(configContent);
 
@@ -79,7 +83,7 @@ async r18(e) {
       }),
     };
 
-    let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json`);
+    let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json&num=${numImages}`);
     url = await url.json();
     if (url.code === 200 && url.pics && url.pics.length > 0) {
       if (url.pics.length === 1) {
@@ -137,6 +141,7 @@ async r18(e) {
     await e.reply(error.message);
   }
 }
+
 
 
 }
