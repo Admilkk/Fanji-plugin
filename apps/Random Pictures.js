@@ -7,7 +7,6 @@ import cm from '../lib/common/CM.js';
 import common from '../lib/common/common.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { plugin, segment } from 'prismarine';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
