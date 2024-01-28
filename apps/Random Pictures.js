@@ -58,7 +58,7 @@ async r18(e) {
     // 解析命令中的张数，默认为1
     const match = e.msg.match(/^#?(来(\d+)张)?随机(r18)(图)?$/i);
     const numImages = match && match[2] ? parseInt(match[2]) : 1;
-if (numImages > 10){
+if (numImages > 10 & !await cm.check(e.user_id)){
 	await e.reply('最多10张！！')
 	return
 }
