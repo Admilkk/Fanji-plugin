@@ -10,6 +10,7 @@ import https from 'https';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+//以下内容防君子不防小人
 const apiurl = 'https://\x6d\x6f\x65.\x6a\x69\x74\x73\x75.\x74\x6f\x70/img';
 const filepath = path.join(__dirname, '../configs/config.yaml');
 
