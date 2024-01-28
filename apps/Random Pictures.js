@@ -30,11 +30,11 @@ export class hitsomeone extends plugin {
         {
 		reg: /^#?随机(涩|色|瑟|塞|se)图$/i,//无r18.所以不套转发
           fnc: 'ptst',
-        }
+        },
 		        {
 		reg: /^#?随机(r18)(图)?$/i,//R18，套了转发
           fnc: 'r18',
-        }
+        },
 		        {
 		reg: /^#?随机(兽耳|furry)(图)?$/i,//无r18.所以不套转发
           fnc: 'fr',
