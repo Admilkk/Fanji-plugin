@@ -61,8 +61,12 @@ export class apisetu extends plugin {
     messages.push(segment.image(https://moe.jitsu.top/img/?sort=r18&proxy=i.pixiv.re));
     const forward = messages;
     const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
-
+try{
     await this.reply(forwardMsg);
+}catch(error){
+	await e.reply('别等了，太涩了发不出来')
+	return
+}
 	  }catch(error){
 		        await e.reply('出现了一点小问题');
 	  await e.reply(error.message)
