@@ -49,7 +49,6 @@ export class apisetu extends plugin {
       await e.reply('出现了一点小问题');
 	  await e.reply(error.message)
     }
-    return false;
   }
 
   async r18(e) {
@@ -66,7 +65,6 @@ export class apisetu extends plugin {
 		        await e.reply('出现了一点小问题');
 	  await e.reply(error.message)
 	  }
-	  return false
   }
 
   async fr(e) {
