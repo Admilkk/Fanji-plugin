@@ -34,7 +34,7 @@ export class apisetu extends plugin {
           fnc: 'ptst',
         },
         {
-          reg: /^#?(来(\d+)张)?随机(r18)(图)?(封号版)?$/i, // R18，套了转发
+          reg: /^#?(来(\d+)张)?随机(r18)(图)?(\u5c01\u53f7\u7248)?$/i, // R18，套了转发
           fnc: 'r18',
         },
         {
