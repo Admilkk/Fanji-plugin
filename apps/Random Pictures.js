@@ -52,8 +52,7 @@ export class apisetu extends plugin {
     }
   }
 
-  async r18(e) {
-  let fw = '';
+async r18(e) {
   try {
     const configContent = fs.readFileSync(filepath, 'utf8');
     let config = yaml.load(configContent);
@@ -66,27 +65,66 @@ export class apisetu extends plugin {
     }
 
     const pixivEnabled = config.pixiv;
+    let fw = pixivEnabled ? '&proxy=imgaz.pixiv.net' : '';
 
-    if (pixivEnabled) {
-      fw = '&proxy=imgaz.pixiv.net';
-    }
+    let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json`);
+    url = await url.json();
 
-    const messages = ['你的涩图来啦'];
+    if (url.code === 200 && url.pics && url.pics.length > 0) {
+      if (url.pics.length === 1) {
+        // 只有一张图片的情况
+        const imageUrl = url.pics[0];
+        const response = await fetch(imageUrl);
+        const buffer = await response.buffer();
+        const timestamp = new Date().getTime();
+        const imagePath = `../resource/pixiv/${timestamp}_0.jpg`; // 修改为保存路径
 
-    messages.push(segment.image(`https://moe.jitsu.top/img/?sort=r18${fw}`));
-    const forward = messages;
-    const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
+        fs.writeFileSync(imagePath, buffer, 'binary');
 
-    try {
-      await this.reply(forwardMsg);
-    } catch (error) {
-      await e.reply('别等了，太涩了发不出来');
-      return;
+        const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath)], '你要的色图来啦');
+
+        try {
+          await this.reply(forwardMsg);
+        } catch (error) {
+          await e.reply('别等了，太涩了发不出来');
+          return;
+        }
+      } else {
+        // 多张图片的情况
+        const imagePromises = url.pics.map(async (imageUrl, index) => {
+          // 下载图片并保存到指定路径
+          const response = await fetch(imageUrl);
+          const buffer = await response.buffer();
+          const timestamp = new Date().getTime();
+          const imagePath = `../resource/pixiv/${timestamp}_${index}.jpg`; // 修改为保存路径
+
+          fs.writeFileSync(imagePath, buffer, 'binary');
+          return imagePath;
+        });
+
+        const imagePaths = await Promise.all(imagePromises);
+
+        const messages = ['你的涩图来啦'];
+        messages.push(...imagePaths.map(imagePath => segment.image(imagePath)));
+        const forward = messages;
+
+        const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
+
+        try {
+          await this.reply(forwardMsg);
+        } catch (error) {
+          await e.reply('别等了，太涩了发不出来');
+          return;
+        }
+      }
+    } else {
+      await e.reply('API 返回的数据不正确，未能获取到图片信息。');
     }
   } catch (error) {
     await e.reply('出现了一点小问题');
     await e.reply(error.message);
   }
 }
+
 
 }
