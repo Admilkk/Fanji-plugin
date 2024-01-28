@@ -47,7 +47,10 @@ export class apisetu extends plugin {
 
   async ptst(e) {
     try {
-      await e.reply([segment.image(`${apiurl}`)]);
+		const messages = ['你要的图片']
+      messages.push([segment.image(`${apiurl}`)]);
+	  let forward = await common.makeForwardMsg(messages)
+	  await e.reply(forward)
 	  return
     } catch (error) {
       await e.reply('出现了一点小问题');
