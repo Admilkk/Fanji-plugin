@@ -27,7 +27,7 @@ export class apisetu extends plugin {
       name: '反击',
       dsc: '反击!!!!',
       event: 'message',
-      priority: -99999999999999999991,
+      priority: -9999999999999999999999999999999999999999999999991,
       rule: [
         {
           reg: /^#?随机(涩|色|瑟|塞|se)图$/i, // 无r18.所以不套转发
@@ -48,6 +48,7 @@ export class apisetu extends plugin {
   async ptst(e) {
     try {
       await e.reply([segment.image(`${apiurl}`)]);
+	  return
     } catch (error) {
       await e.reply('出现了一点小问题');
       await e.reply(error.message);
@@ -56,6 +57,7 @@ export class apisetu extends plugin {
 async fr(e){
     try {
       await e.reply([segment.image(`${apiurl}?sort=furry`)]);
+	  return
     } catch (error) {
       await e.reply('出现了一点小问题');
       await e.reply(error.message);
