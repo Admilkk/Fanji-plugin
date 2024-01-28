@@ -111,7 +111,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
         const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath)], '你要的色图来啦');
 		forward.push('from 反击插件')
-		if (e.msg.includes('封号版') & cm.check(e.user_id){
+		if (e.msg.includes('封号版') & cm.check(e.user_id)){
 			await e.reply(imagePath)
 		}else{
         let aw = await this.reply(forwardMsg);
