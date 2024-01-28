@@ -109,7 +109,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
         fs.writeFileSync(imagePath, buffer, 'binary');
 
-        const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath)'\nfrom fanji-plugin'], '你要的色图来啦');
+        const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath),'\nfrom fanji-plugin'], '你要的色图来啦');
 		if (e.msg.includes('封号版') & cm.check(e.user_id)){
 			await e.reply(imagePath)
 		}else{
