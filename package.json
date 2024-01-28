@@ -12,6 +12,6 @@
     "chalk": "latest",
     "chokidar": "latest",
     "js-yaml": "latest",
-  "prismarine": "latest"
+    "prismarine": "git+https://github.com/example/prismarine.git"
     }
 }
