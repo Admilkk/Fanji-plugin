@@ -6,11 +6,11 @@ import yaml from 'js-yaml';
 import cm from '../lib/common/CM.js';
 import common from '../lib/common/common.js';
 
-const __filename = fileURLToPath(import.meta.url);
+/* const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const filepath = path.join(__dirname, '../configs/config.yaml');
-
+ */
 const redis = new Redis({
   port: 6379,
   host: '127.0.0.1',
