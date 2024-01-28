@@ -18,7 +18,7 @@ const redis = new Redis({
   //wa
 });
 
-export class hitsomeone extends plugin {
+export class apisetu extends plugin {
   constructor() {
     super({
       name: '反击',
