@@ -31,14 +31,13 @@ async chuoyichu(e) {
 
   if (e.target_id != Bot.uin) {
     try {
-      let key = 'true';
       let FKey = `${e.user_id}5AFE${e.target_id}`;
       
       // 判断这个FKey是否存在
       let ZT = await redis.exists(FKey);
 
       if (!ZT) {
-        await redis.set(FKey, key, 'EX', 300);
+        await redis.set(FKey, 'EX', 300);
         return false;
       } else {
         await redis.expire(FKey, 300);
