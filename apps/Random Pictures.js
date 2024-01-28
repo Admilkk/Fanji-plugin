@@ -5,12 +5,14 @@ import path from 'path';
 import yaml from 'js-yaml';
 import cm from '../lib/common/CM.js';
 import common from '../lib/common/common.js';
-
-/* const __filename = fileURLToPath(import.meta.url);
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { plugin, segment } from 'prismarine';
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const filepath = path.join(__dirname, '../configs/config.yaml');
- */
+
 const redis = new Redis({
   port: 6379,
   host: '127.0.0.1',
@@ -47,44 +49,51 @@ export class apisetu extends plugin {
       await e.reply([segment.image('https://moe.jitsu.top/img')]);
     } catch (error) {
       await e.reply('出现了一点小问题');
-	  await e.reply(error.message)
+      await e.reply(error.message);
     }
   }
 
   async r18(e) {
-	  try {
-		  // let data = await fetch(`https://moe.jitsu.top/img/?sort=r18&type=json`)
-		  // data = data.json()
-		  // data.pics = data.pics.replace('https', 'http')
-    const messages = ['你的涩图来啦'];
+    let fw = '';
+    try {
+      const configContent = fs.readFileSync(filepath, 'utf8');
+      const config = yaml.load(configContent);
+      const pixivEnabled = config?.pixiv ?? false;
 
-    messages.push(segment.image('https://moe.jitsu.top/img/?sort=r18&proxy=i.pixiv.re'));
-    const forward = messages;
-    const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
-try{
-    await this.reply(forwardMsg);
-}catch(error){
-	await e.reply('别等了，太涩了发不出来')
-	return
-}
-	  }catch(error){
-		        await e.reply('出现了一点小问题');
-	  await e.reply(error.message)
-	  }
+      if (pixivEnabled) {
+        fw = '&proxy=imgaz.pixiv.net';
+      }
+
+      const messages = ['你的涩图来啦'];
+
+      messages.push(segment.image(`https://moe.jitsu.top/img/?sort=r18${fw}`));
+      const forward = messages;
+      const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
+
+      try {
+        await this.reply(forwardMsg);
+      } catch (error) {
+        await e.reply('别等了，太涩了发不出来');
+        return;
+      }
+    } catch (error) {
+      await e.reply('出现了一点小问题');
+      await e.reply(error.message);
+    }
   }
 
   async fr(e) {
-	  try {
-    const messages = ['你的涩图来啦'];
+    try {
+      const messages = ['你的涩图来啦'];
 
-    messages.push(segment.image('https://moe.jitsu.top/img/?sort=furry'));
-    const forward = messages;
-    const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
+      messages.push(segment.image('https://moe.jitsu.top/img/?sort=furry'));
+      const forward = messages;
+      const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
 
-    await this.reply(forwardMsg);
-  }catch(error){
-	        await e.reply('出现了一点小问题');
-	  await e.reply(error.message)
-  }
+      await this.reply(forwardMsg);
+    } catch (error) {
+      await e.reply('出现了一点小问题');
+      await e.reply(error.message);
+    }
   }
 }

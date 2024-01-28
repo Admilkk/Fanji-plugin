@@ -3,3 +3,6 @@ master: 123456
 
 # 不用管这个
 jiejin: true
+
+# pixiv是否开启代理
+pixiv: false
