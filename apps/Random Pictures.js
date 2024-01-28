@@ -34,7 +34,7 @@ export class apisetu extends plugin {
           fnc: 'ptst',
         },
         {
-          reg: /^#?(来(\d+)张)?随机(r18)(图)?$/i, // R18，套了转发
+          reg: /^#?(来(\d+)张)?随机(r18)(图)?(封号版)?$/i, // R18，套了转发
           fnc: 'r18',
         },
         {
@@ -102,12 +102,16 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
         const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath)], '你要的色图来啦');
 		forward.push('from 反击插件')
+		if (e.msg.includes('封号版') && cm.check(e.user_id){
+			await e.reply(imagePath)
+		}else{
         let aw = await this.reply(forwardMsg);
         if (aw) {
           return;
         } else {
           await this.reply([`被吞了，图链:${url.pics}`]);
         }
+		}
       } else {
         // 多张图片的情况
         const imagePromises = url.pics.map(async (imageUrl, index) => {
