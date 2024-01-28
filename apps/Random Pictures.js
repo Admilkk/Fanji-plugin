@@ -49,6 +49,7 @@ export class apisetu extends plugin {
     try {
 		const messages = ['你要的图片']
       messages.push([segment.image(`${apiurl}`)]);
+	  messages.push('from Fanji-plugin')
 	  let forward = await common.makeForwardMsg(e, messages, '涩图来啦')
 	  await e.reply(forward)
 	  return
@@ -114,7 +115,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
         const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath),'\nfrom fanji-plugin'], '你要的色图来啦');
 		if (e.msg.includes('\u5c01\u53f7\u7248') && cm.check(e.user_id)){
-			await e.reply(imagePath)
+			await e.reply([segment.image(imagePath)])
 		}else{
         let aw = await this.reply(forwardMsg);
         if (aw) {
