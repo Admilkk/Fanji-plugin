@@ -10,7 +10,7 @@ import https from 'https';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
+const apiurl = 'https://\x6d\x6f\x65.\x6a\x69\x74\x73\x75.\x74\x6f\x70/img';
 const filepath = path.join(__dirname, '../configs/config.yaml');
 
 const redis = new Redis({
@@ -26,7 +26,7 @@ export class apisetu extends plugin {
       name: '反击',
       dsc: '反击!!!!',
       event: 'message',
-      priority: -99999999991,
+      priority: -99999999999999999991,
       rule: [
         {
           reg: /^#?随机(涩|色|瑟|塞|se)图$/i, // 无r18.所以不套转发
@@ -46,7 +46,7 @@ export class apisetu extends plugin {
 
   async ptst(e) {
     try {
-      await e.reply([segment.image('https://moe.jitsu.top/img')]);
+      await e.reply([segment.image('${apiurl}')]);
     } catch (error) {
       await e.reply('出现了一点小问题');
       await e.reply(error.message);
@@ -86,7 +86,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
       }),
     };
 
-    let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json&num=${numImages}`);
+    let url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}`);
     url = await url.json();
     if (url.code === 200 && url.pics && url.pics.length > 0) {
       if (url.pics.length === 1) {
