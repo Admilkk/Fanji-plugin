@@ -68,17 +68,16 @@ async r18(e) {
     const pixivEnabled = config.pixiv;
     let fw = pixivEnabled ? '&proxy=imgaz.pixiv.net' : '';
 
-const requestOptions = {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  // 禁用证书验证
-  agent: new https.Agent({  
-    rejectUnauthorized: false,
-  }),
-};
-
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // 禁用证书验证
+      agent: new https.Agent({  
+        rejectUnauthorized: false,
+      }),
+    };
 
     let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json`);
     url = await url.json();
@@ -89,7 +88,7 @@ const requestOptions = {
         const response = await fetch(imageUrl, requestOptions);
         const buffer = await response.buffer();
         const timestamp = new Date().getTime();
-        const imagePath = `../resource/pixiv/${timestamp}_0.jpg`; // 修改为保存路径
+        const imagePath = path.join(__dirname, `../resource/pixiv/${timestamp}_0.jpg`); // 修改为保存路径
 
         fs.writeFileSync(imagePath, buffer, 'binary');
 
@@ -108,7 +107,7 @@ const requestOptions = {
           const response = await fetch(imageUrl, requestOptions);
           const buffer = await response.buffer();
           const timestamp = new Date().getTime();
-          const imagePath = `../resource/pixiv/${timestamp}_${index}.jpg`; // 修改为保存路径
+          const imagePath = path.join(__dirname, `../resource/pixiv/${timestamp}_${index}.jpg`);// 修改为保存路径
 
           fs.writeFileSync(imagePath, buffer, 'binary');
           return imagePath;
