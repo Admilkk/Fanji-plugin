@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import chokidar from 'chokidar';
 import path from 'node:path';
 logger.info('\x1b[34m---------加载插件中---------\x1b[0m');
-async function createConfigFolder() {
+await (async () => {
   const configFolderPath = path.resolve('./plugins/Fanji-plugin/configs');
   const defConfigFolderPath = './plugins/Fanji-plugin/def_config';
 
@@ -64,10 +64,7 @@ async function createConfigFolder() {
   }
 
   logger.info(msg);
-}
-
-createConfigFolder();
-
+})();
 const apps = await appsOut({ AppsName: 'apps' }).then(req => {
   logger.info(`\n\t${chalk.white(`┌────────────────────────────┐`)}\t\n\t${chalk.cyan(`「Fanji-plugin载入中···」`)}\n\t${chalk.blue(`「载入成功！」`)}\n\t${chalk.yellow(`「交流群号：776370425   」`)}\n\t${chalk.white(`└───────────────────────────┘`)}\t`);
   return req;
