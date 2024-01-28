@@ -56,9 +56,12 @@ export class apisetu extends plugin {
 async r18(e) {
   try {
     // 解析命令中的张数，默认为1
-    const match = e.message.match(/^#?(来(\d+)张)?随机(r18)(图)?$/i);
+    const match = e.msg.match(/^#?(来(\d+)张)?随机(r18)(图)?$/i);
     const numImages = match && match[2] ? parseInt(match[2]) : 1;
-
+if (numImages > 10){
+	await e.reply('最多10张！！')
+	return
+}
     const configContent = fs.readFileSync(filepath, 'utf8');
     let config = yaml.load(configContent);
 
