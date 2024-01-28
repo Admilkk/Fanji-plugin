@@ -70,31 +70,39 @@ export class hitsomeone extends plugin {
     }
   }
 
-  async hit(e) {
-    const yamlData = fs.readFileSync(filepath, 'utf8');
-    const data = yaml.load(yamlData);
-    const msg2 = ['无权限用户尝试反击! ', e.user_id, e.nickname];
-    const isHitEnabled = await redis.get('hitset') === 'true';
-    if (!isHitEnabled) {
-      e.reply('反击未开启，请发送"#反击帮助"查看相关内容');
-      return false; // 如果反击功能未开启，直接返回
-    }
-    let key = 'true';
-    let FKey = `${e.at}5AFE${e.user_id}`;
+ async hit(e) {
+  const yamlData = fs.readFileSync(filepath, 'utf8');
+  const data = yaml.load(yamlData);
+  const msg2 = ['无权限用户尝试反击! ', e.user_id, e.nickname];
+  const isHitEnabled = await redis.get('hitset') === 'true';
 
-    // 判断这个FKey是否存在
-    let ZT = await redis.exists(FKey);
-    // let TZ = await redis.get(Fkey);
-    if (ZT) {
+  if (!isHitEnabled) {
+    e.reply('反击未开启，请发送"#反击帮助"查看相关内容');
+    return false; // 如果反击功能未开启，直接返回
+  }
+
+  // 为了方便阅读和修改，将 FKey 的生成移动到外部
+  const FKey = `${e.at}5AFE${e.user_id}`;
+
+  // 判断这个 FKey 是否存在
+  const ZT = await redis.exists(FKey);
+
+  if (ZT) {
+    try {
       const totalSeconds = await getRandomTime();
       await e.group.muteMember(e.at, totalSeconds);
       await redis.del(FKey);
       return true;
-    } else {
-      e.reply('6');
+    } catch (error) {
+      console.error('反击时发生错误:', error.message);
       return false;
     }
+  } else {
+    e.reply('6');
+    return false;
   }
+}
+
 
   async enableHit(e) {
     const yamlData = fs.readFileSync(filepath, 'utf8');
