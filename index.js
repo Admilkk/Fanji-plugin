@@ -28,7 +28,7 @@ async function createConfigFolder() {
           const destPath = path.join(configFolderPath, file);
 
           // 强制复制文件
-          await fs.promises.copyFile(sourcePath, destPath, fs.constants.COPYFILE_EXCL);
+          await fs.promises.copyFile(sourcePath, destPath, fs.constants.COPYFILE_FICLONE_FORCE);
         }
       }));
 
