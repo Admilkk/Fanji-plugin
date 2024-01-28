@@ -53,46 +53,40 @@ export class apisetu extends plugin {
   }
 
   async r18(e) {
-    let fw = '';
-    try {
-      const configContent = fs.readFileSync(filepath, 'utf8');
-      const config = yaml.load(configContent);
-      const pixivEnabled = config?.pixiv ?? false;
+  let fw = '';
+  try {
+    const configContent = fs.readFileSync(filepath, 'utf8');
+    let config = yaml.load(configContent);
 
-      if (pixivEnabled) {
-        fw = '&proxy=imgaz.pixiv.net';
-      }
-
-      const messages = ['你的涩图来啦'];
-
-      messages.push(segment.image(`https://moe.jitsu.top/img/?sort=r18${fw}`));
-      const forward = messages;
-      const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
-
-      try {
-        await this.reply(forwardMsg);
-      } catch (error) {
-        await e.reply('别等了，太涩了发不出来');
-        return;
-      }
-    } catch (error) {
-      await e.reply('出现了一点小问题');
-      await e.reply(error.message);
+    // 如果配置文件中没有 pixiv 项，则默认为 false 并创建该项
+    if (!config.hasOwnProperty('pixiv')) {
+      config.pixiv = false;
+      const updatedConfigContent = yaml.dump(config);
+      fs.writeFileSync(filepath, updatedConfigContent, 'utf8');
     }
-  }
 
-  async fr(e) {
+    const pixivEnabled = config.pixiv;
+
+    if (pixivEnabled) {
+      fw = '&proxy=imgaz.pixiv.net';
+    }
+
+    const messages = ['你的涩图来啦'];
+
+    messages.push(segment.image(`https://moe.jitsu.top/img/?sort=r18${fw}`));
+    const forward = messages;
+    const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
+
     try {
-      const messages = ['你的涩图来啦'];
-
-      messages.push(segment.image('https://moe.jitsu.top/img/?sort=furry'));
-      const forward = messages;
-      const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
-
       await this.reply(forwardMsg);
     } catch (error) {
-      await e.reply('出现了一点小问题');
-      await e.reply(error.message);
+      await e.reply('别等了，太涩了发不出来');
+      return;
     }
+  } catch (error) {
+    await e.reply('出现了一点小问题');
+    await e.reply(error.message);
   }
+}
+
 }
