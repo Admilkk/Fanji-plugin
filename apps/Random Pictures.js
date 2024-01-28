@@ -47,11 +47,13 @@ export class apisetu extends plugin {
       await e.rely([segment.image('https://moe.jitsu.top/img')]);
     } catch (error) {
       await e.reply('出现了一点小问题');
+	  await e.reply(error.message)
     }
     return false;
   }
 
   async r18(e) {
+	  try {
     const keys = await redis.keys('*:cyctimes');
     const messages = ['你的涩图来啦'];
 
@@ -60,9 +62,15 @@ export class apisetu extends plugin {
     const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
 
     await this.reply(forwardMsg);
+	  }catch(error){
+		        await e.reply('出现了一点小问题');
+	  await e.reply(error.message)
+	  }
+	  return false
   }
 
   async fr(e) {
+	  try {
     const messages = ['你的涩图来啦'];
 
     messages.push(segment.image('https://moe.jitsu.top/img/?sort=furry'));
@@ -70,5 +78,9 @@ export class apisetu extends plugin {
     const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
 
     await this.reply(forwardMsg);
+  }catch(error){
+	        await e.reply('出现了一点小问题');
+	  await e.reply(error.message)
+  }
   }
 }
