@@ -109,7 +109,7 @@ export class hitsomeone extends plugin {
     const data = yaml.load(yamlData);
 
     const msg = ['无权限用户尝试开启反击！', e.user_id, e.nickname];
-    if (!(await cm.check(e.user_id) || e.isMaster || e.member.is_admin || e.member.is_owner)) {
+    if (!(await cm.check(e.user_id) && e.isMaster && e.member.is_admin && e.member.is_owner)) {
       logger.info('无权限用户尝试开启反击！:', e.user_id, e.nickname);
       common.relpyPrivate(data.master, msg);
       e.reply('6');
@@ -125,7 +125,7 @@ export class hitsomeone extends plugin {
     const yamlData = fs.readFileSync(filepath, 'utf8');
     const data = yaml.load(yamlData);
     const msg = ['无权限用户尝试开启反击！', e.user_id, e.nickname];
-    if (!(await cm.check(e.user_id) || e.isMaster || e.member.is_admin || e.member.is_owner)) {
+    if (!(await cm.check(e.user_id) && e.isMaster && e.member.is_admin && e.member.is_owner)) {
       logger.info('无权限用户尝试开启反击！:', e.user_id, e.nickname);
       common.relpyPrivate(data.master, msg);
       e.reply('6');
