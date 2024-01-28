@@ -68,14 +68,17 @@ async r18(e) {
     const pixivEnabled = config.pixiv;
     let fw = pixivEnabled ? '&proxy=imgaz.pixiv.net' : '';
 
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // 禁用证书验证
-      rejectUnauthorized: false,
-    };
+const requestOptions = {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  // 禁用证书验证
+  agent: new https.Agent({  
+    rejectUnauthorized: false,
+  }),
+};
+
 
     let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json`);
     url = await url.json();
