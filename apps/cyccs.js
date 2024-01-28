@@ -44,7 +44,7 @@ async chuoyichu(e) {
 		return false
       }
     } catch (error) {
-      await e.reply('发生了亿点点小错误');
+      await e.reply('发生了亿点点小错误', error.message);
     }
   } else {
     return false;
