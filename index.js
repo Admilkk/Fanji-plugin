@@ -17,10 +17,24 @@ async function createConfigFolder() {
     const configExists = await fs.promises.stat(configFolderPath).catch(() => null);
 
     if (configExists) {
-      // 配置文件夹已存在
-      msg = '配置文件已存在';
+      // 配置文件夹已存在，强制复制 def_config 下的除了 config.yaml 之外的所有文件
+      const files = await fs.promises.readdir(defConfigFolderPath);
+
+      // 遍历文件并强制复制到 config 文件夹
+      await Promise.all(files.map(async (file) => {
+        // 排除 config.yaml 文件
+        if (file !== 'config.yaml') {
+          const sourcePath = path.join(defConfigFolderPath, file);
+          const destPath = path.join(configFolderPath, file);
+
+          // 强制复制文件
+          await fs.promises.copyFile(sourcePath, destPath, fs.constants.COPYFILE_EXCL);
+        }
+      }));
+
+      msg = '强制复制配置文件完成';
     } else {
-      // 如果不存在则创建
+      // 如果不存在则创建并复制所有文件
       await fs.promises.mkdir(configFolderPath, { recursive: true });
 
       // 获取 def_config 文件夹下的所有文件
@@ -28,14 +42,11 @@ async function createConfigFolder() {
 
       // 遍历文件并复制到 config 文件夹
       await Promise.all(files.map(async (file) => {
-        // 排除 config.yaml 文件
-        if (file !== 'config.yaml') {
-          const sourcePath = path.join(defConfigFolderPath, file);
-          const destPath = path.join(configFolderPath, file);
+        const sourcePath = path.join(defConfigFolderPath, file);
+        const destPath = path.join(configFolderPath, file);
 
-          // 复制文件
-          await fs.promises.copyFile(sourcePath, destPath);
-        }
+        // 复制文件
+        await fs.promises.copyFile(sourcePath, destPath);
       }));
 
       msg = '复制配置文件完成';
