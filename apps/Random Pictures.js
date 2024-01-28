@@ -77,13 +77,13 @@ async r18(e) {
       rejectUnauthorized: false,
     };
 
-    let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json`, requestOptions);
+    let url = await fetch(`https://moe.jitsu.top/img?sort=r18&type=json`);
     url = await url.json();
     if (url.code === 200 && url.pics && url.pics.length > 0) {
       if (url.pics.length === 1) {
         // 只有一张图片的情况
         const imageUrl = url.pics[0];
-        const response = await fetch(imageUrl);
+        const response = await fetch(imageUrl, requestOptions);
         const buffer = await response.buffer();
         const timestamp = new Date().getTime();
         const imagePath = `../resource/pixiv/${timestamp}_0.jpg`; // 修改为保存路径
