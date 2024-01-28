@@ -82,7 +82,7 @@ export class hitsomeone extends plugin {
   }
 
   // 为了方便阅读和修改，将 FKey 的生成移动到外部
-  const FKey = `${e.at}5AFE${e.user_id}`;
+  const FKey = `${e.at}5AFE${e.operate_id}`;
 
   // 判断这个 FKey 是否存在
   const ZT = await redis.exists(FKey);

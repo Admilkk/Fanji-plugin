@@ -31,7 +31,7 @@ async chuoyichu(e) {
 
   if (e.target_id != Bot.uin & e.user_id != Bot.uin) {
  try {
-      const FKey = `${e.user_id}5AFE${e.target_id}`;
+      const FKey = `${e.operate_id}5AFE${e.target_id}`;
       
       // 判断这个 FKey 是否存在
       const exists = await redis.exists(FKey);
