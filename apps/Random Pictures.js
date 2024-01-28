@@ -49,7 +49,7 @@ export class apisetu extends plugin {
     try {
 		const messages = ['你要的图片']
       messages.push([segment.image(`${apiurl}`)]);
-	  let forward = await common.makeForwardMsg(messages)
+	  let forward = await common.makeForwardMsg(e, messages, '涩图来啦')
 	  await e.reply(forward)
 	  return
     } catch (error) {
