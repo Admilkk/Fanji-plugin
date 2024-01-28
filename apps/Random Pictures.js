@@ -102,7 +102,7 @@ async r18(e) {
         // 多张图片的情况
         const imagePromises = url.pics.map(async (imageUrl, index) => {
           // 下载图片并保存到指定路径
-          const response = await fetch(imageUrl);
+          const response = await fetch(imageUrl, requestOptions);
           const buffer = await response.buffer();
           const timestamp = new Date().getTime();
           const imagePath = `../resource/pixiv/${timestamp}_${index}.jpg`; // 修改为保存路径
