@@ -47,13 +47,20 @@ export class apisetu extends plugin {
 
   async ptst(e) {
     try {
-      await e.reply([segment.image('${apiurl}')]);
+      await e.reply([segment.image(`${apiurl}`)]);
     } catch (error) {
       await e.reply('出现了一点小问题');
       await e.reply(error.message);
     }
   }
-
+async fr(e){
+    try {
+      await e.reply([segment.image(`${apiurl}?sort=furry`)]);
+    } catch (error) {
+      await e.reply('出现了一点小问题');
+      await e.reply(error.message);
+    }
+  }
 async r18(e) {
   try {
     // 解析命令中的张数，默认为1
