@@ -44,7 +44,7 @@ export class apisetu extends plugin {
 
   async ptst(e) {
     try {
-      await e.rely([segment.image('https://moe.jitsu.top/img')]);
+      await e.reply([segment.image('https://moe.jitsu.top/img')]);
     } catch (error) {
       await e.reply('出现了一点小问题');
 	  await e.reply(error.message)
