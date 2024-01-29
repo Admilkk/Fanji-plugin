@@ -3,7 +3,7 @@
 ![Visitor Count](https://profile-counter.glitch.me/fanji-plugin/count.svg)
 #### 介绍
 一个小草插件，内含涩图调用以及反击系统
-插件交流群:[114514](https://www.bilibili.com/video/BV1GJ411x7h7/)
+插件交流群:[114514](https://blog.admilk.top/go/RC/)
 
 
 
