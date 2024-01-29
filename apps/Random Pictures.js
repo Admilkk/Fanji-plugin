@@ -121,7 +121,14 @@ if (numImages > 10 & !await cm.check(e.user_id)){
         if (aw) {
           return;
         } else {
-          await this.reply([`被吞了，图链:${url.pics}`]);
+         
+			aw = await this.reply(forwardMsg)
+			if (aw) {
+				return
+			}else{
+				 await this.reply([`被吞了，图链:${url.pics}`]);
+			}
+		  
         }
 		}
       } else {
