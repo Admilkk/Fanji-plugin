@@ -157,7 +157,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
         if (aw) {
           return;
         } else {
-          const allImageLinks = url.pics.join('\n');
+          const allImageLinks = url.pics.join('\n\n');
           await this.reply([`被吞了，图链:\n${allImageLinks}`]);
         }
       }
