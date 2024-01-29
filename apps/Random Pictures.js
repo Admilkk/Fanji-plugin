@@ -10,6 +10,7 @@ import https from 'https';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+		let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
 //以下内容防君子不防小人
 const apiurl = 'https://\x6d\x6f\x65.\x6a\x69\x74\x73\x75.\x74\x6f\x70/img';
 const filepath = path.join(__dirname, '../configs/config.yaml');
@@ -113,7 +114,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
         fs.writeFileSync(imagePath, buffer, 'binary');
 
-        const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath),'\nfrom fanji-plugin'], '你要的色图来啦');
+        const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath),'\nfrom fanji-plugin',segment.image(ymzx)], '你要的色图来啦');
 		if (e.msg.includes('\u5c01\u53f7\u7248') && cm.check(e.user_id)){
 			await e.reply([segment.image(imagePath)])
 		}else{
@@ -147,7 +148,6 @@ if (numImages > 10 & !await cm.check(e.user_id)){
         const imagePaths = await Promise.all(imagePromises);
 
         const messages = ['你的涩图来啦'];
-		let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
 		messages.push(segment.image(ymzx))
         messages.push(...imagePaths.map(imagePath => segment.image(imagePath)));
 				messages.push('from 反击插件')
