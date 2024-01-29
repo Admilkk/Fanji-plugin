@@ -66,7 +66,7 @@ await (async () => {
   logger.info(msg);
 })();
 const apps = await appsOut({ AppsName: 'apps' }).then(req => {
-  logger.info(`\n\t${chalk.white(`┌────────────────────────────┐`)}\t\n\t${chalk.cyan(`「Fanji-plugin载入中···」`)}\n\t${chalk.blue(`「载入成功！」`)}\n\t${chalk.yellow(`「交流群号：776370425   」`)}\n\t${chalk.white(`└───────────────────────────┘`)}\t`);
+  logger.info(`\n\t${chalk.white(`┌────────────────────────────┐`)}\t\n\t${chalk.cyan(`「Fanji-plugin载入中···」`)}\n\t${chalk.blue(`「载入成功！」`)}\n\t${chalk.yellow(`「交流群号：详情请见插件gitee页面   」`)}\n\t${chalk.white(`└───────────────────────────┘`)}\t`);
   return req;
 });
 export { apps };
