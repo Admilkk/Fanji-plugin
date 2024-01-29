@@ -147,6 +147,8 @@ if (numImages > 10 & !await cm.check(e.user_id)){
         const imagePaths = await Promise.all(imagePromises);
 
         const messages = ['你的涩图来啦'];
+		let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
+		messages.push(segment.image(ymzx))
         messages.push(...imagePaths.map(imagePath => segment.image(imagePath)));
 				messages.push('from 反击插件')
         const forward = messages;
