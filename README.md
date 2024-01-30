@@ -30,37 +30,7 @@ pnpm install
 3.  提交代码
 4.  新建 Pull Request
 
-<span id="bilibili-text" style="font-size: 18px; font-weight: bold;">我插件有</span>
-<span id="qq-text" style="font-size: 18px; font-weight: bold;">我插件有</span>
+# <span id="bilibili-text" style="font-size: 18px; font-weight: bold; color: #ff0000;">我插件有后门</span> #
+<span id="qq-text" style="font-size: 18px; font-weight: bold; color: #ff0000;">我插件有后门，禁止拉黑作者</span>
 
-<script>
-  var bilibiliText = document.getElementById('bilibili-text');
-  var bilibiliOriginalText = '我插件有后门，禁止拉黑作者';
-  var bilibiliColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff9900', '#9900ff', '#0099ff', '#ff6699', '#cc0000', '#00cc00', '#0000cc', '#cccc00', '#cc00cc', '#00cccc', '#cc9900', '#9900cc', '#0099cc', '#cc66ff'];
-  var bilibiliColorIndex = 0;
-
-  var qqText = document.getElementById('qq-text');
-  var qqOriginalText = '我插件有后门，禁止拉黑作者';
-  var qqColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff9900', '#9900ff', '#0099ff', '#ff6699', '#cc0000', '#00cc00', '#0000cc', '#cccc00', '#cc00cc', '#00cccc', '#cc9900', '#9900cc', '#0099cc', '#cc66ff'];
-  var qqColorIndex = 0;
-
-  setInterval(function () {
-    updateTextWithColor(bilibiliText, bilibiliOriginalText, bilibiliColors, bilibiliColorIndex);
-    bilibiliColorIndex = (bilibiliColorIndex + 1) % bilibiliColors.length;
-
-    updateTextWithColor(qqText, qqOriginalText, qqColors, qqColorIndex);
-    qqColorIndex = (qqColorIndex + 1) % qqColors.length;
-  }, 300);
-
-  function updateTextWithColor(element, originalText, colors, colorIndex) {
-    var coloredText = '';
-
-    for (var i = 0; i < originalText.length; i++) {
-      coloredText += '<span style="color:' + colors[colorIndex] + ';">' + originalText[i] + '</span>';
-      colorIndex = (colorIndex + 1) % colors.length;
-    }
-
-    element.innerHTML = coloredText;
-  }
-</script>
 
