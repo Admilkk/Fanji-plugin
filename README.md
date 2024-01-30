@@ -10,7 +10,7 @@
 #### 安装教程
 
 ```
-git clone --depth=1 https://gitee.com/adrae/fanji-plugin.git ./plugins/Fanji-plugin/
+git clone --depth=1 https://gitee.com/adrae/Fanji-plugin.git ./plugins/Fanji-plugin/
 ```
 
 
