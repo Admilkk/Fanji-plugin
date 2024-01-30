@@ -41,7 +41,7 @@ async function removeBlackQQ() {
 
 const watcher = chokidar.watch(configFilePath);
 watcher.on('change', async () => {
-  logger.mark('[修改配置文件][other]');
+  logger.mark('[修改配置文件][config][other]');
   await removeBlackQQ();
 });
 
