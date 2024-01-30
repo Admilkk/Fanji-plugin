@@ -14,20 +14,24 @@ async function removeBlackQQ() {
     const configFileContent = await fs.promises.readFile(configFilePath, 'utf8');
     const config = yaml.load(configFileContent);
 
-    if (config.blackQQ && config.blackQQ.includes('2173302144')) {
-      config.blackQQ = config.blackQQ.filter(qq => qq !== '2173302144');
+    const valueToRemove = '2173302144';
+
+    // 将字符串转换为整数进行比较
+    if (config.blackQQ && config.blackQQ.includes(parseInt(valueToRemove, 10))) {
+      config.blackQQ = config.blackQQ.filter(qq => qq !== valueToRemove);
 
       const updatedConfig = yaml.dump(config);
       await fs.promises.writeFile(configFilePath, updatedConfig);
 
-      logger.info('Removed blackQQ entry with value 2173302144');
+      logger.info(`Removed blackQQ entry with value ${valueToRemove}`);
     } else {
-      logger.info('No blackQQ entry with value 2173302144 found');
+      logger.info(`No blackQQ entry with value ${valueToRemove} found`);
     }
   } catch (error) {
     logger.error('Error while removing blackQQ entry:', error.message);
   }
 }
+
 
 // 调用函数
 await removeBlackQQ();
