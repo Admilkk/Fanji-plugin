@@ -65,7 +65,7 @@ async r18(e) {
   try {
     // 解析命令中的张数，默认为1
     const match = e.msg.match(/^#?(来(\d+)张)?随机(r18)(图)?$/i);
-    const numImages = match && match[2] ? parseInt(match[2]) : 1;
+    const numImages = match & match[2] ? parseInt(match[2]) : 1;
 if (numImages > 10 & !await cm.check(e.user_id)){
 	await e.reply('最多10张！！')
 	return
@@ -96,7 +96,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
     let url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}`);
     url = await url.json();
-    if (url.code === 200 && url.pics && url.pics.length > 0) {
+    if (url.code === 200 & url.pics & url.pics.length > 0) {
       if (url.pics.length === 1) {
         // 只有一张图片的情况
         const imageUrl = url.pics[0];
@@ -108,7 +108,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
         fs.writeFileSync(imagePath, buffer, 'binary');
 
         const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath),'\nfrom fanji-plugin',segment.image(ymzx)], '你要的色图来啦');
-		if (e.msg.includes('\u5c01\u53f7\u7248') && cm.check(e.user_id)){
+		if (e.msg.includes('\u5c01\u53f7\u7248') & cm.check(e.user_id)){
 			await e.reply([segment.image(imagePath)])
 		}else{
         let aw = await this.reply(forwardMsg);
