@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import Redis from 'ioredis';
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
@@ -14,12 +13,6 @@ const __dirname = dirname(__filename);
 const filepath = path.join(__dirname, '../configs/config.yaml');
 
 
-const redis = new Redis({
-  port: 6379,
-  host: '127.0.0.1',
-  password: '',
-  //wa
-});
 
 export class hitsomeone extends plugin {
   constructor() {

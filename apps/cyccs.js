@@ -1,12 +1,4 @@
-﻿import Redis from 'ioredis';
-
-const redis = new Redis({
-  port: 6379,
-  host: '127.0.0.1',
-  password: '',
-});
-
-export class chuo extends plugin {
+﻿export class chuo extends plugin {
   constructor() {
     super({
       name: '戳一111111',
