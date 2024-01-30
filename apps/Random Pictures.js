@@ -12,6 +12,7 @@ const __dirname = dirname(__filename);
 		let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
 //以下内容防君子不防小人
 const apiurl = 'https://\x6d\x6f\x65.\x6a\x69\x74\x73\x75.\x74\x6f\x70/img';
+const apiurl2 = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0064\u0075\u006a\u0069\u006e\u002e\u006f\u0072\u0067\u002f\u0070\u0069\u0063\u002f\u0079\u0075\u0061\u006e\u0073\u0068\u0065\u006e\u002f';
 const filepath = path.join(__dirname, '../configs/config.yaml');
 
 
@@ -27,6 +28,10 @@ export class apisetu extends plugin {
           reg: /^#?随机(涩|色|瑟|塞|se)图$/i, // 无r18.所以不套转发
           fnc: 'ptst',
         },
+		        {
+          reg: /^#?随机(原|y|厵|○)(神|s|神|🈸)((图片)|图)?$/i, // 无r18.所以不套转发
+          fnc: 'ys',
+        },
         {
           reg: /^#?(来(\d+)张)?随机(r18)(图)?(\u5c01\u53f7\u7248)?$/i, // R18，套了转发
           fnc: 'r18',
@@ -38,7 +43,9 @@ export class apisetu extends plugin {
       ],
     });
   }
-
+  async ys(e) {
+	  await e.reply([segment.image(apiurl2)]);
+  }
   async ptst(e) {
     try {
 		const messages = ['你要的图片']
