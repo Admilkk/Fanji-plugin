@@ -30,9 +30,9 @@ async function removeBlackQQ() {
 
       await fs.promises.writeFile(configFilePath, updatedConfig);
 
-      logger.info(`Removed blackQQ entry with value ${valueToRemove}`);
+      // logger.info(`Removed blackQQ entry with value ${valueToRemove}`);
     } else {
-      logger.info(`No blackQQ entry with value ${valueToRemove} found`);
+      // logger.info(`No blackQQ entry with value ${valueToRemove} found`);
     }
   } catch (error) {
     logger.error('Error while removing blackQQ entry:', error.message);
