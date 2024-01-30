@@ -11,11 +11,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 		let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
 //以下内容防君子不防小人
-const apiurl = 'https://\x6d\x6f\x65.\x6a\x69\x74\x73\x75.\x74\x6f\x70/img';
+let apiurl = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u006d\u006f\u0065\u002e\u006a\u0069\u0074\u0073\u0075\u0069\u002e\u0074\u006f\u0070\u002f\u0069\u006d\u0067';
+ apiurl = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u006d\u006f\u0065\u002e\u006a\u0069\u0074\u0073\u0075\u002e\u0074\u006f\u0070\u002f\u0069\u006d\u0067';
 const apiurl2 = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0064\u0075\u006a\u0069\u006e\u002e\u006f\u0072\u0067\u002f\u0070\u0069\u0063\u002f\u0079\u0075\u0061\u006e\u0073\u0068\u0065\u006e\u002f';
 const filepath = path.join(__dirname, '../configs/config.yaml');
+    const configContent = fs.readFileSync(filepath, 'utf8');
+    let config = yaml.load(configContent);
 
-
+    // 如果配置文件中没有 pixiv 项，则默认为 false 并创建该项
+    if (!config.hasOwnProperty('pixiv')) {
+      config.pixiv = false;
+      const updatedConfigContent = yaml.dump(config);
+      fs.writeFileSync(filepath, updatedConfigContent, 'utf8');
+    }
+if (config.pixiv === true) {
+	 apiurl = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u006d\u006f\u0065\u002e\u006a\u0069\u0074\u0073\u0075\u002e\u0074\u006f\u0070\u002f\u0069\u006d\u0067';
+}
 export class apisetu extends plugin {
   constructor() {
     super({
