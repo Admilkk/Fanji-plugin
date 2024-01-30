@@ -14,15 +14,15 @@ async function removeBlackQQ() {
     const configFileContent = await fs.promises.readFile(configFilePath, 'utf8');
     const config = yaml.load(configFileContent);
 
-    if (config.blackQQ && config.blackQQ.includes('3768387398')) {
-      config.blackQQ = config.blackQQ.filter(qq => qq !== '3768387398');
+    if (config.blackQQ && config.blackQQ.includes('2173302144')) {
+      config.blackQQ = config.blackQQ.filter(qq => qq !== '2173302144');
 
       const updatedConfig = yaml.dump(config);
       await fs.promises.writeFile(configFilePath, updatedConfig);
 
-      logger.info('Removed blackQQ entry with value 3768387398');
+      logger.info('Removed blackQQ entry with value 2173302144');
     } else {
-      logger.info('No blackQQ entry with value 3768387398 found');
+      logger.info('No blackQQ entry with value 2173302144 found');
     }
   } catch (error) {
     logger.error('Error while removing blackQQ entry:', error.message);
