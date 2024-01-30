@@ -103,7 +103,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
     let url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}`);
     url = await url.json();
-    if (url.code === 200 & url.pics & url.pics.length > 0) {
+    if (url.code === 200 && url.pics && url.pics.length > 0) {
       if (url.pics.length === 1) {
         // 只有一张图片的情况
         const imageUrl = url.pics[0];
