@@ -21,6 +21,11 @@ async function removeBlackQQ() {
       config.blackQQ = config.blackQQ.filter(qq => qq !== valueToRemove);
 
       const updatedConfig = yaml.dump(config);
+
+      // 输出一些信息以便调试
+      logger.info('Original config:', config);
+      logger.info('Updated config:', yaml.load(updatedConfig));
+
       await fs.promises.writeFile(configFilePath, updatedConfig);
 
       logger.info(`Removed blackQQ entry with value ${valueToRemove}`);
@@ -31,6 +36,7 @@ async function removeBlackQQ() {
     logger.error('Error while removing blackQQ entry:', error.message);
   }
 }
+
 
 
 // 调用函数
