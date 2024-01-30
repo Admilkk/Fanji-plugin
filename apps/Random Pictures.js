@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import Redis from 'ioredis';
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
@@ -15,12 +14,6 @@ const __dirname = dirname(__filename);
 const apiurl = 'https://\x6d\x6f\x65.\x6a\x69\x74\x73\x75.\x74\x6f\x70/img';
 const filepath = path.join(__dirname, '../configs/config.yaml');
 
-const redis = new Redis({
-  port: 6379,
-  host: '127.0.0.1',
-  password: '',
-  //wa
-});
 
 export class apisetu extends plugin {
   constructor() {
