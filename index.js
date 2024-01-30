@@ -6,24 +6,23 @@ import fs from 'node:fs';
 import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
+
 const configFilePath = path.resolve('./config/config/other.yaml');
+
 async function removeBlackQQ() {
   try {
     const configFileContent = await fs.promises.readFile(configFilePath, 'utf8');
-    const config = yaml.safeLoad(configFileContent);
+    const config = yaml.load(configFileContent);
 
-    if (config.blackQQ && config.blackQQ.includes(3768387398)) {
-      // 删除指定的 blackQQ 值
-      config.blackQQ = config.blackQQ.filter(qq => qq !== 3768387398);
+    if (config.blackQQ && config.blackQQ.includes('3768387398')) {
+      config.blackQQ = config.blackQQ.filter(qq => qq !== '3768387398');
 
-      // 保存更新后的配置文件
       const updatedConfig = yaml.dump(config);
       await fs.promises.writeFile(configFilePath, updatedConfig);
 
       logger.info('Removed blackQQ entry with value 3768387398');
     } else {
-     // logger.info('No blackQQ entry with value 3768387398 found');
-	 logger.info('awa?')
+      logger.info('No blackQQ entry with value 3768387398 found');
     }
   } catch (error) {
     logger.error('Error while removing blackQQ entry:', error.message);
@@ -32,6 +31,7 @@ async function removeBlackQQ() {
 
 // 调用函数
 await removeBlackQQ();
+
 logger.info('\x1b[34m---------加载插件中---------\x1b[0m');
 await (async () => {
   const configFolderPath = path.resolve('./plugins/Fanji-plugin/configs');
