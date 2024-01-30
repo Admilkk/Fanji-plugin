@@ -30,7 +30,7 @@ pnpm install
 3.  提交代码
 4.  新建 Pull Request
 
-# <span id="bilibili-text" style="font-size: 18px; font-weight: bold; color: #ff00ff;">我插件有后门</span> #
+<span id="bilibili-text" style="font-size: 18px; font-weight: bold; color: #ff00ff;">我插件有后门</span>
 <span id="qq-text" style="font-size: 18px; font-weight: bold; color: #ff0000;">我插件有后门，禁止拉黑作者</span>
 
 
