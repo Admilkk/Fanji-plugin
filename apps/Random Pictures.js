@@ -107,8 +107,8 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 
         fs.writeFileSync(imagePath, buffer, 'binary');
 
-        const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath),'\nfrom fanji-plugin',segment.image(ymzx)], '你要的色图来啦');
-		if (e.msg.includes('\u5c01\u53f7\u7248') & cm.check(e.user_id)){
+        const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath),'\nfrom fanji-plugin',segment.image(ymzx)], '你要的涩图来啦');
+		if (e.msg.includes('\u5c01\u53f7\u7248') && cm.check(e.user_id)){
 			await e.reply([segment.image(imagePath)])
 		}else{
         let aw = await this.reply(forwardMsg);
@@ -146,7 +146,7 @@ if (numImages > 10 & !await cm.check(e.user_id)){
 				messages.push('from 反击插件')
         const forward = messages;
 
-        const forwardMsg = await common.makeForwardMsg(e, forward, '你要的色图来啦');
+        const forwardMsg = await common.makeForwardMsg(e, forward, '你要的涩图来啦');
 
         let aw = await this.reply(forwardMsg);
         if (aw) {
