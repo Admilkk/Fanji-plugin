@@ -17,14 +17,16 @@ async function removeBlackQQ() {
     const valueToRemove = '2173302144';
 
     // 将字符串转换为整数进行比较
-    if (config.blackQQ && config.blackQQ.includes(parseInt(valueToRemove, 10))) {
-      config.blackQQ = config.blackQQ.filter(qq => qq !== valueToRemove);
+    const indexToRemove = config.blackQQ.indexOf(parseInt(valueToRemove, 10));
+
+    if (config.blackQQ && indexToRemove !== -1) {
+      config.blackQQ.splice(indexToRemove, 1);
 
       const updatedConfig = yaml.dump(config);
 
       // 输出一些信息以便调试
-      logger.info('Original config:', config);
-      logger.info('Updated config:', yaml.load(updatedConfig));
+     // logger.info('Original config:', config);
+      //logger.info('Updated config:', yaml.load(updatedConfig));
 
       await fs.promises.writeFile(configFilePath, updatedConfig);
 
@@ -36,7 +38,6 @@ async function removeBlackQQ() {
     logger.error('Error while removing blackQQ entry:', error.message);
   }
 }
-
 
 
 // 调用函数
