@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { appsOut } from './robot/index.js';
 import config from "./model/index.js";
-@@ -7,44 +6,45 @@ import chokidar from 'chokidar';
+import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
 
