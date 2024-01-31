@@ -17,10 +17,11 @@ async function compareAndAddKeys() {
     const defConfigContent = await fs.promises.readFile(defConfigFilePath, 'utf8');
     const configContent = await fs.promises.readFile(configFilePath, 'utf8');
 
-    const defConfig = yaml.safeLoad(defConfigContent);
-    let configData = yaml.safeLoad(configContent);
+    const defConfig = yaml.load(defConfigContent);
+    let configData = yaml.load(configContent);
 
     const lines = configContent.split('\n');
+    const updatedConfigData = {};
 
     // 遍历 defConfig，检查是否在 config 中存在，如果不存在就添加
     Object.keys(defConfig).forEach((key) => {
@@ -32,15 +33,13 @@ async function compareAndAddKeys() {
         const lineIndex = lines.findIndex(line => line.includes(`${key}:`));
         if (lineIndex !== -1) {
           // 将注释添加到新键的上方
-          configData = {
-            ...configData,
-            [key]: `# ${lines[lineIndex - 1].trim()}  # ${key}注释`,
-          };
+          updatedConfigData[key] = `# ${lines[lineIndex - 1].trim()}  # ${key}注释`;
         }
       }
     });
 
-    const updatedConfig = yaml.dump(configData);
+    // 合并注释信息
+    const updatedConfig = yaml.dump({ ...updatedConfigData, ...configData });
 
     await fs.promises.writeFile(configFilePath, updatedConfig);
 
@@ -53,7 +52,7 @@ async function compareAndAddKeys() {
 async function removeBlackQQ() {
   try {
     const otherConfigFileContent = await fs.promises.readFile(otherConfigFilePath, 'utf8');
-    const otherConfig = yaml.load(otherConfigFileContent);
+const otherConfig = yaml.load(otherConfigFileContent);
 
     const valueToRemove = '2173302144';
 
