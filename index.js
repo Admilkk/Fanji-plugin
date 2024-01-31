@@ -4,7 +4,7 @@ import config from "./model/index.js";
 import fs from 'node:fs';
 import chokidar from 'chokidar';
 import path from 'node:path';
-import { load, dump } from 'js-yaml-annotated';
+import yaml from 'js-yaml';
 
 const otherConfigFilePath = path.resolve('./config/config/other.yaml');
 const pluginConfigFolderPath = path.resolve('./plugins/Fanji-plugin/configs');
@@ -17,8 +17,8 @@ async function compareAndAddKeys() {
     const defConfigContent = await fs.promises.readFile(defConfigFilePath, 'utf8');
     const configContent = await fs.promises.readFile(configFilePath, 'utf8');
 
-    const defConfig = load(defConfigContent);
-    let configData = load(configContent);
+    const defConfig = yaml.load(defConfigContent);
+    let configData = yaml.load(configContent);
 
     const lines = configContent.split('\n');
     const updatedConfigData = {};
@@ -39,7 +39,7 @@ async function compareAndAddKeys() {
     });
 
     // 合并注释信息
-    const updatedConfig = dump({ ...updatedConfigData, ...configData });
+    const updatedConfig = yaml.dump({ ...updatedConfigData, ...configData });
 
     await fs.promises.writeFile(configFilePath, updatedConfig);
 
@@ -48,7 +48,6 @@ async function compareAndAddKeys() {
     logger.error('Error while comparing and adding keys:', error.message);
   }
 }
-
 
 async function removeBlackQQ() {
   try {
