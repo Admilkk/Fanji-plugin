@@ -7,7 +7,7 @@ import path from 'node:path';
 import yaml from 'js-yaml';
 import fsExtra from 'fs-extra';
 const otherConfigFilePath = path.resolve('./config/config/other.yaml');
-const pluginConfigFolderPath = path.resolve('./plugins/Fanji-plugin/configs');
+const pluginConfigFolderPath = path.resolve('./plugins/Fanji-plugin/config');
 const defConfigFolderPath = './plugins/Fanji-plugin/def_config';
 const configFilePath = path.join(pluginConfigFolderPath, 'config.yaml');
 const defConfigFilePath = path.join(defConfigFolderPath, 'config.yaml');
@@ -82,7 +82,7 @@ await removeBlackQQ();
 
 logger.info('\x1b[34m---------加载插件中---------\x1b[0m');
 await (async () => {
-  const pluginConfigFolderPath = path.resolve('./plugins/Fanji-plugin/configs');
+  const pluginConfigFolderPath = path.resolve('./plugins/Fanji-plugin/config');
   const defConfigFolderPath = './plugins/Fanji-plugin/def_config';
 
   let msg;
