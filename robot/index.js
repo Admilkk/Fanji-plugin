@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'path';
 import { AppName } from '../app.config.js';
+import chalk from 'chalk';
 export const appsOut = async ({ AppsName }) => {
   // 获取插件名称
   const firstName = `plugins/${AppName}`;
@@ -54,6 +55,7 @@ export const appsOut = async ({ AppsName }) => {
           );
         // 存储插件对象
         apps[key] = allExport[key];
+        logger.info(chalk.cyan('[Fanji-plugin]'), `加载${address.replace(/\.\.\/apps\//g, '')}文件完成`);
       } else {
         logger.info(
           `Template detection:存在非class属性${key}导出\n    ${address}`

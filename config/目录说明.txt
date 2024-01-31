@@ -1,0 +1,4 @@
+如果是config文件夹，那么其中的pixiv项指的是是否开启涩图代理，false表示国内，true表示国外
+master填入你的主人qq
+jiejin这一项可以不管
+请勿更改def_config文件夹

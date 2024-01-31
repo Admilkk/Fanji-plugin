@@ -6,11 +6,12 @@ import cm from '../lib/common/CM.js';
 import common from '../lib/common/common.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import plugin from '../../../lib/plugins/plugin.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const filepath = path.join(__dirname, '../configs/config.yaml');
+const filepath = path.join(__dirname, '../config/config.yaml');
 
 
 
@@ -63,38 +64,36 @@ export class hitsomeone extends plugin {
     }
   }
 
- async hit(e) {
-  const yamlData = fs.readFileSync(filepath, 'utf8');
-  const data = yaml.load(yamlData);
-  const msg2 = ['无权限用户尝试反击! ', e.user_id, e.nickname];
-  const isHitEnabled = await redis.get('hitset') === 'true';
+  async hit(e) {
+    const yamlData = fs.readFileSync(filepath, 'utf8');
+    const data = yaml.load(yamlData);
+    const msg2 = ['无权限用户尝试反击! ', e.user_id, e.nickname];
+    const isHitEnabled = await redis.get('hitset') === 'true';
 
-  if (!isHitEnabled) {
-    e.reply('反击未开启，请发送"#反击帮助"查看相关内容');
-    return false; // 如果反击功能未开启，直接返回
-  }
+    if (!isHitEnabled) {
+      e.reply('反击未开启，请发送"#反击帮助"查看相关内容');
+      return false; // 如果反击功能未开启，直接返回
+    }
 
-  // 为了方便阅读和修改，将 FKey 的生成移动到外部
-  const FKey = `${e.at}5AFE${e.user_id}`;
-
-  // 判断这个 FKey 是否存在
-  const ZT = await redis.exists(FKey);
-
-  if (ZT) {
-    try {
-      const totalSeconds = await getRandomTime();
-      await e.group.muteMember(e.at, totalSeconds);
-      await redis.del(FKey);
-      return true;
-    } catch (error) {
-      console.error('反击时发生错误:', error.message);
+    // 为了方便阅读和修改，将 FKey 的生成移动到外部
+    const FKey = `${e.at}5AFE${e.user_id}`;
+    // 判断这个 FKey 是否存在
+    const ZT = await redis.get(FKey);
+    if (ZT) {
+      try {
+        const totalSeconds = await this.getRandomTime();
+        await e.group.muteMember(e.at, totalSeconds);
+        await redis.del(FKey);
+        return true;
+      } catch (error) {
+        console.error('反击时发生错误:', error.message);
+        return false;
+      }
+    } else {
+      e.reply('6');
       return false;
     }
-  } else {
-    e.reply('6');
-    return false;
   }
-}
 
 
   async enableHit(e) {
@@ -103,17 +102,17 @@ export class hitsomeone extends plugin {
 
     const msg = ['无权限用户尝试开启反击！', e.user_id, e.nickname];
     if (await cm.check(e.user_id) || e.isMaster) {
-		    await redis.set('hitset', 'true');
-    await e.reply('已开启反击！');
-    return false;
+      await redis.set('hitset', 'true');
+      await e.reply('已开启反击！');
+      return false;
 
-    }else{
+    } else {
 
       logger.info('无权限用户尝试开启反击！:', e.user_id, e.nickname);
       common.relpyPrivate(data.master, msg);
       e.reply('6');
       return false;
-  }
+    }
   }
 
   async disableHit(e) {
@@ -121,16 +120,16 @@ export class hitsomeone extends plugin {
     const data = yaml.load(yamlData);
     const msg = ['无权限用户尝试开启反击！', e.user_id, e.nickname];
     if (await cm.check(e.user_id) || e.isMaster) {
-    await redis.set('hitset', 'false');
-    await e.reply('已关闭反击！');
-    return false;
-    }else{
+      await redis.set('hitset', 'false');
+      await e.reply('已关闭反击！');
+      return false;
+    } else {
       logger.info('无权限用户尝试开启反击！:', e.user_id, e.nickname);
       common.relpyPrivate(data.master, msg);
       e.reply('6');
       return false;
 
-  }
+    }
   }
 
   async getRandomTime() {

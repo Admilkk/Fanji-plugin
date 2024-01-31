@@ -4,9 +4,9 @@ import YAML from 'yaml'
 import chokidar from 'chokidar'
 
 class RConfig {
-  constructor () {
+  constructor() {
     // 配置文件
-      this.configPath = './plugins/Fanji-plugin/configs/'
+    this.configPath = './plugins/Fanji-plugin/config/'
     this.config = {}
 
     // 监听文件
@@ -18,7 +18,7 @@ class RConfig {
    * @param name
    * @returns {any}
    */
-  getConfig (name) {
+  getConfig(name) {
     let ignore = []
 
     if (ignore.includes(`${name}`)) {
@@ -32,7 +32,7 @@ class RConfig {
    * 获取配置yaml
    * @param name 名称
    */
-  getYaml (name) {
+  getYaml(name) {
     // 获取文件路径
     let file = this.getFilePath(name)
     // 解析xml
@@ -47,7 +47,7 @@ class RConfig {
    * @param name
    * @returns {string}
    */
-  getFilePath (name) {
+  getFilePath(name) {
     return `${this.configPath}${name}.yaml`
   }
 
@@ -56,13 +56,13 @@ class RConfig {
    * @param file
    * @param name
    */
-// 监听文件变化，当文件发生变化时，删除logger中的mark
-  watch (file, name) {
+  // 监听文件变化，当文件发生变化时，删除logger中的mark
+  watch(file, name) {
     const watcher = chokidar.watch(file)
 
     watcher.on('change', (path) => {
       delete
-      logger.mark(`[修改配置文件][${name}]`)
+        logger.mark(`[修改配置文件][${name}]`)
     })
   }
 
@@ -71,8 +71,8 @@ class RConfig {
    * @param name
    * @param data
    */
-// 保存设置
-  saveSet (name, data) {
+  // 保存设置
+  saveSet(name, data) {
     // 获取文件路径
     let file = this.getFilePath(name)
     // 如果数据为空，判断文件是否存在，如果存在则删除

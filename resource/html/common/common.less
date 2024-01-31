@@ -163,16 +163,16 @@ body {
 
 /********  ELEM  ********/
 
-@elems: hydro, anemo, cryo, electro, geo, pyro, dendro, quantum, sr;
+@elems: hydro, anemo, cryo, electro, geo, pyro, dendro;
 
 each(@elems, {
   .elem-@{value} .talent-icon {
-    background-image: url("./bg/talent-@{value}.webp");
+    background-image: url("./bg/talent-@{value}.png");
   }
 
   .elem-@{value} .elem-bg,
   .@{value}-bg {
-    background-image: url("./bg/bg-@{value}.webp");
+    background-image: url("./bg/bg-@{value}.jpg");
   }
 })
 
@@ -348,10 +348,6 @@ ul.cont-msg, .cont-footer ul {
       background-image: url("../common/item/bg@{value}-o.png");
     }
   })
-
-  &.star-w {
-    background: #fff;
-  }
 }
 
 .item-list {
@@ -391,11 +387,4 @@ ul.cont-msg, .cont-footer ul {
     padding: 4px 5px 3px;
     border-radius: 0 0 6px 0;
   }
-}
-
-.icon {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: block;
 }

@@ -1,10 +1,9 @@
-import Help from "../model/help.js";
 import puppeteer from "../../../lib/puppeteer/puppeteer.js";
-import md5 from "md5";
 import config from "../model/index.js";
 import Version from "../model/version.js";
-
-const _path = process.cwd();
+import { Common, Data } from '../components/index.js'
+import lodash from 'lodash'
+import Theme from '../config/system/theme.js'
 export class help extends plugin {
     constructor(e) {
         super({
@@ -26,7 +25,7 @@ export class help extends plugin {
         this.versionData = config.getConfig("version");
     }
 
-// 异步版本函数
+    // 异步版本函数
     async version() {
         // 调用Version类，获取版本信息
         const data = await new Version(this.e).getData(this.versionData.slice(0, 3));
@@ -35,40 +34,47 @@ export class help extends plugin {
         // 返回图片
         this.e.reply(img);
     }
+
     // 异步帮助函数
-    async help() {
-        // 调用Help类，获取帮助信息
-        let data = await Help.get(this.e);
-        // 如果没有帮助信息，则返回
-        if (!data) {
-            return;
-        }
-        // 调用cache函数，获取图片
-        let img = await this.cache(data);
-        // 返回图片
-        await this.reply(img);
+    async help(e) {
+        let custom = {}
+        let help = {}
+
+        let { diyCfg, sysCfg } = await Data.importCfg('help')
+
+        custom = help
+
+        let helpConfig = lodash.defaults(diyCfg.helpCfg || {}, custom.helpCfg, sysCfg.helpCfg)
+        let helpList = diyCfg.helpList || custom.helpList || sysCfg.helpList
+        let helpGroup = []
+
+        lodash.forEach(helpList, (group) => {
+            if (group.auth && group.auth === 'master' && !e.isMaster) {
+                return true
+            }
+
+            lodash.forEach(group.list, (help) => {
+                let icon = help.icon * 1
+                if (!icon) {
+                    help.css = 'display:none'
+                } else {
+                    let x = (icon - 1) % 10
+                    let y = (icon - x - 1) / 10
+                    help.css = `background-position:-${x * 50}px -${y * 50}px`
+                }
+            })
+
+            helpGroup.push(group)
+        })
+        let themeData = await Theme.getThemeData(diyCfg.helpCfg || {}, sysCfg.helpCfg || {})
+
+        return await Common.render('help/index', {
+            helpCfg: helpConfig,
+            helpGroup,
+            ...themeData,
+            element: 'default'
+        }, { e, scale: 1 })
     }
 
-// 异步缓存函数，用于缓存数据
-    async cache(data) {
-        // 获取data的md5值
-        let tmp = md5(JSON.stringify(data));
-        // 如果help.helpData.md5的值等于tmp，则直接返回help.helpData.img
-        if (help.helpData.md5 === tmp) {
-            return help.helpData.img;
-        }
 
-        // 调用puppeteer.screenshot函数，获取help.helpData.img的值
-        help.helpData.img = await puppeteer.screenshot("help", data);
-        // 将tmp的值赋值给help.helpData.md5
-        help.helpData.md5 = tmp;
-
-        // 返回help.helpData.img
-        return help.helpData.img;
-    }
-
-   static helpData = {
-        md5: "",
-        img: "",
-    };
 }
