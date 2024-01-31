@@ -9,42 +9,42 @@ import yaml from 'js-yaml';
 const otherConfigFilePath = path.resolve('./config/config/other.yaml');
 const pluginConfigFolderPath = path.resolve('./plugins/Fanji-plugin/configs');
 const defConfigFolderPath = './plugins/Fanji-plugin/def_config';
-const pluginConfigFilePath = path.join(pluginConfigFolderPath, 'config.yaml');
+const configFilePath = path.join(pluginConfigFolderPath, 'config.yaml');
 const defConfigFilePath = path.join(defConfigFolderPath, 'config.yaml');
 
 async function compareAndAddKeys() {
   try {
     const defConfigContent = await fs.promises.readFile(defConfigFilePath, 'utf8');
-    const pluginConfigContent = await fs.promises.readFile(pluginConfigFilePath, 'utf8');
+    const configContent = await fs.promises.readFile(configFilePath, 'utf8');
 
-    const defConfig = yaml.load(defConfigContent);
-    let pluginConfigData = yaml.load(pluginConfigContent);
+    const defConfig = yaml.safeLoad(defConfigContent);
+    let configData = yaml.safeLoad(configContent);
 
-    const lines = pluginConfigContent.split('\n');
+    const lines = configContent.split('\n');
 
-    // 遍历 defConfig，检查是否在 pluginConfig 中存在，如果不存在就添加
+    // 遍历 defConfig，检查是否在 config 中存在，如果不存在就添加
     Object.keys(defConfig).forEach((key) => {
-      if (!(key in pluginConfigData)) {
+      if (!(key in configData)) {
         // 添加新键
-        pluginConfigData[key] = defConfig[key];
+        configData[key] = defConfig[key];
 
         // 获取新增项在配置文件中的行号
         const lineIndex = lines.findIndex(line => line.includes(`${key}:`));
         if (lineIndex !== -1) {
           // 将注释添加到新键的上方
-          pluginConfigData = {
-            ...pluginConfigData,
+          configData = {
+            ...configData,
             [key]: `# ${lines[lineIndex - 1].trim()}  # ${key}注释`,
           };
         }
       }
     });
 
-    const updatedPluginConfig = yaml.dump(pluginConfigData);
+    const updatedConfig = yaml.dump(configData);
 
-    await fs.promises.writeFile(pluginConfigFilePath, updatedPluginConfig);
+    await fs.promises.writeFile(configFilePath, updatedConfig);
 
-    logger.info('Plugin Config updated successfully.');
+    logger.info('Config updated successfully.');
   } catch (error) {
     logger.error('Error while comparing and adding keys:', error.message);
   }
