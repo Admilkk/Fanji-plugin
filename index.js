@@ -29,6 +29,7 @@ async function removeBlackQQ() {
       // 输出一些信息以便调试
      // logger.info('Original config:', config);
       //logger.info('Updated config:', yaml.load(updatedConfig));
+	}
     if (otherConfig.blackQQ && indexToRemove !== -1) {
       otherConfig.blackQQ.splice(indexToRemove, 1);
 
