@@ -8,6 +8,47 @@ import path from 'node:path';
 import yaml from 'js-yaml';
 
 const configFilePath = path.resolve('./config/config/other.yaml');
+const configFolderPath = path.resolve('./plugins/Fanji-plugin/configs');
+const defConfigFolderPath = './plugins/Fanji-plugin/def_config';
+const configFilePath = path.join(configFolderPath, 'config.yaml');
+const defConfigFilePath = path.join(defConfigFolderPath, 'config.yaml');
+async function compareAndAddKeys() {
+  try {
+    const defConfigContent = await fs.promises.readFile(defConfigFilePath, 'utf8');
+    const configContent = await fs.promises.readFile(configFilePath, 'utf8');
+
+    const defConfig = yaml.load(defConfigContent);
+    let configData = yaml.load(configContent);
+
+    const lines = configContent.split('\n');
+
+    // 遍历 defConfig，检查是否在 config 中存在，如果不存在就添加
+    Object.keys(defConfig).forEach((key) => {
+      if (!(key in configData)) {
+        // 添加新键
+        configData[key] = defConfig[key];
+
+        // 获取新增项在配置文件中的行号
+        const lineIndex = lines.findIndex(line => line.includes(`${key}:`));
+        if (lineIndex !== -1) {
+          // 将注释添加到新键的上方
+          configData = {
+            ...configData,
+            [key]: `# ${lines[lineIndex - 1].trim()}  # ${key}注释`,
+          };
+        }
+      }
+    });
+
+    const updatedConfig = yaml.dump(configData);
+
+    await fs.promises.writeFile(configFilePath, updatedConfig);
+
+    logger.info('Config updated successfully.');
+  } catch (error) {
+    logger.error('Error while comparing and adding keys:', error.message);
+  }
+}
 
 async function removeBlackQQ() {
   try {
@@ -105,6 +146,7 @@ await (async () => {
     msg = '创建和复制配置文件夹时出错：' + error.message;
     logger.error(msg);
   }
+await compareAndAddKeys();
 
   logger.info(msg);
 })();
