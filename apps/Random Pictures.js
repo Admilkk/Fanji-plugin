@@ -36,7 +36,7 @@ export class apisetu extends plugin {
       priority: -9999999999999999999999999999999999999999999999991,
       rule: [
         {
-          reg: /^#?随机(涩|瑟|塞|se)图$/i, // 无r18.所以不套转发
+          reg: /^#?随机(涩|色|瑟|塞|se)图$/i, // 无r18.所以不套转发
           fnc: 'ptst',
         },
 		        {
