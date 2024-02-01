@@ -83,10 +83,10 @@ async yxy(e) {
 
     const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
    let aw = await e.reply(forwardMsg);
-    if (!aw) {
-      const allImageLinks = messages.slice(1).map(msg => msg.url).join('\n');
-      await e.reply('消息被风控！\n' + allImageLinks);
-    }
+if (!aw) {
+  const allImageLinks = messages.slice(1).map(msg => msg[0].url).join('\n');
+  await e.reply('消息被风控！\n' + allImageLinks);
+}
   } catch (error) {
     console.error(`Error in yxy function: ${error.message}`);
   }
