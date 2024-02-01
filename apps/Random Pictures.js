@@ -70,7 +70,7 @@ async yxy(e) {
     const messages = ['你要的图来啦'];
 
     for (let i = 0; i < num; i++) {
-      const res = await fetch(apiUrl);
+      const res = await fetch(apiUrl4);
       const imageUrl = await res.text();
 
       if (imageUrl) {
