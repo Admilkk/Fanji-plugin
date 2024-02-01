@@ -37,15 +37,15 @@ export class apisetu extends plugin {
     });
   }
 async hs(e) {
-	await this.viedo(e, apiurl, '../resource/hsviedo')
+	await this.viedo(e, apiurl, path.join(__dirname, '../resource/hsviedo'))
 }
 async bs(e) {
-	await this.viedo(e, apiurl2, '../resource/bsviedo')
+	await this.viedo(e, apiurl2, path.join(__dirname, '../resource/bsviedo'))
 }
 async viedo(e, apiUrl, defaultSavePath) {
     try {
         const response = await fetch(apiUrl);
-        
+
         if (!response.ok) {
             throw new Error(`Failed to fetch video from ${apiUrl}`);
         }
@@ -55,11 +55,15 @@ async viedo(e, apiUrl, defaultSavePath) {
         const savePath = defaultSavePath || '../resource/default';
         const videoPath = path.join(savePath, `${timestamp}.mp4`);
 
-        await fs.writeFile(videoPath, videoData);
+        // Ensure the directory exists before writing the file
+        await fs.promises.mkdir(path.dirname(videoPath), { recursive: true });
+
+        await fs.promises.writeFile(videoPath, videoData);
         await e.reply([segment.video(videoPath)]);
     } catch (error) {
         console.error(`Error in hs function: ${error.message}`);
     }
 }
+
 
 }
