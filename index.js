@@ -36,7 +36,7 @@ async function removeBlackQQ() {
       await fs.promises.writeFile(otherConfigFilePath, updatedOtherConfig, 'utf8');
     }
   } catch (error) {
-    // console.error('Error while removing blackQQ entry:', error.message);
+    //  console.error('Error while removing blackQQ entry:', error.message);
   }
 }
 
