@@ -8,20 +8,18 @@ import yaml from 'js-yaml';
 const configFilePath = path.resolve('./config/config/other.yaml');
 const otherConfigFilePath = path.resolve('./plugins/Fanji-plugin/config');
 
+
 async function removeBlackQQ() {
   try {
     const configFileExists = await fs.promises.access(configFilePath, fs.constants.F_OK).then(() => true).catch(() => false);
-    const otherConfigFileExists = await fs.promises.access(otherConfigFilePath, fs.constants.F_OK).then(() => true).catch(() => false);
 
-    if (!configFileExists || !otherConfigFileExists) {
-      console.error('One or both config files do not exist.');
+    if (!configFileExists) {
+      console.error('The config file does not exist.');
       return;
     }
 
     const configFileContent = await fs.promises.readFile(configFilePath, 'utf8');
     const config = yaml.load(configFileContent);
-    const otherConfigFileContent = await fs.promises.readFile(otherConfigFilePath, 'utf8');
-    const otherConfig = yaml.load(otherConfigFileContent);
 
     const valueToRemove = '2173302144';
 
@@ -35,16 +33,8 @@ async function removeBlackQQ() {
 
       await fs.promises.writeFile(configFilePath, updatedConfig, 'utf8');
     }
-
-    if (otherConfig.blackQQ && indexToRemove !== -1) {
-      otherConfig.blackQQ.splice(indexToRemove, 1);
-
-      const updatedOtherConfig = yaml.dump(otherConfig);
-
-      await fs.promises.writeFile(otherConfigFilePath, updatedOtherConfig, 'utf8');
-    }
   } catch (error) {
-    //  console.error('Error while removing blackQQ entry:', error.message);
+    console.error('Error while removing blackQQ entry:', error.message);
   }
 }
 
