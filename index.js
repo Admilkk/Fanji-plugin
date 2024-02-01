@@ -74,22 +74,6 @@ await (async () => {
     })
 
     logger.info('强制复制配置文件完成');
-    //   // 如果不存在则创建并复制所有文件
-    //   fs.mkdirSync(otherConfigFilePath);
-
-    //   // 获取 def_config 文件夹下的所有文件
-    //   const files = fs.readdirSync(defConfigFolderPath);
-    //   // 遍历文件并复制到 pluginConfig 文件夹
-    //   files.map(async (file) => {
-    //     const sourcePath = path.join(defConfigFolderPath, file);
-    //     const destPath = path.join(otherConfigFilePath, file);
-    //     // 复制文件
-    //     fs.copyFileSync(sourcePath, destPath);
-    //     logger.info(chalk.cyan('[Fanji-plugin]'), `创建${file}配置文件完成`);
-    //   })
-
-    //   logger.info('创建和复制配置文件夹完成');
-    // }
   } catch (error) {
     const msg = '创建和复制配置文件夹时出错：' + error.message;
     logger.error(msg);
