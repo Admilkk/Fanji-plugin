@@ -7,6 +7,9 @@ import common from '../lib/common/common.js';
 import { fileURLToPath } from 'url';
 import https from 'https';
 import { dirname } from 'path';
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+const { exec, execSync } = require('child_process')
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
@@ -37,9 +40,11 @@ export class apiviedo extends plugin {
     });
   }
 async hs(e) {
+	await this.ffmpeg()
 	await this.viedo(e, apiurl, path.join(__dirname, '../resource/hsviedo'))
 }
 async bs(e) {
+	await this.ffmpeg()
 	await this.viedo(e, apiurl2, path.join(__dirname, '../resource/bsviedo'))
 }
 async viedo(e, apiUrl, defaultSavePath) {
@@ -65,6 +70,13 @@ async viedo(e, apiUrl, defaultSavePath) {
         console.error(`Error in hs function: ${error.message}`);
     }
 }
-
+    async ffmpeg() {
+        let ret = await execSync('ffmpeg -h', { encoding: 'utf-8' })
+        if (!ret || !ret.includes('ffmpeg version')) {
+            await this.reply('请先安装FFmpeg')
+            return false
+        }
+        return true
+    }
 
 }
