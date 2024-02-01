@@ -42,7 +42,7 @@ async hs(e) {
 async bs(e) {
 	await this.viedo(e, apiurl2, '../resource/bsviedo')
 }
-async function viedo(e, apiUrl, defaultSavePath) {
+async viedo(e, apiUrl, defaultSavePath) {
     try {
         const response = await fetch(apiUrl);
         
