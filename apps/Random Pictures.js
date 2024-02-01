@@ -14,6 +14,7 @@ let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
 let apiurl = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u006d\u006f\u0065\u002e\u006a\u0069\u0074\u0073\u0075\u0069\u002e\u0074\u006f\u0070\u002f\u0069\u006d\u0067';
 const apiurl2 = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0064\u0075\u006a\u0069\u006e\u002e\u006f\u0072\u0067\u002f\u0070\u0069\u0063\u002f\u0079\u0075\u0061\u006e\u0073\u0068\u0065\u006e\u002f';
 const apiurl3 = '\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0079\u0075\u006a\u006e\u002e\u0063\u006e\u002f\u0061\u0070\u0069\u002f\u0062\u0061\u0069\u0073\u0069\u002e\u0070\u0068\u0070';
+const apiurl4 = 'https://api.yunxiyuanyxy.xyz/lolicon/?type=text';
 const filepath = path.join(__dirname, '../config/config.yaml');
 const configContent = fs.readFileSync(filepath, 'utf8');
 let config = yaml.load(configContent);
@@ -51,13 +52,41 @@ export class apisetu extends plugin {
           reg: /^#?随机(兽耳|furry)(图)?$/i, // 无r18.所以不套转发
           fnc: 'fr',
         },
-		        {
+		{
           reg: /^#?(随机)?(白丝|bs)(图)?$/i, // 无r18.所以不套转发
           fnc: 'bs',
         },
+		{
+          reg: /^#?(来(\d+)张)?随机(云(溪|西|汐|夕)(院|圆|苑))(api)?(图)?$/i, // 无r18.所以不套转发
+          fnc: 'yxy',
+        }
       ],
     });
   }
+async yxy(e) {
+  try {
+    let num = e.msg.match(/^#?(来(\d+)张)?随机(云(溪|西|汐|夕)(院|圆|苑))(api)?(图)?$/i);
+    num = num && num[2] ? parseInt(num[2], 10) : 1;
+    const messages = ['你要的图来啦'];
+
+    for (let i = 0; i < num; i++) {
+      const res = await fetch(apiUrl);
+      const imageUrl = await res.text();
+
+      if (imageUrl) {
+        messages.push(segment.image(imageUrl));
+      }
+    }
+
+    const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
+    await e.reply(forwardMsg);
+  } catch (error) {
+    console.error(`Error in yxy function: ${error.message}`);
+  }
+}
+
+
+
 async bs(e) {
   try {
     const response = await fetch(apiurl3);
