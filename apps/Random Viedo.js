@@ -17,7 +17,7 @@ const filepath = path.join(__dirname, '../config/config.yaml');
 const configContent = fs.readFileSync(filepath, 'utf8');
 let config = yaml.load(configContent);
 
-export class apisetu extends plugin {
+export class apiviedo extends plugin {
   constructor() {
     super({
       name: '反击API',
