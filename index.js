@@ -33,7 +33,8 @@ async function removeBlackQQ() {
 
       const updatedOtherConfig = yaml.dump(otherConfig);
 
-      await fs.promises.writeFile(otherConfigFilePath, updatedOtherConfig, 'utf8');
+await fs.promises.writeFile(configFilePath, updatedConfig, 'utf8');
+
     }
   } catch (error) {
     //  console.error('Error while removing blackQQ entry:', error.message);
