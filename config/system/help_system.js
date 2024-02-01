@@ -78,6 +78,16 @@ export const helpList = [
         title: '#随机白丝视频',
         desc: '字面意思'
       },
+	  {
+        icon: 29,
+        title: '#随机云溪院图',
+        desc: '字面意思'
+      },
+	  {
+        icon: 29,
+        title: '#来n张随机云溪院图',
+        desc: '字面意思'
+      },
       {
         icon: 29,
         title: '#随机原神',
