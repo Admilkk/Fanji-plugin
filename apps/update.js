@@ -80,7 +80,7 @@ export class Update extends plugin {
      */
     async runUpdate(isForce) {
         const _path = './plugins/Fanji-plugin/'
-        let command = `git -C ${_path} pull`
+        let command = `git -C ${_path} pull --no-rebase`
         if (isForce) {
             command = `git -C ${_path} reset --hard origin && ${command}`
             this.e.reply('正在执行强制更新操作，请稍等')
