@@ -67,30 +67,32 @@ async yxy(e) {
   await e.reply('开始了');
   try {
     let num = e.msg.match(/(\d+)/);
-    num = num && num[1] ? parseInt(num[1], 10) : 1; // Fix: use num[1] instead of num[2]
+    num = num && num[1] ? parseInt(num[1], 10) : 1;
     const messages = ['你要的图来啦'];
     let res;
-    let imageUrl;
+    let imageUrls = []; // 用于存储所有图片链接
 
     for (let i = 0; i < num; i++) {
       res = await fetch(apiurl4);
-      imageUrl = await res.text();
+      const imageUrl = await res.text();
 
       if (imageUrl) {
-       messages.push([segment.image(imageUrl)]);
+        messages.push(segment.image(imageUrl));
+        imageUrls.push(imageUrl);
       }
     }
 
     const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
-   let aw = await e.reply(forwardMsg);
-if (!aw) {
-  const allImageLinks = messages.slice(1).map(msg => msg[0].url).join('\n');
-  await e.reply('消息被风控！\n' + allImageLinks);
-}
+    let aw = await e.reply(forwardMsg);
+    if (!aw && imageUrls.length > 1) {
+      const allImageLinks = imageUrls.join('\n');
+      await e.reply('消息被风控！\n' + allImageLinks);
+    }
   } catch (error) {
     console.error(`Error in yxy function: ${error.message}`);
   }
 }
+
 
 
 
