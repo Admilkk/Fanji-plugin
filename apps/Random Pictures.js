@@ -14,6 +14,7 @@ let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
 let apiurl = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u006d\u006f\u0065\u002e\u006a\u0069\u0074\u0073\u0075\u0069\u002e\u0074\u006f\u0070\u002f\u0069\u006d\u0067';
 apiurl = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u006d\u006f\u0065\u002e\u006a\u0069\u0074\u0073\u0075\u002e\u0074\u006f\u0070\u002f\u0069\u006d\u0067';
 const apiurl2 = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0064\u0075\u006a\u0069\u006e\u002e\u006f\u0072\u0067\u002f\u0070\u0069\u0063\u002f\u0079\u0075\u0061\u006e\u0073\u0068\u0065\u006e\u002f';
+const apiurl3 = '687474703a2f2f6170692e79756a6e2e636e2f6170692f62616973692e706870';
 const filepath = path.join(__dirname, '../config/config.yaml');
 const configContent = fs.readFileSync(filepath, 'utf8');
 let config = yaml.load(configContent);
@@ -50,10 +51,29 @@ export class apisetu extends plugin {
         {
           reg: /^#?随机(兽耳|furry)(图)?$/i, // 无r18.所以不套转发
           fnc: 'fr',
-        }
+        },
+		        {
+          reg: /^#?(随机)?(白丝|bs)(图)?$/i, // 无r18.所以不套转发
+          fnc: 'bs',
+        },
       ],
     });
   }
+async bs(e) {
+  try {
+    const response = await fetch(apiurl3);
+    const blob = await response.blob();
+    const timestamp = new Date().getTime();
+    const fileName = `${timestamp}.jpg`;
+    const file = new File([blob], fileName, { type: "image/jpeg" });
+    const filePath = path.join(__dirname, `../resource/bs/${fileName}`);
+    this.saveFile(file, filePath);
+    await e.reply([segment.image(filePath)]);
+  } catch (error) {
+    await e.reply("出现了一点小问题，无法获取白丝图。" + error.message);
+  }
+}
+
   async ys(e) {
     await e.reply([segment.image(apiurl2)]);
   }
