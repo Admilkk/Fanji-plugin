@@ -56,23 +56,18 @@ export class apisetu extends plugin {
           reg: /^#?(随机)?(白丝|bs)(图)?$/i, // 无r18.所以不套转发
           fnc: 'bs',
         },
-		{
-          reg: /^#?(来(\d+)张)?随机(云(溪|西|汐|夕)(院|圆|苑))(api)?(图)?$/i, // 无r18.所以不套转发
-          fnc: 'yxy',
-        }
-      ],
-    });
-  }
 async yxy(e) {
-	await e.reply('开始了')
+  await e.reply('开始了');
   try {
-    let num = e.msg.match(/^#?(来(\d+)张)?随机(云(溪|西|汐|夕)(院|圆|苑))(api)?(图)?$/i);
+    let num = e.msg.match(/(\d+)/);
     num = num && num[2] ? parseInt(num[2], 10) : 1;
     const messages = ['你要的图来啦'];
+    let res;
+    let imageUrl;
 
     for (let i = 0; i < num; i++) {
-      const res = await fetch(apiUrl4);
-      const imageUrl = await res.text();
+      res = await fetch(apiurl4);
+      imageUrl = await res.text();
 
       if (imageUrl) {
         messages.push(segment.image(imageUrl));
