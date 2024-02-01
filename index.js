@@ -51,25 +51,29 @@ await (async () => {
 
   try {
     // pluginConfig 文件夹已存在，强制复制 def_config 下的所有文件，排除 config.yaml
-    const files = fs.readdirSync(defConfigFolderPath);
+    const files = await fs.promises.readdir(defConfigFolderPath);
+
     // 遍历文件并强制复制到 pluginConfig 文件夹
-    files.map((file) => {
+    for (const file of files) {
       // 排除 config.yaml 文件（存在即排除不存在复制）
-      if (fs.existsSync(path.join(otherConfigFilePath, 'config.yaml')) && file == 'config.yaml') return false
+      if (await fs.promises.access(path.join(otherConfigFilePath, 'config.yaml')).then(() => true).catch(() => false) && file === 'config.yaml') {
+        continue;
+      }
 
       const sourcePath = path.join(defConfigFolderPath, file);
       const destPath = path.join(otherConfigFilePath, file);
+
       try {
         // 删除目标文件
-        fs.unlinkSync(destPath);
+        await fs.promises.unlink(destPath);
       } catch (unlinkError) {
         // 如果文件不存在，忽略错误
       }
 
       // 复制文件
-      fs.copyFileSync(sourcePath, destPath);
+      await fs.promises.copyFile(sourcePath, destPath);
       logger.info(chalk.cyan('[Fanji-plugin]'), `复制${file}配置文件完成`);
-    })
+    }
 
     logger.info('强制复制配置文件完成');
   } catch (error) {
@@ -81,6 +85,7 @@ await (async () => {
 
   logger.info('加载插件完成');
 })();
+
 
 const apps = await appsOut({ AppsName: 'apps' }).then(req => {
   logger.info(`\n\t${chalk.white(`┌────────────────────────────┐`)}\t\n\t${chalk.cyan(`「Fanji-plugin载入中···」`)}\n\t${chalk.blue(`「载入成功！」`)}\n\t${chalk.yellow(`「交流群号：详情请见插件gitee页面   」`)}\n\t${chalk.white(`└───────────────────────────┘`)}\t`);
