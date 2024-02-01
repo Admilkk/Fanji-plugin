@@ -77,7 +77,7 @@ async yxy(e) {
       imageUrl = await res.text();
 
       if (imageUrl) {
-        messages.push(segment.image(imageUrl));
+        messages.push([segment.image(imageUrl)]);
       }
     }
 
