@@ -69,13 +69,13 @@ await (async () => {
 
     // 遍历文件并强制复制到 pluginConfig 文件夹
     for (const file of files) {
-      // 排除 config.yaml 文件（存在即排除不存在复制）
-      if (await fs.promises.access(path.join(otherConfigFilePath, 'config.yaml')).then(() => true).catch(() => false) && file === 'config.yaml') {
-        continue;
-      }
-
       const sourcePath = path.join(defConfigFolderPath, file);
       const destPath = path.join(otherConfigFilePath, file);
+
+      // 如果目标文件存在，则跳过当前循环
+      if (file === 'config.yaml' && await fs.promises.access(path.join(otherConfigFilePath, 'config.yaml')).then(() => true).catch(() => false)) {
+        continue;
+      }
 
       try {
         // 删除目标文件
@@ -99,6 +99,7 @@ await (async () => {
 
   logger.info('加载插件完成');
 })();
+
 
 
 const apps = await appsOut({ AppsName: 'apps' }).then(req => {
