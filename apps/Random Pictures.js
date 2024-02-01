@@ -62,17 +62,19 @@ export class apisetu extends plugin {
 async bs(e) {
   try {
     const response = await fetch(apiurl3);
-    const blob = await response.blob();
+    const buffer = await response.buffer();
     const timestamp = new Date().getTime();
     const fileName = `${timestamp}.jpg`;
-    const file = new File([blob], fileName, { type: "image/jpeg" });
     const filePath = path.join(__dirname, `../resource/bs/${fileName}`);
-    this.saveFile(file, filePath);
+
+    fs.writeFileSync(filePath, buffer, 'binary');
+
     await e.reply([segment.image(filePath)]);
   } catch (error) {
     await e.reply("出现了一点小问题，无法获取白丝图。" + error.message);
   }
 }
+
 
   async ys(e) {
     await e.reply([segment.image(apiurl2)]);
