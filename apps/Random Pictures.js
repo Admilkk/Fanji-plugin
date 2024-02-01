@@ -64,6 +64,7 @@ export class apisetu extends plugin {
     });
   }
 async yxy(e) {
+	await e.reply('开始了')
   try {
     let num = e.msg.match(/^#?(来(\d+)张)?随机(云(溪|西|汐|夕)(院|圆|苑))(api)?(图)?$/i);
     num = num && num[2] ? parseInt(num[2], 10) : 1;
