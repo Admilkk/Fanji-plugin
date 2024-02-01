@@ -56,6 +56,13 @@ export class apisetu extends plugin {
           reg: /^#?(随机)?(白丝|bs)(图)?$/i, // 无r18.所以不套转发
           fnc: 'bs',
         },
+		{
+          reg: /^#?(来(\d+)张)?随机(云(溪|西|汐|夕)(院|圆|苑))(api)?(图)?$/i, // 无r18.所以不套转发
+          fnc: 'yxy',
+        }
+      ],
+    });
+  }
 async yxy(e) {
   await e.reply('开始了');
   try {
@@ -81,6 +88,7 @@ async yxy(e) {
   }
 }
 //
+
 
 
 async bs(e) {
