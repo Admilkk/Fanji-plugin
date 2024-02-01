@@ -60,6 +60,7 @@ async viedo(e, apiUrl, defaultSavePath) {
 
         await fs.promises.writeFile(videoPath, videoData);
         await e.reply([segment.video(videoPath)]);
+		await e.reply('From Fanji-plugin')
     } catch (error) {
         console.error(`Error in hs function: ${error.message}`);
     }
