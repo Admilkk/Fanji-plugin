@@ -63,6 +63,11 @@ export const helpList = [
         title: '#随机furry图',
         desc: '字面意思'
       },
+	  {
+        icon: 29,
+        title: '#随机白丝',
+        desc: '字面意思'
+      },
       {
         icon: 29,
         title: '#随机原神',
@@ -74,6 +79,11 @@ export const helpList = [
     group: '管理员命令',
     list: [
       {
+        icon: 29,
+        title: '#开启反击',
+        desc: '字面意思'
+      },
+	  {
         icon: 29,
         title: '#开启反击',
         desc: '字面意思'
