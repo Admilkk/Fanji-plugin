@@ -98,9 +98,9 @@ async yxy(e) {
 
     await e.reply(['tosend:', tosend]);
 
-const imageSegments = imageUrls.map((url) => [segment.image(url)]);
 
-    messages.push(imageSegments);
+messages.push(...imageUrls.map((url) => [segment.image(url)]));
+
     const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
 
     let aw = await e.reply(forwardMsg);
