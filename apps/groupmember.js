@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 *作者：时先思
 *传播请标注作者
 */
-//我稍微改了亿点
+//我稍微改了亿点:Admilk,留下我的名字！
 export class example2 extends plugin {
   constructor () {
     super({
@@ -44,7 +44,7 @@ export class example2 extends plugin {
 
   async getmember(e) {
 	  let aw = await cm.check(e.user_id)
-    if (!aw && !e.isMaster)) {
+    if (!aw && !e.isMaster) {
       e.reply('你没有权限啊');
       return false;
     }
@@ -68,7 +68,7 @@ export class example2 extends plugin {
 
   async savemember(e) {
 	  let aw = await cm.check(e.user_id)
-    if (!aw && !e.isMaster)) {
+    if (!aw && !e.isMaster) {
       e.reply('你没有权限啊');
       return false;
     }
@@ -85,7 +85,7 @@ export class example2 extends plugin {
 
   async getsavelist(e) {
 	  let aw = await cm.check(e.user_id)
-    if (!aw && !e.isMaster)) {
+    if (!aw && !e.isMaster) {
       e.reply('你没有权限啊');
       return false;
     }
