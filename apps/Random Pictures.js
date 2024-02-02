@@ -96,9 +96,10 @@ async yxy(e) {
       tosend = imageUrls;
     }
 
-    await e.reply(['tosend:', tosend]); // 使用数组包裹
+    await e.reply(['tosend:', tosend]);
 
-    const imageSegments = imageUrls.map((url) => segment.image(url));
+const imageSegments = imageUrls.map((url) => [segment.image(url)]);
+
     messages.push(imageSegments);
     const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
 
