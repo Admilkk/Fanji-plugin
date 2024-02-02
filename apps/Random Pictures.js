@@ -96,7 +96,7 @@ async yxy(e) {
       tosend = imageUrls;
     }
 
-    await e.reply(['tosend:', tosend]);
+    await e.reply(['tosend:' + tosend]);
 
 
 messages.push(...imageUrls.map((url) => [segment.image(url)]));
