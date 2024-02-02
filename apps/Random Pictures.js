@@ -77,6 +77,7 @@ async yxy(e) {
     let res;
     let imageUrls = [];
     let allImageLinks = '';
+    let tosend = '';
 
     res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true`);
     const result = await res.json();
@@ -91,20 +92,21 @@ async yxy(e) {
     }
 
     allImageLinks = imageUrls.join('\n\n');
-    tosend = imageUrls.join('|');
-    if (imageUrls.length === 1) {
-      tosend = imageUrls;
-    }
+    tosend = imageUrls.length === 1 ? imageUrls[0] : imageUrls.join('|');
 
-    await e.reply(['tosend:' + tosend]);
+    // 回复包含 tosend 的消息
+    await e.reply(`tosend: ${tosend}`);
 
+    // 构造图片消息
+    messages.push(...imageUrls.map((url) => segment.image(url)));
 
-messages.push(...imageUrls.map((url) => [segment.image(url)]));
-
+    // 构造转发消息
     const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
 
+    // 发送消息
     let aw = await e.reply(forwardMsg);
 
+    // 风控处理
     if (!aw && imageUrls.length > 1) {
       await e.reply('消息被风控！\n' + allImageLinks);
     }
@@ -112,6 +114,7 @@ messages.push(...imageUrls.map((url) => [segment.image(url)]));
     console.error(`Error in yxy function: ${error.message}`);
   }
 }
+
 
 
 /* async yxy(e) {
