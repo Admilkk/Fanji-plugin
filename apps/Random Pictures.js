@@ -91,9 +91,13 @@ async yxy(e) {
     }
 
     allImageLinks = imageUrls.join('\n\n');
-	tosend = imageUrls.join('|')
-	if (imageUrls.length === 1){tosend = imageUrls}
-  await e.reply('tosend:', tosend}
+    tosend = imageUrls.join('|');
+    if (imageUrls.length === 1) {
+      tosend = imageUrls;
+    }
+
+    await e.reply(['tosend:', tosend]); // 使用数组包裹
+
     const imageSegments = imageUrls.map((url) => segment.image(url));
     messages.push(imageSegments);
     const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
