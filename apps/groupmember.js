@@ -81,7 +81,7 @@ export class example2 extends plugin {
   }
 
   async getsavelist(e) {
-	  	  if (!await cm.check(e.user_id) || e.isMaster){e.reply('你没有权限啊');return false}
+	  	  if (!await cm.check(e.user_id) || !e.isMaster){e.reply('你没有权限啊');return false}
     if (!e.isGroup) return;
 
     let savepath = path.join(__dirname, '../data/groupmember', `${e.group_id}.json`);
