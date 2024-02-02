@@ -62,7 +62,7 @@ export class apisetu extends plugin {
           fnc: 'bs',
         },
 		{
-          reg: /^#?(来(\d+)张)?随机(lol)(api)(图)?$/i, // 无r18.所以不套转发
+          reg: /^#?(来(\d+)张)?随机(loli)(api)?(图)?$/i, // 无r18.所以不套转发
           fnc: 'yxy',
         },
 				{

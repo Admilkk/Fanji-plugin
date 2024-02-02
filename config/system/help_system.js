@@ -80,12 +80,12 @@ export const helpList = [
       },
 	  {
         icon: 29,
-        title: '#随机云溪院图',
+        title: '#随机loli图',
         desc: '字面意思'
       },
 	  {
         icon: 29,
-        title: '#来n张随机云溪院图',
+        title: '#来n张随机loli图',
         desc: '字面意思'
       },
 	  {
