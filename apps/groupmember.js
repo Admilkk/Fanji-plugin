@@ -42,46 +42,50 @@ export class example2 extends plugin {
     })
   }
 
-  /** 获取群员消息 */
-  async getmember (e) {
-	  if (!await cm.check(e.user_id) || e.isMaster){e.reply('你没有权限啊');return false}
-    this.reply(await e.runtime.common.makeForwardMsg(e,await this.getmemberlist(e, false),"当前群员名单"))
+  async getmember(e) {
+    if (!(await cm.check(e.user_id) && e.isMaster)) {
+      e.reply('你没有权限啊');
+      return false;
+    }
+    this.sendBatchedMessages(await this.getmemberlist(e, false), e);
   }
 
-   async getmemberlist(e, bcorck) {
-	   if (bcorck) {
-		     let member = await e.group.getMemberMap();
-  let groupmember = [];
+  async getmemberlist(e, bcorck) {
+    let member = await e.group.getMemberMap();
+    let groupmember = [];
 
-  member.forEach(item => {
-    groupmember.push([`QQ号: ${item.user_id}, 昵称: ${item.nickname}头像：`,`https://q.qlogo.cn/headimg_dl?dst_uin=${item.user_id}&spec=640&img_type=jpg`]);
-  });
+    member.forEach(item => {
+      if (bcorck) {
+        groupmember.push([`QQ号: ${item.user_id}, 昵称: ${item.nickname}头像：`, `https://q.qlogo.cn/headimg_dl?dst_uin=${item.user_id}&spec=640&img_type=jpg`]);
+      } else {
+        groupmember.push([`QQ号: ${item.user_id}, 昵称: ${item.nickname}头像：`, segment.image(`https://q.qlogo.cn/headimg_dl?dst_uin=${item.user_id}&spec=640&img_type=jpg`)]);
+      }
+    });
 
-  return groupmember;
-}else{
-  let member = await e.group.getMemberMap();
-  let groupmember = [];
-
-  member.forEach(item => {
-    groupmember.push([`QQ号: ${item.user_id}, 昵称: ${item.nickname}头像：`,segment.image(`https://q.qlogo.cn/headimg_dl?dst_uin=${item.user_id}&spec=640&img_type=jpg`)]);
-  });
-
-  return groupmember;
-	}
-}
+    return groupmember;
+  }
 
   async savemember(e) {
-	  	  if (!await cm.check(e.user_id) || e.isMaster){e.reply('你没有权限啊');return false}
+    if (!(await cm.check(e.user_id) && e.isMaster)) {
+      e.reply('你没有权限啊');
+      return false;
+    }
     let savepath = path.join(__dirname, '../data/groupmember');
     if (!fs.existsSync(savepath)) {
       fs.mkdirSync(savepath);
     }
-    fs.writeFileSync(path.join(savepath, `${e.group_id}.json`), JSON.stringify(await this.getmemberlist(e, true)));
+
+    const groupmembers = await this.getmemberlist(e, true);
+
+    fs.writeFileSync(path.join(savepath, `${e.group_id}.json`), JSON.stringify(groupmembers));
     this.reply("群名单保存成功！");
   }
 
   async getsavelist(e) {
-	  	  if (!await cm.check(e.user_id) || !e.isMaster){e.reply('你没有权限啊');return false}
+    if (!(await cm.check(e.user_id) && e.isMaster)) {
+      e.reply('你没有权限啊');
+      return false;
+    }
     if (!e.isGroup) return;
 
     let savepath = path.join(__dirname, '../data/groupmember', `${e.group_id}.json`);
@@ -93,6 +97,15 @@ export class example2 extends plugin {
     let grouplist = JSON.parse(fs.readFileSync(savepath, { encoding: 'utf8' }) || null);
     let formattedList = grouplist.map(item => [item[0], segment.image(item[1])]);
 
-    this.reply(await e.runtime.common.makeForwardMsg(e, formattedList, "本地群员名单"));
+    this.sendBatchedMessages(formattedList, e);
+  }
+
+  // 辅助函数，分批发送消息
+  async sendBatchedMessages(messages, e) {
+    const batchSize = 100;
+    for (let i = 0; i < messages.length; i += batchSize) {
+      const batch = messages.slice(i, i + batchSize);
+      await e.reply(await e.runtime.common.makeForwardMsg(e, batch, "本地群员名单"));
+    }
   }
 }
