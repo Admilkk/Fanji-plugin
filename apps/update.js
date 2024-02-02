@@ -33,7 +33,7 @@ let uping = false
 /**
  * 处理插件更新
  */
-export class Update extends plugin {
+export class Updateaaa extends plugin {
     constructor() {
         super({
             name: '更新Fanji插件',
