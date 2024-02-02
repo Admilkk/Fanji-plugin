@@ -10,11 +10,12 @@ const __dirname = dirname(__filename);
 *作者：时先思
 *传播请标注作者
 */
+//我稍微改了亿点
 export class example2 extends plugin {
   constructor () {
     super({
-      name: '获取发电群员',
-      dsc: '获取发电群员',
+      name: '获取群员',
+      dsc: '获取群员',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message',
       priority: 5000,
