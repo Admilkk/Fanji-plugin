@@ -97,7 +97,7 @@ async yxy(e) {
     console.error(`Error in yxy function: ${error.message}`);
   }
 }
-async yxy(e) {
+async zt(e) {
   await e.reply('开始了');
   try {
     let num = e.msg.match(/(\d+)/);
@@ -105,7 +105,7 @@ async yxy(e) {
     const messages = ['你要的图来啦'];
     let res;
     let imageUrls = []; // 用于存储所有图片链接
-    res = await fetch(`apiurl5${num}`);
+    res = await fetch(`${apiurl5}${num}`);
     res = await res.json();
 
     if (res && res.urls && res.urls.length > 0) {
@@ -128,6 +128,7 @@ async yxy(e) {
     console.error(`Error in zt function: ${error.message}`);
   }
 }
+
 
 
 
