@@ -124,6 +124,26 @@ export const helpList = [
         desc: '字面意思'
       }
     ]
+  },
+  {
+	  group: '一键跑路功能',
+	  list: [
+	  {
+		  icon: 30,
+		  title: '#获取群员名单',
+		  desc: '字面意思'
+	  },
+	  {
+		  icon: 30,
+		  title: '#保存群员名单',
+		  desc: '保存于插件目录/data/groupmember/'
+	  },
+	  {
+		  icon: 30,
+		  title: '#本地群员名单',
+		  desc: '读取名单'
+	  }
+	]
   }
 ]
 
