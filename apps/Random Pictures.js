@@ -15,6 +15,7 @@ let apiurl = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u006d\u006f\u0065
 const apiurl2 = '\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0064\u0075\u006a\u0069\u006e\u002e\u006f\u0072\u0067\u002f\u0070\u0069\u0063\u002f\u0079\u0075\u0061\u006e\u0073\u0068\u0065\u006e\u002f';
 const apiurl3 = '\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0079\u0075\u006a\u006e\u002e\u0063\u006e\u002f\u0061\u0070\u0069\u002f\u0062\u0061\u0069\u0073\u0069\u002e\u0070\u0068\u0070';
 const apiurl4 = 'https://api.yunxiyuanyxy.xyz/lolicon/?type=text';
+const apiurl5 = 'https://api.yunxiyuanyxy.xyz/freely/?type=json&num='
 const filepath = path.join(__dirname, '../config/config.yaml');
 const configContent = fs.readFileSync(filepath, 'utf8');
 let config = yaml.load(configContent);
@@ -59,6 +60,10 @@ export class apisetu extends plugin {
 		{
           reg: /^#?(来(\d+)张)?随机(云(溪|西|汐|夕)(院|圆|苑))(api)?(图)?$/i, // 无r18.所以不套转发
           fnc: 'yxy',
+        },
+				{
+          reg: /^#?(来(\d+)张)?随机杂(图)?$/i, // 无r18.所以不套转发
+          fnc: 'zt',
         }
       ],
     });
@@ -92,7 +97,37 @@ async yxy(e) {
     console.error(`Error in yxy function: ${error.message}`);
   }
 }
+async yxy(e) {
+  await e.reply('开始了');
+  try {
+    let num = e.msg.match(/(\d+)/);
+    num = num && num[1] ? parseInt(num[1], 10) : 1;
+    const messages = ['你要的图来啦'];
+    let res;
+    let imageUrls = []; // 用于存储所有图片链接
+    res = await fetch(`apiurl5${num}`);
+    res = await res.json();
 
+    if (res && res.urls && res.urls.length > 0) {
+      for (let i = 0; i < res.urls.length; i++) {
+        const imageUrl = res.urls[i];
+        messages.push(segment.image(imageUrl));
+        imageUrls.push(imageUrl);
+      }
+    } else {
+      return e.reply('API 返回的数据不正确，未能获取到图片信息。');
+    }
+
+    const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
+    let aw = await e.reply(forwardMsg);
+    if (!aw && imageUrls.length > 1) {
+      const allImageLinks = imageUrls.join('\n');
+      await e.reply('消息被风控！\n' + allImageLinks);
+    }
+  } catch (error) {
+    console.error(`Error in zt function: ${error.message}`);
+  }
+}
 
 
 
