@@ -18,10 +18,13 @@ export class apisetu extends plugin {
       dsc: '反击!!!!',
       event: 'message',
       priority: -9999999999999999999999999999999999999999999999991,
+      rule: [
+        {
+          reg: await buildRegex(), // Use the result of buildRegex directly
+          fnc: 'bq',
+        }
+      ],
     });
-
-    // 调用初始化方法
-    this.initialize();
   }
 
   async initialize() {
@@ -61,4 +64,9 @@ async function getEmojiNames() {
 async function buildRegexString() {
   const emojiNames = await getEmojiNames();
   return `/#随机\\((${emojiNames.join('|')})\\)表情/i`;
+}
+
+// 构建正则表达式
+async function buildRegex() {
+  return new RegExp(await buildRegexString());
 }
