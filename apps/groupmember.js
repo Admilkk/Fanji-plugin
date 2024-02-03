@@ -28,7 +28,7 @@ export class example2 extends plugin {
         },
         {
              /** 命令正则匹配 */
-          reg: '^#保存群员名单$',
+          reg: /#?(保存群员名单|一键(跑路|run))$/i,
           /** 执行方法 */
           fnc: 'savemember'
         },
