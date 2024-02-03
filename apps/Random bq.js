@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import { plugin } from 'qiankun';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
