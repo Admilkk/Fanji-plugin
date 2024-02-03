@@ -1,15 +1,11 @@
 import fetch from 'node-fetch';
-import fs from 'fs';
-import path from 'path';
-import yaml from 'js-yaml';
-import cm from '../lib/common/CM.js';
-import common from '../lib/common/common.js';
 import { fileURLToPath } from 'url';
-import https from 'https';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?type=302&list=';
+const regs = '塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧';
 
 export class apibq extends plugin {
   constructor() {
@@ -20,27 +16,41 @@ export class apibq extends plugin {
       priority: -9999999999999999999999999999999999999999999999991,
       rule: [
         {
-          reg: /(#?(随机)?(塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧)表情|随机表情)/i,
+          reg: new RegExp(`#?((随机)?(${regs})表情|随机表情)`, 'i'),
           fnc: 'bq',
         },
-      ], // 这里添加了逗号
+        {
+          reg: '^#?查看全部随机表情$';
+          fnc: 'allbq',
+        },
+      ], 
     });
   }
 
   async bq(e) {
-    const message = e.msg; // 获取消息文本
-
-    // 使用正则表达式的 match 方法匹配消息文本
-    const matchResult = message.match(/(#?(随机)?(塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧)表情|随机表情)/i);
-
+    const message = e.msg; 
+    const matchResult = message.match(this.rule[0].reg);
     if (matchResult) {
-      // matchResult[0] 匹配到的整个表情字符串
-      // matchResult[3] 匹配到的表情名字
-      const emojiName = matchResult[3];
-      await e.reply(`您发送的表情名字是：${emojiName}`);
+      const emojiName = matchResult[3] ? matchResult[3] : 'sj';
+      await e.reply([segment.image(`${apiurl}${emojiName}`)])
     } else {
-      // 没有匹配到表情
-      await e.reply('未识别到表情，请检查格式是否正确。');
+      return false;
+    }
+  }
+  async allbq(e) {
+	  const messages = ['全部表情:']
+    try {
+      const response = await fetch(apiurl);
+      const data = await response.json();
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          messages.push(`${key}: ${data[key]}张`);
+        }
+      }
+	  let forward = await e.runtime.common.makeForwardMsg(e, messages, '全部表情')
+	  await e.reply(forward)
+    } catch (error) {
+      await e.reply('API爆炸了');
     }
   }
 }
