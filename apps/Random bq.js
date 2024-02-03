@@ -18,7 +18,7 @@ async function getEmojiNames() {
     return Object.keys(data);
   } catch (error) {
     console.error('Error fetching emoji data:', error.message);
-    return ['aw', 'az']; // 注意这里的返回值应该是一个数组，用逗号隔开每个元素
+    return ['aw', 'az'];
   }
 }
 
@@ -40,7 +40,7 @@ async function main() {
   return regexString;
 }
 
-export class apisetu extends plugin {
+export class apibq extends plugin {
   constructor() {
     super({
       name: '反击',
@@ -60,16 +60,22 @@ export class apisetu extends plugin {
   }
 
   async initialize() {
-    // 调用 main 函数并将结果赋给 regs 变量
-    const regs = await main();
+    // 使用 Promise 来确保异步操作完成
+    await new Promise(async (resolve) => {
+      // 调用 main 函数并将结果赋给 regs 变量
+      const regs = await main();
 
-    // 将正则表达式字符串设置为规则
-    this.rules = [
-      {
-        reg: new RegExp(regs),
-        fnc: 'bq',
-      }
-    ];
+      // 将正则表达式字符串设置为规则
+      this.rules = [
+        {
+          reg: new RegExp(regs),
+          fnc: 'bq',
+        }
+      ];
+
+      // 完成异步操作，resolve Promise
+      resolve();
+    });
   }
 
   async bq(e) {
