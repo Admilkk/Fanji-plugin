@@ -51,16 +51,25 @@ export class apibq extends plugin {
       priority: -9999999999999999999999999999999999999999999999991,
     });
 
-    (async () => {
+    this.initialize();
+  }
+
+  async initialize() {
+    try {
+      // Build the regex once during initialization
+      const regex = await buildRegexString();
+
       this.rules = [
         {
-          reg: await buildRegexString(),
+          reg: regex,
           fnc: 'bq',
         }
       ];
-    })();
+    } catch (error) {
+      console.error('Initialization error:', error.message);
+    }
   }
-  
+
   async bq(e) {
     await e.reply('aw');
   }
