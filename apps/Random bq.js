@@ -17,13 +17,13 @@ export class apibq extends plugin {
       event: 'message',
       priority: -9999999999999999999999999999999999999999999999991,
       rule: [
+	    {
+          reg: '^#?查看全部随机表情$',
+          fnc: 'allbq'
+        },
         {
           reg: new RegExp(`#?((随机)?(${regs})表情|随机表情)`, 'i'),
           fnc: 'bq'
-        },
-        {
-          reg: '^#?查看全部随机表情$',
-          fnc: 'allbq'
         }
       ], 
     });
@@ -38,6 +38,7 @@ export class apibq extends plugin {
     } else {
       return false;
     }
+	return false
   }
   async allbq(e) {
 	  const messages = ['全部表情:']
