@@ -42,7 +42,6 @@ export class apibq extends plugin {
   }
   async allbq(e) {
 	  const messages = ['全部表情:']
-    try {
       const response = await fetch(apiurl);
       const data = await response.json();
       for (const key in data) {
@@ -52,8 +51,5 @@ export class apibq extends plugin {
       }
 	  let forward = await common.makeForwardMsg(e, messages, '全部表情')
 	  await e.reply(forward)
-    } catch (error) {
-      await e.reply('API爆炸了');
-    }
   }
 }
