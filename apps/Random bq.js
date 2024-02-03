@@ -17,12 +17,12 @@ export class apibq extends plugin {
       rule: [
         {
           reg: new RegExp(`#?((随机)?(${regs})表情|随机表情)`, 'i'),
-          fnc: 'bq',
+          fnc: 'bq'
         },
         {
-          reg: '^#?查看全部随机表情$';
-          fnc: 'allbq',
-        },
+          reg: '^#?查看全部随机表情$',
+          fnc: 'allbq'
+        }
       ], 
     });
   }
