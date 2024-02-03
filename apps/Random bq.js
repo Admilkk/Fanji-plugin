@@ -9,39 +9,6 @@ import https from 'https';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-async function getEmojiData() {
-  try {
-    const response = await fetch('https://api.yunxiyuanyxy.xyz/emoji/?list=all');
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching emoji data:', error.message);
-    return {};
-  }
-}
-
-// 构建正则表达式字符串的异步函数
-async function buildRegexString() {
-  try {
-    // 获取表情数据对象
-    const emojiData = await getEmojiData();
-
-    // 提取所有键（表情名称）为数组
-    const emojiNames = Object.keys(emojiData);
-
-    // 将数组转换为字符串
-    const emojiNamesString = emojiNames.join('|');
-
-    // 构建正则表达式字符串
-    const regexString = `/#随机\\((${emojiNamesString})\\)表情/i`;
-
-    return new RegExp(regexString);
-  } catch (error) {
-    console.error('Error building regex string:', error.message);
-    throw error; // 将错误传递给调用者
-  }
-}
-
 export class apibq extends plugin {
   constructor() {
     super({
@@ -49,28 +16,32 @@ export class apibq extends plugin {
       dsc: '反击!!!!',
       event: 'message',
       priority: -9999999999999999999999999999999999999999999999991,
-    });
-
-    this.initialize();
-  }
-
-  async initialize() {
-    try {
-      // Build the regex once during initialization
-      const regex = await buildRegexString();
-
-      this.rules = [
+      rule: [
         {
-          reg: regex,
+          reg: /(#?(随机)?(塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧)表情|随机表情)/i
           fnc: 'bq',
         }
-      ];
-    } catch (error) {
-      logger.error('Initialization error:', error.message);
-    }
+      ],
+    });
+  }
   }
 
-  async bq(e) {
-    await e.reply('aw');
+async bq(e) {
+  const message = e.msg; // 获取消息文本
+  const regex = /(#?(随机)?(塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧)表情|随机表情)/i;
+  
+  // 使用正则表达式的match方法匹配消息文本
+  const matchResult = message.match(regex);
+
+  if (matchResult) {
+    // matchResult[0] 匹配到的整个表情字符串
+    // matchResult[3] 匹配到的表情名字
+    const emojiName = matchResult[3];
+    await e.reply(`您发送的表情名字是：${emojiName}`);
+  } else {
+    // 没有匹配到表情
+    await e.reply('未识别到表情，请检查格式是否正确。');
   }
+}
+
 }
