@@ -98,6 +98,16 @@ export const helpList = [
         title: '#来n张随机杂图',
         desc: '字面意思'
       },
+	  {
+        icon: 29,
+        title: '随机[表情名字]表情',
+        desc: '字面意思'
+      },
+	  {
+        icon: 29,
+        title: '#查看全部随机表情',
+        desc: '字面意思'
+      },
       {
         icon: 29,
         title: '#随机原神',
