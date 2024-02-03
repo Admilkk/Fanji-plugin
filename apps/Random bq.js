@@ -28,10 +28,10 @@ export class apibq extends plugin {
 
 async bq(e) {
   const message = e.msg; // 获取消息文本
-  const regex = /(#?(随机)?(塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧)表情|随机表情)/i;
+
   
   // 使用正则表达式的match方法匹配消息文本
-  const matchResult = message.match(regex);
+  const matchResult = message.match(/(#?(随机)?(塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧)表情|随机表情)/i);
 
   if (matchResult) {
     // matchResult[0] 匹配到的整个表情字符串
