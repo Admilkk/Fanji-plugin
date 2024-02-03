@@ -10,6 +10,7 @@ import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
 async function getEmojiNames() {
   try {
     const response = await fetch('https://api.yunxiyuanyxy.xyz/emoji/?list=all');
@@ -17,7 +18,7 @@ async function getEmojiNames() {
     return Object.keys(data);
   } catch (error) {
     console.error('Error fetching emoji data:', error.message);
-    return [aw, az];
+    return ['aw', 'az']; // 注意这里的返回值应该是一个数组，用逗号隔开每个元素
   }
 }
 
@@ -39,9 +40,6 @@ async function main() {
   return regexString;
 }
 
-// 调用主函数并将返回值赋给 regs 变量
-const regs = main();
-
 export class apisetu extends plugin {
   constructor() {
     super({
@@ -51,14 +49,30 @@ export class apisetu extends plugin {
       priority: -9999999999999999999999999999999999999999999999991,
       rule: [
         {
-          reg: regs, // Use the result of buildRegex directly
+          reg: null, // 初始化为 null
           fnc: 'bq',
         }
       ],
     });
+
+    // 在构造函数中调用 async 函数，等待其执行完成
+    this.initialize();
   }
+
+  async initialize() {
+    // 调用 main 函数并将结果赋给 regs 变量
+    const regs = await main();
+
+    // 将正则表达式字符串设置为规则
+    this.rules = [
+      {
+        reg: new RegExp(regs),
+        fnc: 'bq',
+      }
+    ];
+  }
+
   async bq(e) {
     await e.reply('aw');
   }
 }
-
