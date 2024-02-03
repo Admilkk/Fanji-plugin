@@ -66,7 +66,7 @@ export class apibq extends plugin {
         }
       ];
     } catch (error) {
-      console.error('Initialization error:', error.message);
+      logger.error('Initialization error:', error.message);
     }
   }
 
