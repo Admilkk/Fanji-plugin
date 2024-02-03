@@ -1,7 +1,9 @@
-import fetch from 'node-fetch';
+import fs from 'fs'
+import path from 'path';
+import cm from '../lib/common/CM.js';
 import { fileURLToPath } from 'url';
+import https from 'https';
 import { dirname } from 'path';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?type=302&list=';
@@ -47,7 +49,7 @@ export class apibq extends plugin {
           messages.push(`${key}: ${data[key]}张`);
         }
       }
-	  let forward = await e.runtime.common.makeForwardMsg(e, messages, '全部表情')
+	  let forward = await common.makeForwardMsg(e, messages, '全部表情')
 	  await e.reply(forward)
     } catch (error) {
       await e.reply('API爆炸了');
