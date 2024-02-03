@@ -49,18 +49,19 @@ export class apibq extends plugin {
       dsc: '反击!!!!',
       event: 'message',
       priority: -9999999999999999999999999999999999999999999999991,
-      rule: [
+    });
+
+    (async () => {
+      this.rules = [
         {
           reg: await buildRegexString(),
           fnc: 'bq',
         }
-      ],
-    });
+      ];
+    })();
   }
   
-  
-
   async bq(e) {
-    await e.reply('aw')
+    await e.reply('aw');
   }
 }
