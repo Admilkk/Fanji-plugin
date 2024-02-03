@@ -31,7 +31,7 @@ export class apibq extends plugin {
 
   async bq(e) {
     const message = e.msg; 
-    const matchResult = message.match(this.rule[0].reg);
+    const matchResult = message.match(this.rule[1].reg);
     if (matchResult) {
       const emojiName = matchResult[3] ? matchResult[3] : 'sj';
       await e.reply([segment.image(`${apiurl}${emojiName}`)])
