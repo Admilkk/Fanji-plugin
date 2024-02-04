@@ -22,7 +22,7 @@ export class apibq extends plugin {
           fnc: 'allbq'
         },
         {
-          reg: '^#?(随机)?(#|.*)表情', 
+          reg: '', 
           fnc: 'bq'
         }
       ], 
@@ -39,6 +39,7 @@ async updateRegex() {
     const data = await response.json();
     const keys = Object.keys(data);
     this.keysString = keys.join('|');
+	logger.info('[反击][bq]获取正则')
     this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
     
     // 保存当前时间为上次更新时间
@@ -58,8 +59,14 @@ async bq(e) {
   const message = e.msg; 
   await this.updateRegex();
 
-  let emojiName = message.replace(/^#?随机?表情/, ''); // 移除 #、随机 和 表情
-  emojiName = emojiName.replace(/\s+/g, '');
+  const matchResult = message.match(this.rule[1].reg);
+  
+  // 如果没有匹配到，或者无法获取到表情名字，直接返回 false
+  if (!matchResult || !matchResult[3]) {
+    return false;
+  }
+
+  let emojiName = matchResult[3].replace(/\s+/g, ''); // 移除空格
   if (!emojiName) {
     emojiName = 'sj';
   }
@@ -67,6 +74,7 @@ async bq(e) {
   await e.reply([segment.image(`${apiurl}${emojiName}`)]);
   return false;
 }
+
 
 
 
