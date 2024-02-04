@@ -54,7 +54,6 @@ async updateRegex() {
     }
   }
 }
-
 async bq(e) {
   const message = e.msg; 
   await this.updateRegex();
