@@ -156,7 +156,7 @@ async zt(e) {
     if (res && res.urls && res.urls.length > 0) {
       for (let i = 0; i < res.urls.length; i++) {
         const imageUrl = res.urls[i];
-        messages.push(segment.image(imageUrl));
+        messages.push([segment.image(imageUrl)]);
         imageUrls.push(imageUrl);
       }
     } else {
