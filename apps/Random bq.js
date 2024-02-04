@@ -28,25 +28,26 @@ export class apibq extends plugin {
       ], 
     });
   }
-  async updateRegex() {
-    // 获取上次更新时间
-    const lastUpdateTime = await redis.get('last_updatezz_time');
-    const now = new Date().getTime();
-    if (!lastUpdateTime || now - lastUpdatezzTime > 600000) {
-      const response = await fetch(`${apiurl}all`);
-      const data = await response.json();
-      const keys = Object.keys(data);
-      this.keysString = keys.join('|');
-      this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
-     // 保存当前时间为上次更新时间
-      await redis.set('last_updatezz_time', now);
-    } else {
-      const storedRegex = await redis.get('stored_regex');
-      if (storedRegex) {
-        this.rule[1].reg = new RegExp(storedRegex, 'i');
-      }
+async updateRegex() {
+  // 获取上次更新时间
+  const lastUpdateTime = await redis.get('last_updatezz_time');
+  const now = new Date().getTime();
+  if (!lastUpdateTime || now - lastUpdateTime > 600000) {
+    const response = await fetch(`${apiurl}all`);
+    const data = await response.json();
+    const keys = Object.keys(data);
+    this.keysString = keys.join('|');
+    this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
+    // 保存当前时间为上次更新时间
+    await redis.set('last_updatezz_time', now);
+  } else {
+    const storedRegex = await redis.get('stored_regex');
+    if (storedRegex) {
+      this.rule[1].reg = new RegExp(storedRegex, 'i');
     }
   }
+}
+
   async bq(e) {
     const message = e.msg; 
 
