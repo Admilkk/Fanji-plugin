@@ -39,7 +39,7 @@ async updateRegex() {
     const data = await response.json();
     const keys = Object.keys(data);
     this.keysString = keys.join('|');
-	logger.info('[反击][bq]获取正则')
+	await this.reply('[反击][bq]获取正则')
     this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
     
     // 保存当前时间为上次更新时间
