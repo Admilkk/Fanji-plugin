@@ -66,7 +66,7 @@ async bq(e) {
 
 let emojiName = matchResult[1].replace(/^#?随机?/, '').replace(/\s+/g, '');
 
- if (e.msg === ('#随机表情'||'随机表情')) {
+  if (e.msg === '#随机表情' || e.msg === '随机表情') {
     emojiName = 'sj';
   }
 
