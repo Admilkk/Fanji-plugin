@@ -22,7 +22,7 @@ export class apibq extends plugin {
           fnc: 'allbq'
         },
         {
-          reg: '', 
+          reg: '^#?((随机)(.*)表情|随机表情)', 
           fnc: 'bq'
         }
       ], 
@@ -56,6 +56,7 @@ async updateRegex() {
 }
 
 async bq(e) {
+	try {
   const message = e.msg; 
   await this.updateRegex();
 
@@ -73,6 +74,9 @@ async bq(e) {
 
   await e.reply([segment.image(`${apiurl}${emojiName}`)]);
   return false;
+	}catch(error){
+  return false;
+	}
 }
 
 
