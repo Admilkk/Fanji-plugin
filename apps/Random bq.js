@@ -40,6 +40,8 @@ async updateRegex() {
     this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
     // 保存当前时间为上次更新时间
     await redis.set('last_updatezz_time', now);
+    // 保存正则表达式
+    await redis.set('stored_regex', `#?((随机)?(${this.keysString})表情|随机表情)`);
   } else {
     const storedRegex = await redis.get('stored_regex');
     if (storedRegex) {
@@ -47,6 +49,7 @@ async updateRegex() {
     }
   }
 }
+
 
   async bq(e) {
     const message = e.msg; 
