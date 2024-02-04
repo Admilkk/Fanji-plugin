@@ -39,7 +39,7 @@ async updateRegex() {
     const data = await response.json();
     const keys = Object.keys(data);
     this.keysString = keys.join('|');
-	await this.reply('[反击][bq]获取正则')
+	console.log('[反击][bq]获取正则')
     this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
     
     // 保存当前时间为上次更新时间
@@ -61,12 +61,11 @@ async bq(e) {
 
   const matchResult = message.match(this.rule[1].reg);
   
-  // 如果没有匹配到，或者无法获取到表情名字，直接返回 false
   if (!matchResult || !matchResult[3]) {
     return false;
   }
 
-  let emojiName = matchResult[3].replace(/\s+/g, ''); // 移除空格
+  let emojiName = matchResult[3].replace(/\s+/g, ''); 
   if (!emojiName) {
     emojiName = 'sj';
   }
