@@ -73,11 +73,16 @@ async viedo(e, apiUrl, defaultSavePath) {
     }
 }
     async ffmpeg() {
+		try{
         let ret = await execSync('ffmpeg -h', { encoding: 'utf-8' })
         if (!ret || !ret.includes('version')) {
             await this.reply('请先安装FFmpeg')
             return false
         }
+		}catch(error){
+			            await this.reply('请先安装FFmpeg')
+            return false
+		}
         return true
     }
 
