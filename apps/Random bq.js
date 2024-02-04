@@ -33,14 +33,17 @@ async updateRegex() {
   // 获取上次更新时间
   const lastUpdateTime = await redis.get('last_updatezz_time');
   const now = new Date().getTime();
+  
   if (!lastUpdateTime || now - lastUpdateTime > 600000) {
     const response = await fetch(`${apiurl}all`);
     const data = await response.json();
     const keys = Object.keys(data);
     this.keysString = keys.join('|');
     this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
+    
     // 保存当前时间为上次更新时间
     await redis.set('last_updatezz_time', now);
+    
     // 保存正则表达式
     await redis.set('stored_regex', `#?((随机)?(${this.keysString})表情|随机表情)`);
   } else {
@@ -51,23 +54,21 @@ async updateRegex() {
   }
 }
 
+async bq(e) {
+  const message = e.msg; 
+  await this.updateRegex();
 
-  async bq(e) {
-    const message = e.msg; 
-
-    // 直接更新正则表达式
-    await this.updateRegex();
-
-    const matchResult = message.match(this.rule[1].reg);
-    if (matchResult && matchResult[3]) {
-const emojiName = (matchResult[2] || matchResult[3] || 'sj').replace(/\s+/g, '');
-
-      await e.reply([segment.image(`${apiurl}${emojiName}`)]);
-    } else {
-      return false;
-    }
-    return false;
+  let emojiName = message.replace(/^#?随机?表情/, ''); // 移除 #、随机 和 表情
+  emojiName = emojiName.replace(/\s+/g, '');
+  if (!emojiName) {
+    emojiName = 'sj';
   }
+
+  await e.reply([segment.image(`${apiurl}${emojiName}`)]);
+  return false;
+}
+
+
 
 
   async allbq(e) {
