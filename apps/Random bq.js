@@ -54,21 +54,22 @@ async updateRegex() {
     }
   }
 }
+
 async bq(e) {
   const message = e.msg; 
   await this.updateRegex();
 
   const matchResult = message.match(this.rule[1].reg);
   
-  if (!matchResult || !matchResult[0]) {
+  if (!matchResult || !matchResult[3]) {
     return false;
   }
 
-let emojiName = matchResult[1].replace(/^#?随机?/, '').replace(/\s+/g, '');
-
+  let emojiName = matchResult[3].replace(/\s+/g, ''); 
   if (e.msg === '#随机表情' || e.msg === '随机表情') {
     emojiName = 'sj';
   }
+
 
   await e.reply([segment.image(`${apiurl}${emojiName}`)]);
   return false;
