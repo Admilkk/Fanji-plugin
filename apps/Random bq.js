@@ -17,29 +17,42 @@ export class apibq extends plugin {
       event: 'message',
       priority: -9999999999999999999999999999999999999999999999991,
       rule: [
-	    {
+        {
           reg: '^#?查看全部随机表情$',
           fnc: 'allbq'
         },
         {
-          reg: new RegExp(`#?((随机)?(${regs})表情|随机表情)`, 'i'),
+          reg: '', 
           fnc: 'bq'
         }
       ], 
     });
+
+    this.updateRegex();
   }
 
-  async bq(e) {
-    const message = e.msg; 
-    const matchResult = message.match(this.rule[1].reg);
-    if (matchResult) {
-      const emojiName = matchResult[3] ? matchResult[3] : 'sj';
-      await e.reply([segment.image(`${apiurl}${emojiName}`)])
-    } else {
-      return false;
-    }
-	return false
+  async updateRegex() {
+    const response = await fetch(`${apiurl}all`);
+    const data = await response.json();
+    const keys = Object.keys(data);
+    this.keysString = keys.join('|');
+    this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
   }
+
+async bq(e) {
+  const message = e.msg; 
+  await this.updateRegex();
+
+  const matchResult = message.match(this.rule[1].reg);
+  if (matchResult && matchResult[3]) {
+    const emojiName = matchResult[3];
+    await e.reply([segment.image(`${apiurl}${emojiName}`)]);
+  } else {
+    return false;
+  }
+  return false;
+}
+
   async allbq(e) {
 	  const messages = ['全部表情:']
       const response = await fetch(`${apiurl}all`);
