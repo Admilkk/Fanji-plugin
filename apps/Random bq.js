@@ -64,7 +64,8 @@ async bq(e) {
     return false;
   }
 
-  let emojiName = matchResult[0].replace(/^#?随机?/, '').replace(/\s+/g, ''); 
+let emojiName = matchResult[1].replace(/^#?随机?/, '').replace(/\s+/g, '');
+
   if (!emojiName) {
     emojiName = 'sj';
   }
