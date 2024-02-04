@@ -61,11 +61,11 @@ async bq(e) {
 
   const matchResult = message.match(this.rule[1].reg);
   
-  if (!matchResult || !matchResult[3]) {
+  if (!matchResult || !matchResult[0]) {
     return false;
   }
 
-  let emojiName = matchResult[3].replace(/\s+/g, ''); 
+  let emojiName = matchResult[0].replace(/^#?随机?/, '').replace(/\s+/g, ''); 
   if (!emojiName) {
     emojiName = 'sj';
   }
