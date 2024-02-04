@@ -60,7 +60,8 @@ async updateRegex() {
 
     const matchResult = message.match(this.rule[1].reg);
     if (matchResult && matchResult[3]) {
-const emojiName = (matchResult[2] || matchResult[3] || 'sj').trim();
+const emojiName = (matchResult[2] || matchResult[3] || 'sj').replace(/\s+/g, '');
+
       await e.reply([segment.image(`${apiurl}${emojiName}`)]);
     } else {
       return false;
