@@ -22,36 +22,33 @@ export class apibq extends plugin {
           fnc: 'allbq'
         },
         {
-          reg: '', 
+          reg: '^#?(随机)?(#|)表情', 
           fnc: 'bq'
         }
       ], 
     });
-
-    this.updateRegex();
   }
 
-  async updateRegex() {
+  async bq(e) {
+    const message = e.msg; 
+
+    // 直接更新正则表达式
     const response = await fetch(`${apiurl}all`);
     const data = await response.json();
     const keys = Object.keys(data);
     this.keysString = keys.join('|');
     this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
-  }
 
-async bq(e) {
-  const message = e.msg; 
-  await this.updateRegex();
-
-  const matchResult = message.match(this.rule[1].reg);
-  if (matchResult && matchResult[3]) {
-    const emojiName = matchResult[3];
-    await e.reply([segment.image(`${apiurl}${emojiName}`)]);
-  } else {
+    const matchResult = message.match(this.rule[1].reg);
+    if (matchResult && matchResult[3]) {
+      const emojiName = matchResult[3];
+      await e.reply([segment.image(`${apiurl}${emojiName}`)]);
+    } else {
+      return false;
+    }
     return false;
   }
-  return false;
-}
+
 
   async allbq(e) {
 	  const messages = ['全部表情:']
