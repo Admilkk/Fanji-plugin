@@ -22,7 +22,7 @@ export class example2 extends plugin {
       rule: [
         {
           /** 命令正则匹配 */
-          reg: '^#（获取群员名单|人口普查)$',
+          reg: '^#?(获取群员名单|人口普查)$',
           /** 执行方法 */
           fnc: 'getmember'
         },
