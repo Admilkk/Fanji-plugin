@@ -254,12 +254,13 @@ async bs(e) {
           rejectUnauthorized: false,
         }),
       };
-if (!match[6]){
-      let url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}`);
-}else{
-	let url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}&tag=${tag}`);
-}
-      url = await url.json();
+    let url; // 在这里定义 url 变量
+    if (!match[6]) {
+      url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}`);
+    } else {
+      url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}&tag=${tag}`);
+    }
+    url = await url.json();
       if (url.code === 200 && url.pics && url.pics.length > 0) {
         if (url.pics.length === 1) {
           // 只有一张图片的情况
