@@ -62,7 +62,7 @@ export class apisetu extends plugin {
           fnc: 'bs',
         },
 		{
-          reg: /^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i, // 无r18.所以不套转发
+          reg: /^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?([^#]*)?$/i, // 无r18.所以不套转发
           fnc: 'yxy',
         },
 				{
@@ -73,9 +73,9 @@ export class apisetu extends plugin {
     });
   }
 async yxy(e) 
-const match = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)$/i)
+const match = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?([^#]*)?$/i)
 const tag = match[6] ? match[6].replace(/\s+/g, '|') : '';
-logger.info(`${tag}`)
+logger.info(`tag: :: :: ${tag}`)
 	  
   await e.reply('开始了');
 
