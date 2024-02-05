@@ -76,20 +76,24 @@ async yxy(e) {
   await e.reply('开始了');
 
   try {
-    let num = e.msg.match(/(\d+)/);
+    let num = e.msg.match(/来(\d+)张/);
     num = num && num[1] ? parseInt(num[1], 10) : 1;
-    let matched = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i)
-	let tag = matched[6]? matched[6].replace(/ /g, '|') : '';
+
+    let matched = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i);
+    let tag = matched[6] ? matched[6].replace(/ /g, '|') : '';
+
     const messages = ['你要的图来啦'];
     let res;
     let imageUrls = [];
     let allImageLinks = '';
     let tosend = '';
-if (tag) {
-    res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true&tag=${tag}`);
-}else{
-	 res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true`);
-}
+
+    if (tag) {
+      res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true&tag=${tag}`);
+    } else {
+      res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true`);
+    }
+
     const result = await res.json();
 
     if (result.error) {
@@ -98,19 +102,22 @@ if (tag) {
 
     for (const item of result.data) {
       const imageUrl = item.urls.original;
-      imageUrls.push(imageUrl);
+      const imageInfo = `标题: ${item.title}\n作者: ${item.author}\nPID: ${item.pid}\nUID: ${item.uid}\n标签: ${item.tags.join(', ')}\n`;
+      imageUrls.push({ url: imageUrl, info: imageInfo });
     }
 
-    allImageLinks = imageUrls.join('\n\n');
-    tosend = imageUrls.length === 1 ? imageUrls[0] : imageUrls.join('|');
-  res = await fetch(`${tosendurl}${key}&url=${tosend}`);
-  const data = await res.json();
+    allImageLinks = imageUrls.map((image) => `${image.info}\n${image.url}`).join('\n\n');
+    tosend = imageUrls.length === 1 ? imageUrls[0].url : imageUrls.map((image) => image.url).join('|');
 
-  if (data.code != 0) {
-    await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
-  }
-      messages.push(...imageUrls.map((url) => [segment.image(url)]));
-	const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
+    res = await fetch(`${tosendurl}${key}&url=${tosend}`);
+    const data = await res.json();
+
+    if (data.code !== 0) {
+      await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
+    }
+
+    messages.push(...imageUrls.map((image) => [segment.image(image.url), image.info]));
+    const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
 
     let aw = await e.reply(forwardMsg);
 
@@ -121,6 +128,8 @@ if (tag) {
     console.error(`Error in yxy function: ${error.message}`);
   }
 }
+
+
 
 
 
