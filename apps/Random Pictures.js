@@ -62,7 +62,7 @@ export class apisetu extends plugin {
           fnc: 'bs',
         },
 		{
-          reg: /^#?(来(\d+)张)?随机(loli)(api)?(图)?$/i, // 无r18.所以不套转发
+          reg: /^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)$/i, // 无r18.所以不套转发
           fnc: 'yxy',
         },
 				{
@@ -72,7 +72,11 @@ export class apisetu extends plugin {
       ],
     });
   }
-async yxy(e) {
+async yxy(e) 
+const match = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)$/i)
+const tag = match[6] ? match[6].replace(/\s+/g, '|') : '';
+logger.info(`${tag}`)
+	  
   await e.reply('开始了');
 
   try {
@@ -84,8 +88,11 @@ async yxy(e) {
     let imageUrls = [];
     let allImageLinks = '';
     let tosend = '';
-
+if (!match[6]){
     res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true`);
+}else{
+	    res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true&tag=${tag}`);
+}
     const result = await res.json();
 
     if (result.error) {
@@ -224,8 +231,7 @@ async bs(e) {
 	  let res;
     try {
       // 解析命令中的张数，默认为1
-      const match = e.msg.match(/^#?(来(\d+)张)?随机(r18)(图)?(\u5c01\u53f7\u7248)?(.*)?$/i);
-	  const tag = match[6] ? match[6].replace(/\s+/g, '|') : '';
+      const match = e.msg.match(/^#?(来(\d+)张)?随机(r18)(图)?(\u5c01\u53f7\u7248)?$/i);
       const numImages = match && match[2] ? parseInt(match[2]) : 1;
       if (numImages > 10 & !await cm.check(e.user_id)) {
         await e.reply('最多10张！！')
@@ -255,11 +261,8 @@ async bs(e) {
         }),
       };
     let url; // 在这里定义 url 变量
-    if (!match[6]) {
       url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}`);
-    } else {
-      url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}&tag=${tag}`);
-    }
+
     url = await url.json();
       if (url.code === 200 && url.pics && url.pics.length > 0) {
         if (url.pics.length === 1) {
