@@ -49,9 +49,16 @@ export class apiviedo extends plugin {
 		{
           reg: `^#?(${originalValues.join('|')})$`,
           fnc: 'jh'
+        },
+		{
+          reg: /^#?查看全部(随机)?视频(类型)?/,
+          fnc: 'ck'
         }
       ],
     });
+  }
+  async ck(e){
+	  e.reply(originalValues)
   }
 async hs(e) {
 	let aw = await this.ffmpeg()
