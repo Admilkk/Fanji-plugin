@@ -58,7 +58,7 @@ export class apiviedo extends plugin {
     });
   }
   async ck(e){
-	  e.reply(originalValues)
+	  e.reply(originalValues.join('\n'))
   }
 async hs(e) {
 	let aw = await this.ffmpeg()
