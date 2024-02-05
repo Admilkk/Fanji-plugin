@@ -112,7 +112,7 @@ async yxy(e) {
     res = await fetch(`${tosendurl}${key}&url=${tosend}`);
     const data = await res.json();
 
-    if (data.code !== 0) {
+    if (data.code != 0) {
       await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
     }
 
