@@ -46,10 +46,10 @@ export class apiviedo extends plugin {
           reg: /^#?随机(黑丝|hｓ)?(视频)?$/i,
           fnc: 'hs',
         },
-		{
+/* 		{
           reg: `^#?(${originalValues.join('|')})$`,
           fnc: 'jh'
-        },
+        }, */
 		{
           reg: /^#?查看全部(随机)?视频(类型)?/,
           fnc: 'ck'
