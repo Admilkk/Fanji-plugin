@@ -76,11 +76,10 @@ async yxy(e) {
   await e.reply('开始了');
 
   try {
-let num = e.msg.match(/来(\d+)张/);
-num = num && num[1] ? parseInt(num[1], 10) : 1;
-
+    let num = e.msg.match(/(\d+)/);
+    num = num && num[1] ? parseInt(num[1], 10) : 1;
     let matched = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i)
-	matched = matched[6]? matched[6].replace(/ /g, '|') : '';
+	let tag = matched[6]? matched[6].replace(/ /g, '|') : '';
     const messages = ['你要的图来啦'];
     let res;
     let imageUrls = [];
