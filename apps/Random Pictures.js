@@ -62,7 +62,7 @@ export class apisetu extends plugin {
           fnc: 'bs',
         },
 		{
-          reg: /^#?(来(\d+)张)?随机(loli)(api)?(图)?$/i, // 无r18.所以不套转发
+          reg: /^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i, // 无r18.所以不套转发
           fnc: 'yxy',
         },
 				{
@@ -78,7 +78,8 @@ async yxy(e) {
   try {
     let num = e.msg.match(/(\d+)/);
     num = num && num[1] ? parseInt(num[1], 10) : 1;
-
+    let matched = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i)
+	matched = matched[6]? matched[6].replace(/ /g, '|') : '';
     const messages = ['你要的图来啦'];
     let res;
     let imageUrls = [];
@@ -99,7 +100,11 @@ async yxy(e) {
 
     allImageLinks = imageUrls.join('\n\n');
     tosend = imageUrls.length === 1 ? imageUrls[0] : imageUrls.join('|');
+	if (matched){
+		 res = await fetch(`${tosendurl}${key}&url=${tosend}&tag=${matched}`);
+	}else{
   res = await fetch(`${tosendurl}${key}&url=${tosend}`);
+	}
   const data = await res.json();
 
   if (data.code != 0) {
