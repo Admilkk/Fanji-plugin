@@ -70,7 +70,7 @@ async bs(e) {
 	if (!aw){return}
 	await this.viedo(e, apiurl2, path.join(__dirname, '../resource/bsviedo'))
 }
-async jh (e) {
+/* async jh (e) {
     let aw = await this.ffmpeg();
     if (!aw) { return; }
     try {
@@ -83,7 +83,7 @@ async jh (e) {
     } catch (error) {
         e.reply('报错：' + error);
     }
-}
+} */
 
 async viedo(e, apiUrl, defaultSavePath) {
     try {
