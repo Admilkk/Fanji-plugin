@@ -19,7 +19,17 @@ let apiurl2 = '\u0020\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0061\u0070\u006
 const filepath = path.join(__dirname, '../config/config.yaml');
 const configContent = fs.readFileSync(filepath, 'utf8');
 let config = yaml.load(configContent);
+const originalValues = [
+  '抖音变装', '快手变装', '随机裙子', '甜妹视频', '随机小姐姐', '双倍快乐', 'loli', '玉足',
+  '黑丝视频', '白丝视频', '慢摇视频', 'cos系列', '纯情女高', '吊带系列', '完美身材',
+  '热舞视频', '穿搭系列', '学姐系列', '卡哇伊', '清纯系列', '汉服系列'
+]
+const correspondingValues = [
+  'dybianzhuang', 'ksbianzhuang', 'qunzi', 'tianmei', 'yzxjj', 'shuangbei', 'loli', 'yuzu',
+  'heisi', 'baisi', 'manyao', 'cos', 'nvgao', 'diaodai', 'shencai',
+  'rewu', 'chuanda', 'xuejie', 'kawayi', 'qingchun', 'hanfu'
 
+]
 export class apiviedo extends plugin {
   constructor() {
     super({
@@ -35,6 +45,10 @@ export class apiviedo extends plugin {
         {
           reg: /^#?随机(黑丝|hｓ)?(视频)?$/i,
           fnc: 'hs',
+        },
+		{
+          reg: `^#?(${originalValues.join('|')})$`,
+          fnc: 'jh'
         }
       ],
     });
@@ -49,6 +63,21 @@ async bs(e) {
 	if (!aw){return}
 	await this.viedo(e, apiurl2, path.join(__dirname, '../resource/bsviedo'))
 }
+async jh (e) {
+    let aw = await this.ffmpeg();
+    if (!aw) { return; }
+    try {
+        let name = correspondingValues[originalValues.indexOf(e.msg.replace('#', ''))];
+        let urls = `http://api.hanhanz.gq:4006?category=${name}`;
+        let resp = await fetch(urls);
+        console.log(resp.url);
+        const absolutePath = path.join(__dirname, `../resource/${name}`);
+        await this.viedo(e, urls, absolutePath);
+    } catch (error) {
+        e.reply('报错：' + error);
+    }
+}
+
 async viedo(e, apiUrl, defaultSavePath) {
     try {
         const response = await fetch(apiUrl);
@@ -58,32 +87,30 @@ async viedo(e, apiUrl, defaultSavePath) {
         }
 
         const videoData = await response.buffer();
+        const savePath = defaultSavePath || path.join(__dirname, '../resource/default');
         const timestamp = Date.now();
-        const savePath = defaultSavePath || '../resource/default';
         const videoPath = path.join(savePath, `${timestamp}.mp4`);
 
         // Ensure the directory exists before writing the file
-        await fs.promises.mkdir(path.dirname(videoPath), { recursive: true });
+        await fs.promises.mkdir(savePath, { recursive: true });
 
         await fs.promises.writeFile(videoPath, videoData);
         await e.reply([segment.video(videoPath)]);
-		await e.reply('From Fanji-plugin')
+        await e.reply('From Fanji-plugin');
     } catch (error) {
-        console.error(`Error in hs function: ${error.message}`);
+        console.error(`Error in viedo function: ${error.message}`);
     }
 }
-    async ffmpeg() {
-		try{
-        let ret = await execSync('ffmpeg -h', { encoding: 'utf-8' })
-        if (!ret || !ret.includes('version')) {
-            await this.reply('请先安装FFmpeg')
-            return false
-        }
-		}catch(error){
-			            await this.reply('请先安装FFmpeg')
-            return false
-		}
-        return true
+
+async ffmpeg() {
+    try {
+        await exec('ffmpeg -h');
+        return true;
+    } catch (error) {
+        console.error('请先安装FFmpeg');
+        return false;
     }
+}
 
 }
+
