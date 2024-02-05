@@ -50,7 +50,7 @@ export class apisetu extends plugin {
           fnc: 'ys',
         },
         {
-          reg: /^#?(来(\d+)张)?随机(r18)(图)?(\u5c01\u53f7\u7248)?$/i, // R18，套了转发
+          reg: /^#?(来(\d+)张)?随机(r18)(图)?(\u5c01\u53f7\u7248)?(.*)?$/i, // R18，套了转发
           fnc: 'r18',
         },
         {
@@ -224,7 +224,8 @@ async bs(e) {
 	  let res;
     try {
       // 解析命令中的张数，默认为1
-      const match = e.msg.match(/^#?(来(\d+)张)?随机(r18)(图)?$/i);
+      const match = e.msg.match(/^#?(来(\d+)张)?随机(r18)(图)?(\u5c01\u53f7\u7248)?(.*)?$/i);
+	  const tag = match[6] ? match[6].replace(/\s+/g, '|') : '';
       const numImages = match && match[2] ? parseInt(match[2]) : 1;
       if (numImages > 10 & !await cm.check(e.user_id)) {
         await e.reply('最多10张！！')
@@ -253,8 +254,11 @@ async bs(e) {
           rejectUnauthorized: false,
         }),
       };
-
+if (!match[6]){
       let url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}`);
+}else{
+	let url = await fetch(`${apiurl}?sort=r18&type=json&num=${numImages}&tag=${tag}`);
+}
       url = await url.json();
       if (url.code === 200 && url.pics && url.pics.length > 0) {
         if (url.pics.length === 1) {
