@@ -76,8 +76,9 @@ async yxy(e) {
   await e.reply('开始了');
 
   try {
-    let num = e.msg.match(/(\d+)/);
-    num = num && num[1] ? parseInt(num[1], 10) : 1;
+let num = e.msg.match(/来(\d+)张/);
+num = num && num[1] ? parseInt(num[1], 10) : 1;
+
     let matched = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i)
 	matched = matched[6]? matched[6].replace(/ /g, '|') : '';
     const messages = ['你要的图来啦'];
@@ -85,8 +86,11 @@ async yxy(e) {
     let imageUrls = [];
     let allImageLinks = '';
     let tosend = '';
-
-    res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true`);
+if (tag) {
+    res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true&tag=${tag}`);
+}else{
+	 res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true`);
+}
     const result = await res.json();
 
     if (result.error) {
@@ -100,11 +104,7 @@ async yxy(e) {
 
     allImageLinks = imageUrls.join('\n\n');
     tosend = imageUrls.length === 1 ? imageUrls[0] : imageUrls.join('|');
-	if (matched){
-		 res = await fetch(`${tosendurl}${key}&url=${tosend}&tag=${matched}`);
-	}else{
   res = await fetch(`${tosendurl}${key}&url=${tosend}`);
-	}
   const data = await res.json();
 
   if (data.code != 0) {
