@@ -305,7 +305,7 @@ async uplog() {
 
 // 辅助函数，发送批量消息
 async sendBatchedMessages(messages, e) {
-    let formattedMessage = messages.join('\n\n');
+    let formattedMessage = messages.join('\n');
     await e.reply(await e.runtime.common.makeForwardMsg(e, formattedMessage, '反击插件更新日志'));
 }
 
