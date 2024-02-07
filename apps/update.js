@@ -33,7 +33,7 @@ let uping = false
 /**
  * 处理插件更新
  */
-export class Updateaaa extends plugin {
+export class Update extends plugin {
     constructor() {
         super({
             name: '更新Fanji插件',
@@ -44,7 +44,11 @@ export class Updateaaa extends plugin {
                 {
                     reg: '^#*(MS)?(反击|(H|h)(I|i)(T|t))(插件)?(强制|強制)?更新$',
                     fnc: 'update'
-                }
+                },
+                {
+                    reg: /^#*(fanji|反击)(插件)?更新日志$/i,
+                    fnc: 'uplog'
+                  }
             ]
         })
     }
@@ -234,4 +238,33 @@ let log2 = await common.makeForwardMsg(this.e, [log, end], `${plugin}更新日�
         }
         return true
     }
+    async getLog(plugin = '') {
+        let cm = `cd ./plugins/Fanji-plugin/ && git log  -20 --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%F %T"`
+        let logAll
+        try {
+          logAll = await execSync(cm, { encoding: 'utf-8', windowsHide: true })
+        } catch (error) {
+          logger.error(error.toString())
+          this.reply(error.toString())
+        }
+        if (!logAll) return false
+        logAll = logAll.split('\n')
+        let log = []
+        for (let str of logAll) {
+          str = str.split('||')
+          if (str[0] == this.oldCommitId) break
+          if (str[1].includes('Merge branch')) continue
+          log.push(str[1])
+        }
+        let line = log.length
+        log = log.join('\n\n')
+        if (log.length <= 0) return ''
+        let end = '更多详细信息，请前往gitee查看\nhttps://gitee.com/chinese-cabbage-xzy/Mini-world-plugin'
+        log = await common.makeForwardMsg(this.e, [log, end], `${plugin}更新日志，共${line}条`)
+        return log
+      }
+      async uplog() {
+        let log = await this.getLog()
+        await this.reply(log)
+      }
 }
