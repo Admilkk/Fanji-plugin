@@ -257,14 +257,59 @@ let log2 = await common.makeForwardMsg(this.e, [log, end], `${plugin}更新日�
           log.push(str[1])
         }
         let line = log.length
-        log = log.join('\n\n')
+        log = log.join('\n')
         if (log.length <= 0) return ''
         let end = '更多详细信息，请前往gitee查看\nhttps://gitee.com/chinese-cabbage-xzy/Mini-world-plugin'
         log = await common.makeForwardMsg(this.e, [log, end], `${plugin}更新日志，共${line}条`)
         return log
       }
-      async uplog() {
-        let log = await this.getLog()
-        await this.reply(log)
-      }
+async uplog() {
+    let cm = `cd ./plugins/Fanji-plugin/ && git log  --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%F %T"`
+    let logAll;
+    try {
+        logAll = await execSync(cm, { encoding: 'utf-8' });
+    } catch (error) {
+        logger.error(error.toString());
+        this.reply(error.toString());
+        return;
+    }
+
+    if (!logAll) {
+        this.reply('获取日志失败');
+        return;
+    }
+
+    logAll = logAll.split('\n');
+
+    let batchSize = 100; // 每批100条日志
+    let batchedLogs = [];
+    let batch = [];
+    for (let str of logAll) {
+        let log = str.split('||')[1];
+        if (!log.includes('Merge branch')) {
+            batch.push(log);
+            if (batch.length === batchSize) {
+                batchedLogs.push(batch);
+                batch = [];
+            }
+        }
+    }
+    if (batch.length > 0) {
+        batchedLogs.push(batch);
+    }
+
+    for (let batchedLog of batchedLogs) {
+        await this.sendBatchedMessages(batchedLog, this.e);
+    }
+}
+
+// 辅助函数，发送批量消息
+async sendBatchedMessages(messages, e) {
+    let formattedMessage = messages.join('\n\n');
+    await e.reply(await e.runtime.common.makeForwardMsg(e, formattedMessage, '反击插件更新日志'));
+}
+
+
+
+
 }
