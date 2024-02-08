@@ -86,7 +86,7 @@ export const helpList = [
 	  {
         icon: 29,
         title: '#来n张随机loli图',
-        desc: '字面意思'
+        desc: '可以在后面接上tag，如#随机loli图原神 黑丝'
       },
 	  {
         icon: 29,
