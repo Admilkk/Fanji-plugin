@@ -80,6 +80,11 @@ export const helpList = [
       },
 	  {
         icon: 29,
+        title: '#随机小姐姐视频',
+        desc: '字面意思'
+      },
+	  {
+        icon: 29,
         title: '#随机loli图',
         desc: '字面意思'
       },
