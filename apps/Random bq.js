@@ -3,6 +3,7 @@ import path from 'path';
 import cm from '../lib/common/CM.js';
 import { fileURLToPath } from 'url';
 import https from 'https';
+import fetch from 'node-fetch';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
