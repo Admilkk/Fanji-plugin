@@ -137,7 +137,7 @@ class Setting {
     const watcher = chokidar.watch(file)
     watcher.on('change', path => {
       delete this[type][app]
-      logger.mark(`[cunyx插件][修改配置文件][${type}][${app}]`)
+      logger.mark(`[反击插件][修改配置文件][${type}][${app}]`)
       if (this[`change_${app}`]) {
         this[`change_${app}`]()
       }
