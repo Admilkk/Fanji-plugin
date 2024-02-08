@@ -43,8 +43,12 @@ export class apiviedo extends plugin {
           fnc: 'bs',
         },
         {
-          reg: /^#?随机(黑丝|hｓ)?(视频)?$/i,
+          reg: /^#?随机(黑丝|hｓ)(视频)?$/i,
           fnc: 'hs',
+        },
+        {
+          reg: /^#?随机(小姐姐)(视频)?$/i,
+          fnc: 'xjj',
         },
 /* 		{
           reg: `^#?(${originalValues.join('|')})$`,
@@ -69,6 +73,11 @@ async bs(e) {
 	let aw = await this.ffmpeg()
 	if (!aw){return}
 	await this.viedo(e, apiurl2, path.join(__dirname, '../resource/bsviedo'))
+}
+async xjj(e){
+		let aw = await this.ffmpeg()
+	if (!aw){return}
+	await this.viedo(e, 'https://api.yunxiyuanyxy.xyz/plus/', path.join(__dirname, '../resource/bsviedo'))
 }
 /* async jh (e) {
     let aw = await this.ffmpeg();
