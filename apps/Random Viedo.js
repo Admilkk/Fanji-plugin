@@ -77,7 +77,7 @@ async bs(e) {
 async xjj(e){
 		let aw = await this.ffmpeg()
 	if (!aw){return}
-	await this.viedo(e, 'https://api.yunxiyuanyxy.xyz/plus/', path.join(__dirname, '../resource/xjjviedo'))
+	await this.viedo(e, 'https://api.yunxiyuanyxy.xyz/plus/?type=302', path.join(__dirname, '../resource/xjjviedo'))
 }
 /* async jh (e) {
     let aw = await this.ffmpeg();
