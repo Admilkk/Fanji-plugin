@@ -23,12 +23,33 @@ export class apibq extends plugin {
           fnc: 'allbq'
         },
         {
-          reg: '^#?((随机)(.*)表情|随机表情)', 
+          reg: '^#?((随机)(.*)表情|随机表情)$', 
           fnc: 'bq'
-        }
+        },
+        {
+          reg: /^#?获取(随机)?(表情)?(正则|REG)$/i, 
+          fnc: 'zz'
+        },
       ], 
     });
 	this.updateRegex()
+  }
+  async zz(e){
+	   const lastUpdateTime = await redis.get('last_updatezz_time');
+  const now = new Date().getTime();
+  
+    const response = await fetch(`${apiurl}all`);
+    const data = await response.json();
+    const keys = Object.keys(data);
+    this.keysString = keys.join('|');
+	logger.mark('[反击][bq]获取正则')
+    this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
+    
+    // 保存当前时间为上次更新时间
+    await redis.set('last_updatezz_time', now);
+    
+    // 保存正则表达式
+    await redis.set('stored_regex', `#?((随机)?(${this.keysString})表情|随机表情)`);
   }
 async updateRegex() {
   // 获取上次更新时间
