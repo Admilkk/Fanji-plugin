@@ -37,7 +37,7 @@ export class apibq extends plugin {
   async zz(e){
 	   const lastUpdateTime = await redis.get('last_updatezz_time');
   const now = new Date().getTime();
-  
+  try{
     const response = await fetch(`${apiurl}all`);
     const data = await response.json();
     const keys = Object.keys(data);
@@ -50,6 +50,10 @@ export class apibq extends plugin {
     
     // 保存正则表达式
     await redis.set('stored_regex', `#?((随机)?(${this.keysString})表情|随机表情)`);
+  }catch(error){
+      await e.reply('error connect to API')
+      await e.reply(error.message)
+  }
   }
 async updateRegex() {
   // 获取上次更新时间
