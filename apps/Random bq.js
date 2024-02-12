@@ -124,7 +124,7 @@ async bq(e) {
 
   async allbq(e) {
 	  const messages = ['全部表情:']
-      const response = await fetch(`${apiurl}all`);
+      const response = await fetch(`${apiurl2}all`);
       const data = await response.json();
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
