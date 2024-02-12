@@ -8,6 +8,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?type=302&list=';
+const apiurl2 = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
 const regs = '塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧';
 
 export class apibq extends plugin {
@@ -38,7 +39,7 @@ export class apibq extends plugin {
 	   const lastUpdateTime = await redis.get('last_updatezz_time');
   const now = new Date().getTime();
   try{
-    const response = await fetch(`${apiurl}all`);
+    const response = await fetch(`${apiurl2}all`);
     const data = await response.json();
     const keys = Object.keys(data);
     this.keysString = keys.join('|');
@@ -61,7 +62,7 @@ async updateRegex() {
   const now = new Date().getTime();
   
   if (!lastUpdateTime || now - lastUpdateTime > 600000) {
-    const response = await fetch(`${apiurl}all`);
+    const response = await fetch(`${apiurl2}all`);
     const data = await response.json();
     const keys = Object.keys(data);
     this.keysString = keys.join('|');
