@@ -35,52 +35,64 @@ export class apibq extends plugin {
     });
 	this.updateRegex()
   }
-  async zz(e){
-	   const lastUpdateTime = await redis.get('last_updatezz_time');
-  const now = new Date().getTime();
-  try{
-    const response = await fetch(`${apiurl2}all`);
-    const data = await response.json();
-    const keys = Object.keys(data);
-    this.keysString = keys.join('|');
-	logger.mark('[反击][bq]获取正则')
-    this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
-    
-    // 保存当前时间为上次更新时间
-    await redis.set('last_updatezz_time', now);
-    
-    // 保存正则表达式
-    await redis.set('stored_regex', `#?((随机)?(${this.keysString})表情|随机表情)`);
-  }catch(error){
-      await e.reply('error connect to API')
-      await e.reply(error.message)
+async zz(e) {
+  if (e.isMaster || await cm.check(e.user_id)) {
+    const lastUpdateTime = await redis.get('last_updatezz_time');
+    const now = new Date().getTime();
+    try {
+      const response = await fetch(`${apiurl2}all`);
+      const data = await response.json();
+      const keys = Object.keys(data);
+      this.keysString = keys.join('|');
+      logger.mark('[反击][bq]获取正则');
+      this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
+
+      // 保存当前时间为上次更新时间
+      await redis.set('last_updatezz_time', now);
+
+      // 保存正则表达式
+      await redis.set('stored_regex', `#?((随机)?(${this.keysString})表情|随机表情)`);
+    } catch(error) {
+      await e.reply('error connect to API');
+      await e.reply(error.message);
+    }
   }
-  }
+}
+
 async updateRegex() {
   // 获取上次更新时间
   const lastUpdateTime = await redis.get('last_updatezz_time');
   const now = new Date().getTime();
-  
-  if (!lastUpdateTime || now - lastUpdateTime > 600000) {
-    const response = await fetch(`${apiurl2}all`);
-    const data = await response.json();
-    const keys = Object.keys(data);
-    this.keysString = keys.join('|');
-	logger.mark('[反击][bq]获取正则')
-    this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
-    
-    // 保存当前时间为上次更新时间
-    await redis.set('last_updatezz_time', now);
-    
-    // 保存正则表达式
-    await redis.set('stored_regex', `#?((随机)?(${this.keysString})表情|随机表情)`);
-  } else {
+  try {
+    if (!lastUpdateTime || now - lastUpdateTime > 1260000) {
+      const response = await fetch(`${apiurl2}all`);
+      const data = await response.json();
+      const keys = Object.keys(data);
+      this.keysString = keys.join('|');
+      logger.mark('[反击][bq]获取正则');
+      this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})表情|随机表情)`, 'i');
+
+      // 保存当前时间为上次更新时间
+      await redis.set('last_updatezz_time', now);
+
+      // 保存正则表达式
+      await redis.set('stored_regex', `#?((随机)?(${this.keysString})表情|随机表情)`);
+    } else {
+      const storedRegex = await redis.get('stored_regex');
+      if (storedRegex) {
+        this.rule[1].reg = new RegExp(storedRegex, 'i');
+      }
+    }
+  } catch(error) {
     const storedRegex = await redis.get('stored_regex');
     if (storedRegex) {
       this.rule[1].reg = new RegExp(storedRegex, 'i');
     }
   }
 }
+
+
+
 
 async bq(e) {
 	try {
