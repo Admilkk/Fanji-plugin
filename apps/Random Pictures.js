@@ -89,9 +89,9 @@ async yxy(e) {
     let tosend = '';
 
     if (tag) {
-      res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true&tag=${tag}`);
+      res = await fetch(`${apiurllol}?r18=2&num=${num}&tag=${tag}`);
     } else {
-      res = await fetch(`${apiurllol}?r18=2&num=${num}&excludeAI=true`);
+      res = await fetch(`${apiurllol}?r18=2&num=${num}`);
     }
 
     const result = await res.json();
