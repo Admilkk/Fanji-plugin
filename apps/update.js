@@ -57,7 +57,7 @@ export class Update extends plugin {
      * @returns
      */
     async update() {
-        if (!(this.e.isMaster && await cm.check(this.e.user_id))) { return true }
+        if (!(this.e.isMaster || await cm.check(this.e.user_id))) { return true }
         /** 检查是否正在更新中 */
         if (uping) {
             await this.reply('已有命令更新中..请勿重复操作')
