@@ -76,8 +76,9 @@ async yxy(e) {
   await e.reply('开始了');
 
   try {
-    let num = e.msg.match(/来(\d+)张/);
-    num = num && num[1] ? parseInt(num[1], 10) : 1;
+let numMatch = e.msg.match(/来(\d+)张/);
+let num = numMatch ? parseInt(numMatch[1], 10) : 1;
+
 
     let matched = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i);
     let tag = matched[6] ? matched[6].replace(/ /g, '|') : '';
