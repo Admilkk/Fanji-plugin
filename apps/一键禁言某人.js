@@ -4,14 +4,14 @@ import cm from '../lib/common/CM.js';
 export class GetUser extends plugin {
   constructor(e = {}) {
     super({
-      name: '获取注册状态',
-      dsc: '获取注册状态',
+      name: '反击管理',
+      dsc: '实用工具',
       event: 'message',
       priority: 5000,
       rule: [
         {
           reg: '^#一键(封杀|禁言)(\\d+)?( )?(\\d+)?$',
-          fnc: 'awa',
+          fnc: 'Kill',
         },
       ],
     });
@@ -20,7 +20,7 @@ export class GetUser extends plugin {
   }
 
 
- async awa() {
+ async kill() {
 if (await cm.check(this.e.user_id) || this.e.isMaster){
 	    let match = this.e.msg.match(/#一键(封杀|禁言)(\d+)( )?(\d+)?/);
     await this.e.reply('开始禁言操作');
