@@ -27,6 +27,20 @@ export const helpCfg = {
 
 export const helpList = [
   {
+    group: '实用工具',
+    list: [
+      {
+        icon: 28,
+        title: '#一键禁言@xxx 123',
+        desc: '可以不带@，改成#一键禁言123 123'
+      },
+      {
+        icon: 28,
+        title: '补充说明',
+        desc: '第二个123指的是时间，单位为秒，可以不带，默认600'
+      }
+    ]
+  },
     group: '反击相关',
     list: [
       {
