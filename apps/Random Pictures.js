@@ -74,10 +74,8 @@ export class apisetu extends plugin {
   }
 async yxy(e) {
   await e.reply('开始了');
-
-  try {
 let numMatch = e.msg.match(/来(\d+)张/);
-let num = numMatch ? parseInt(numMatch[1], 10) : 1;
+let num = numMatch ? numMatch[1] : 1;
 
 
     let matched = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i);
@@ -125,9 +123,6 @@ let num = numMatch ? parseInt(numMatch[1], 10) : 1;
     if (!aw && imageUrls.length > 1) {
       await e.reply('消息被风控！\n' + allImageLinks);
     }
-  } catch (error) {
-    console.error(`Error in yxy function: ${error.message}`);
-  }
 }
 
 
