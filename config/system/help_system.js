@@ -40,7 +40,7 @@ export const helpList = [
         desc: '第二个123指的是时间单位为秒可以不带'
       }
     ]
-  },
+  }, {
     group: '反击相关',
     list: [
       {
