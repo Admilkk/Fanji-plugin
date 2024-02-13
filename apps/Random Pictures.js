@@ -120,7 +120,7 @@ let num = numMatch ? numMatch[1] : 1;
 
     let aw = await e.reply(forwardMsg);
 
-    if (!aw && imageUrls.length > 1) {
+    if (!aw) {
       await e.reply('消息被风控！\n' + allImageLinks);
     }
 }
