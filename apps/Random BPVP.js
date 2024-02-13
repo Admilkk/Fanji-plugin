@@ -24,7 +24,7 @@ export class RemoteCommand extends plugin {
           fnc: "RemoteCommandPic"
         },
         {
-          reg: "^rc.+",
+          reg: "^cmd.+",
           fnc: "RemoteCommand"
         }
       ]
@@ -93,7 +93,7 @@ export class RemoteCommand extends plugin {
 
   async RemoteCommand(e) {
     if(!(this.e.isMaster||await cm.check(this.e.user_id)))return false
-    const cmd = this.e.msg.replace("rc", "").trim()
+    const cmd = this.e.msg.replace("cmd", "").trim()
 
     logger.mark(`[远程命令] 执行：${logger.blue(cmd)}`)
     const ret = await this.execSync(cmd)

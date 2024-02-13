@@ -112,7 +112,7 @@ export class Update extends plugin {
             this.isUp = true
             /** 获取Fanji组件的更新日志 */
             let log = await this.getLog('Fanji-plugin')
-            await this.reply(log.log2)
+            await this.e.reply(log.log2)
         }
         logger.mark(`${this.e.logFnc} 最后更新时间：${time}`)
         return true
