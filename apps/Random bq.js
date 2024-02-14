@@ -109,7 +109,7 @@ async bq(e) {
   if (e.msg === '#随机表情' || e.msg === '随机表情') {
     emojiName = 'sj';
   }
-
+logger.mark(emojiName)
 
   await e.reply([segment.image(`${apiurl}${emojiName}`)]);
   return false;
