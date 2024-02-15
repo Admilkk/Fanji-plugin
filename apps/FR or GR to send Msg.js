@@ -23,15 +23,16 @@ export class qf extends plugin {
   }
   async qf(e){
 	  if (e.isMaster || await cm.check(e.user_id)){
-	  let msg = e.msg.match(/.*/)
-	  if (!msg){
+	  let msg = e.msg.match(/^#一键群发(.*)?$/)
+	  if (!msg[1]){
 		  this.setContext('PICKGR')
 		  await e.reply('请发送内容，或者发送‘取消’')
 		  return false
 	  }
-	  msg = msg[0]
+	  msg = msg[1]
 	  for (let group of Bot.gl.keys()){
 		  Bot.pickGroup(group).sendMsg(msg)
+		  		  e.runtime.common.sleep(500)
 	  }
   }else{
 	  await e.reply('你没有权限')
@@ -40,15 +41,16 @@ export class qf extends plugin {
   }
   async hyqf(e){
 	  	  if (e.isMaster || await cm.check(e.user_id)){
-	  	  let msg = e.msg.match(/.*/)
-		  	  if (!msg){
+	  	  let msg = e.msg.match(/^#一键私发(.*)?$/)
+		  	  if (!msg[1]){
 		  this.setContext('PICKFR')
 		  await e.reply('请发送内容，或者发送‘取消’')
 		  return false
 	  }
-	  msg = msg[0]
+	  msg = msg[1]
 	  for (let friend of Bot.fl.keys()){
 		  Bot.pickFriend(friend).sendMsg(msg)
+		  		  e.runtime.common.sleep(500)
 	  }
   }else{
 	  await e.reply('你没有权限')
@@ -64,6 +66,7 @@ export class qf extends plugin {
 				  }
 	  for (let group of Bot.gl.keys()){
 		  Bot.pickGroup(group).sendMsg(msgtosendGR)
+		  		  e.runtime.common.sleep(500)
 	  }
   }
  async PICKFR(e){
@@ -74,6 +77,7 @@ export class qf extends plugin {
 				  }
 	  for (let group of Bot.fl.keys()){
 		  Bot.pickFriend(group).sendMsg(msgtosend)
+		  e.runtime.common.sleep(500)
 	  }
   }
 }
