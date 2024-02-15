@@ -57,27 +57,27 @@ export class qf extends plugin {
 	  return
   }
   }
-async PICKGR (e){
+async PICKGR (){
 	  	  	  let msgtosendGR = e.msg
-			  	  	  	  	  let msgtosend = e.msg
-				  if (!msgtosendGR||e.msg === '取消'){
-					  await e.reply('已结束发送')
+			  	  	  	  	  let msgtosend = this.e.msg
+				  if (!msgtosendGR||this.e.msg === '取消'){
+					  await this.e.reply('已结束发送')
 					  this.finish('PICKGR')
 				  }
 	  for (let group of Bot.gl.keys()){
 		  Bot.pickGroup(group).sendMsg(msgtosendGR)
-		  		await  e.runtime.common.sleep(500)
+		  		await  this.e.runtime.common.sleep(500)
 	  }
   }
-async PICKFR(e){
-	  	  	  	  let msgtosend = e.msg
-				  if (!msgtosend||e.msg === '取消'){
-					  await e.reply('已结束发送')
+async PICKFR(){
+	  	  	  	  let msgtosend = this.e.msg
+				  if (!msgtosend||this.e.msg === '取消'){
+					  await this.e.reply('已结束发送')
 					  this.finish('PICKFR')
 				  }
 	  for (let group of Bot.fl.keys()){
 		  Bot.pickFriend(group).sendMsg(msgtosend)
-		 await e.runtime.common.sleep(500)
+		 await this.e.runtime.common.sleep(500)
 	  }
   }
 }
