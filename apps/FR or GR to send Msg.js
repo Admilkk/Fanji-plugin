@@ -16,7 +16,7 @@ export class qf extends plugin {
         },
         {
           reg: "^#一键私发(.*)?$",
-          fnc: "qf"
+          fnc: "hyqf"
         }
       ]
     })
