@@ -26,14 +26,13 @@ export class qf extends plugin {
 	  let msg = e.msg.match(/^#一键群发(.*)?$/)
 	  if (!msg[1]){
 		  await e.reply('请发送内容，或者发送‘取消’')
-		  await this.setContext('PICKGR')
-		  
-		  return false
-	  }
+		  this.setContext('PICKGR')
+	  }else{
 	  msg = msg[1]
 	  for (let group of Bot.gl.keys()){
 		  Bot.pickGroup(group).sendMsg(msg)
 		  		  e.runtime.common.sleep(500)
+	  }
 	  }
   }else{
 	  await e.reply('你没有权限')
@@ -45,20 +44,20 @@ export class qf extends plugin {
 	  	  let msg = e.msg.match(/^#一键私发(.*)?$/)
 		  	  if (!msg[1]){
 				  await e.reply('请发送内容，或者发送‘取消’')
-		 await this.setContext('PICKFR')
-		  return false
-	  }
+		 this.setContext('PICKFR')
+	  }else{
 	  msg = msg[1]
 	  for (let friend of Bot.fl.keys()){
 		  Bot.pickFriend(friend).sendMsg(msg)
 		  		  e.runtime.common.sleep(500)
+	  }
 	  }
   }else{
 	  await e.reply('你没有权限')
 	  return
   }
   }
- async PICKGR (e){
+PICKGR (e){
 	  	  	  let msgtosendGR = e.msg
 			  	  	  	  	  let msgtosend = e.msg
 				  if (!msgtosendGR||e.msg === '取消'){
@@ -70,7 +69,7 @@ export class qf extends plugin {
 		  		  e.runtime.common.sleep(500)
 	  }
   }
- async PICKFR(e){
+PICKFR(e){
 	  	  	  	  let msgtosend = e.msg
 				  if (!msgtosend||e.msg === '取消'){
 					  await e.reply('已结束发送')
