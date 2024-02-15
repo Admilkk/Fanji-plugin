@@ -56,14 +56,14 @@ export class qf extends plugin {
   }
   }
   PICKGR (e){
-	  	  	  let msgtosend = e.msg
+	  	  	  let msgtosendGR = e.msg
 			  	  	  	  	  let msgtosend = e.msg
-				  if (!msgtosend||e.msg === '取消'){
+				  if (!msgtosendGR||e.msg === '取消'){
 					  await e.reply('已结束发送')
 					  this.finish('PICKGR')
 				  }
 	  for (let group of Bot.gl().keys){
-		  Bot.pickGroup(group).sendMsg(msg)
+		  Bot.pickGroup(group).sendMsg(msgtosendGR)
 	  }
   }
   PICKFR(e){
@@ -73,7 +73,7 @@ export class qf extends plugin {
 					  this.finish('PICKFR')
 				  }
 	  for (let group of Bot.fl().keys){
-		  Bot.pickFriend(group).sendMsg(msg)
+		  Bot.pickFriend(group).sendMsg(msgtosend)
 	  }
   }
 }
