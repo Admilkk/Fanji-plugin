@@ -55,7 +55,7 @@ export class qf extends plugin {
 	  return
   }
   }
-  PICKGR (e){
+ async PICKGR (e){
 	  	  	  let msgtosendGR = e.msg
 			  	  	  	  	  let msgtosend = e.msg
 				  if (!msgtosendGR||e.msg === '取消'){
@@ -66,7 +66,7 @@ export class qf extends plugin {
 		  Bot.pickGroup(group).sendMsg(msgtosendGR)
 	  }
   }
-  PICKFR(e){
+ async PICKFR(e){
 	  	  	  	  let msgtosend = e.msg
 				  if (!msgtosend||e.msg === '取消'){
 					  await e.reply('已结束发送')
