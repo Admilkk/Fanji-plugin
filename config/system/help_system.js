@@ -38,6 +38,16 @@ export const helpList = [
         icon: 28,
         title: '补充说明',
         desc: '第二个123指的是时间单位为秒可以不带'
+      },
+      {
+        icon: 28,
+        title: '#一键群发',
+        desc: '一键给所有群发送内容'
+      },
+      {
+        icon: 28,
+        title: '#一键私发',
+        desc: '一键给所有人发送内容'
       }
     ]
   }, {
