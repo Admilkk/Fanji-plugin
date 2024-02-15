@@ -25,8 +25,8 @@ export class qf extends plugin {
 	  if (e.isMaster || await cm.check(e.user_id)){
 	  let msg = e.msg.match(/^#一键群发(.*)?$/)
 	  if (!msg[1]){
-		  await e.reply('请发送内容，或者发送‘取消’')
-		  this.setContext('PICKGR')
+		  await e.reply('加上需要发送的内容')/* 或者发送‘取消’ */
+		  // this.setContext('PICKGR')
 	  }else{
 	  msg = msg[1]
 	  for (let group of Bot.gl.keys()){
@@ -43,8 +43,8 @@ export class qf extends plugin {
 	  	  if (e.isMaster || await cm.check(e.user_id)){
 	  	  let msg = e.msg.match(/^#一键私发(.*)?$/)
 		  	  if (!msg[1]){
-				  await e.reply('请发送内容，或者发送‘取消’')
-		 this.setContext('PICKFR')
+ await e.reply('加上需要发送的内容')/* 或者发送‘取消’ */
+		  // this.setContext('PICKGR')
 	  }else{
 	  msg = msg[1]
 	  for (let friend of Bot.fl.keys()){
