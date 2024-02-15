@@ -30,7 +30,7 @@ export class qf extends plugin {
 		  return false
 	  }
 	  msg = msg[0]
-	  for (let group of Bot.gl.keys){
+	  for (let group of Bot.gl.keys()){
 		  Bot.pickGroup(group).sendMsg(msg)
 	  }
   }else{
@@ -47,7 +47,7 @@ export class qf extends plugin {
 		  return false
 	  }
 	  msg = msg[0]
-	  for (let friend of Bot.fl.keys){
+	  for (let friend of Bot.fl.keys()){
 		  Bot.pickFriend(friend).sendMsg(msg)
 	  }
   }else{
@@ -62,7 +62,7 @@ export class qf extends plugin {
 					  await e.reply('已结束发送')
 					  this.finish('PICKGR')
 				  }
-	  for (let group of Bot.gl.keys){
+	  for (let group of Bot.gl.keys()){
 		  Bot.pickGroup(group).sendMsg(msgtosendGR)
 	  }
   }
@@ -72,7 +72,7 @@ export class qf extends plugin {
 					  await e.reply('已结束发送')
 					  this.finish('PICKFR')
 				  }
-	  for (let group of Bot.fl.keys){
+	  for (let group of Bot.fl.keys()){
 		  Bot.pickFriend(group).sendMsg(msgtosend)
 	  }
   }
