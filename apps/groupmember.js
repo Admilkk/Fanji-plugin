@@ -105,8 +105,14 @@ export class example2 extends plugin {
 
   // 辅助函数，分批发送消息
 async sendBatchedMessages(messages, e) {
-    const batchSize = 10;
+    const batchSize = 20;
     const batches = [];
+	 const lines = messages.length;
+    let totalEstimate = Math.ceil(lines / batchSize) * 6;
+	    if (lines > 300) {
+        const estimatedTime = totalEstimate + 5; // 预估的发送时间，失败还有5秒的冷却时间
+        await e.reply(`发送时间可能过长，预计发送时间为 ${estimatedTime} 秒`);
+    }
     for (let i = 0; i < messages.length; i += batchSize) {
         const batch = messages.slice(i, i + batchSize);
         batches.push(batch);
@@ -126,6 +132,7 @@ async sendBatchedMessages(messages, e) {
                 if (attempts < 3) {
                     // 如果发送失败，则重新发送
                     forwardMsg = await e.runtime.common.makeForwardMsg(e, batch, "本地群员名单");
+					await e.runtime.common.sleep(5000)
                 }
             }
         }
