@@ -48,7 +48,7 @@ export class example2 extends plugin {
       e.reply('你没有权限啊');
       return false;
     }
-    this.sendBatchedMessages(await this.getmemberlist(e, false), e);
+    await this.sendBatchedMessages(await this.getmemberlist(e, false), e);
   }
 
   async getmemberlist(e, bcorck) {
@@ -100,7 +100,7 @@ export class example2 extends plugin {
     let grouplist = JSON.parse(fs.readFileSync(savepath, { encoding: 'utf8' }) || null);
     let formattedList = grouplist.map(item => [item[0], segment.image(item[1])]);
 
-    this.sendBatchedMessages(formattedList, e);
+    await this.sendBatchedMessages(formattedList, e);
   }
 
   // 辅助函数，分批发送消息
