@@ -104,11 +104,27 @@ export class example2 extends plugin {
   }
 
   // 辅助函数，分批发送消息
-  async sendBatchedMessages(messages, e) {
+async sendBatchedMessages(messages, e) {
     const batchSize = 100;
+    const batches = [];
     for (let i = 0; i < messages.length; i += batchSize) {
-      const batch = messages.slice(i, i + batchSize);
-      await e.reply(await e.runtime.common.makeForwardMsg(e, batch, "本地群员名单"));
+      batches.push(messages.slice(i, i + batchSize));
+    }
+
+    // 并发发送消息
+    await Promise.all(batches.map(batch => this.sendMessageBatch(batch, e)));
+  }
+
+  async sendMessageBatch(batch, e) {
+    // 发送批量消息
+    const forwardMsgs = await Promise.all(batch.map(async message => {
+      return await e.runtime.common.makeForwardMsg(e, message, "本地群员名单");
+    }));
+
+    // 发送批量消息
+    for (const forwardMsg of forwardMsgs) {
+      await e.reply(forwardMsg);
     }
   }
+
 }
