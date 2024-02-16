@@ -110,8 +110,9 @@ async sendBatchedMessages(messages, e) {
     const lines = messages.length;
     let totalEstimate = Math.ceil(lines / batchSize) * 8;
     let totalMsg = Math.ceil(lines / batchSize);
+	 const estimatedTime = totalEstimate + 15; // 预估的发送时间，失败还有15秒的冷却时间
     if (lines > 300) {
-        const estimatedTime = totalEstimate + 15; // 预估的发送时间，失败还有15秒的冷却时间
+       
         await e.reply(`发送时间可能过长，预计发送时间为 ${estimatedTime} 秒`);
     }
 	 await e.reply(`预计发送时间为 ${estimatedTime} 秒`);
