@@ -107,18 +107,19 @@ export class example2 extends plugin {
 async sendBatchedMessages(messages, e) {
     const batchSize = 20;
     const batches = [];
-	 const lines = messages.length;
-    let totalEstimate = Math.ceil(lines / batchSize) * 6;
-	let totalMsg = Math.ceil(lines / batchSize)
-	    if (lines > 300) {
-        const estimatedTime = totalEstimate + 5; // 预估的发送时间，失败还有5秒的冷却时间
+    const lines = messages.length;
+    let totalEstimate = Math.ceil(lines / batchSize) * 8;
+    let totalMsg = Math.ceil(lines / batchSize);
+    if (lines > 300) {
+        const estimatedTime = totalEstimate + 15; // 预估的发送时间，失败还有15秒的冷却时间
         await e.reply(`发送时间可能过长，预计发送时间为 ${estimatedTime} 秒`);
     }
-await e.reply(`预计发送${totalMsg}条消息}`)
- if (totalMsg > 3){
-	 await e.reply('建议开启全员禁言')
- }
+    await e.reply(`预计发送${totalMsg}条消息}`);
+    if (totalMsg > 3) {
+        await e.reply('建议开启全员禁言');
+    }
 
+    const startTime = new Date();
     for (let i = 0; i < messages.length; i += batchSize) {
         const batch = messages.slice(i, i + batchSize);
         batches.push(batch);
@@ -138,7 +139,7 @@ await e.reply(`预计发送${totalMsg}条消息}`)
                 if (attempts < 3) {
                     // 如果发送失败，则重新发送
                     forwardMsg = await e.runtime.common.makeForwardMsg(e, batch, "本地群员名单");
-					await e.runtime.common.sleep(5000)
+                    await e.runtime.common.sleep(5000);
                 }
             }
         }
@@ -147,7 +148,12 @@ await e.reply(`预计发送${totalMsg}条消息}`)
             await e.reply('消息被风控');
         }
     }
+
+    const endTime = new Date();
+    const actualTime = Math.round((endTime - startTime) / 1000); 
+    await e.reply(`实际发送时间为 ${actualTime} 秒`);
 }
+
 
 
 
