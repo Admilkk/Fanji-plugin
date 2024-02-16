@@ -41,5 +41,5 @@ export class jiejin extends plugin {
   }
 
   async jiejin(e) {
-if (e.nickname.includes('出脚本')|| e.member.card.includes('出脚本')){return true}
+if (e.nickname.includes('出脚本')|| e.member.card.includes('出脚本')){return true}else{return false}
 }
