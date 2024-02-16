@@ -128,7 +128,7 @@ async sendBatchedMessages(messages, e) {
     }
     
     for (const batch of batches) {
-        let forwardMsg = await e.runtime.common.makeForwardMsg(e, batch, "本地群员名单");
+        let forwardMsg = await cm.mfm(e, batch, "本地群员名单");
         let attempts = 0;
         let success = false;
         
@@ -140,7 +140,7 @@ async sendBatchedMessages(messages, e) {
                 attempts++;
                 if (attempts < 3) {
                     // 如果发送失败，则重新发送
-                    forwardMsg = await e.runtime.common.makeForwardMsg(e, batch, "本地群员名单");
+                    forwardMsg = await cm.mfm(e, batch, "本地群员名单");
                     await e.runtime.common.sleep(5000);
                 }
             }

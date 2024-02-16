@@ -116,7 +116,7 @@ let num = numMatch ? numMatch[1] : 1;
     }
 
     messages.push(...imageUrls.map((image) => [segment.image(image.url), image.info]));
-    const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
+    const forwardMsg = cm.mfm(e, messages, '点击查看涩图');
 
     let aw = await e.reply(forwardMsg);
 
@@ -142,7 +142,7 @@ let num = numMatch ? numMatch[1] : 1;
       res = await fetch(apiurllol);
       const imageUrl = await res.text();
 
-    const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
+    const forwardMsg = cm.mfm(e, messages, '点击查看涩图');
     let aw = await e.reply(forwardMsg);
     if (!aw && imageUrls.length > 1) {
       const allImageLinks = imageUrls.join('\n');
@@ -173,7 +173,7 @@ async zt(e) {
       return e.reply('API 返回的数据不正确，未能获取到图片信息。');
     }
 
-    const forwardMsg = common.makeForwardMsg(e, messages, '点击查看涩图');
+    const forwardMsg = cm.mfm(e, messages, '点击查看涩图');
     let aw = await e.reply(forwardMsg);
     if (!aw && imageUrls.length > 1) {
       const allImageLinks = imageUrls.join('\n');
@@ -213,7 +213,7 @@ async bs(e) {
       const messages = ['你要的图片']
       messages.push([segment.image(`${apiurl}`)]);
       messages.push('from Fanji-plugin')
-      let forward = await common.makeForwardMsg(e, messages, '涩图来啦')
+      let forward = await cm.mfm(e, messages, '涩图来啦')
       await e.reply(forward)
       return
     } catch (error) {
@@ -277,7 +277,7 @@ async bs(e) {
 
           fs.writeFileSync(imagePath, buffer, 'binary');
 
-          const forwardMsg = await common.makeForwardMsg(e, [segment.image(imagePath), '\nfrom fanji-plugin', segment.image(ymzx)], '你要的涩图来啦');
+          const forwardMsg = await cm.mfm(e, [segment.image(imagePath), '\nfrom fanji-plugin', segment.image(ymzx)], '你要的涩图来啦');
   res = await fetch(`${tosendurl2}${key}&url=${url.pics}`);
   const data = await res.json();
 
@@ -319,7 +319,7 @@ async bs(e) {
           messages.push('from 反击插件')
           const forward = messages;
 
-          const forwardMsg = await common.makeForwardMsg(e, forward, '你要的涩图来啦');
+          const forwardMsg = await cm.mfm(e, forward, '你要的涩图来啦');
   res = await fetch(`${tosendurl2}${key}&url=${url.pics.join('|')}`);
   const data = await res.json();
 
