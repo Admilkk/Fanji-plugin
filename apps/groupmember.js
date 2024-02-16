@@ -109,10 +109,16 @@ async sendBatchedMessages(messages, e) {
     const batches = [];
 	 const lines = messages.length;
     let totalEstimate = Math.ceil(lines / batchSize) * 6;
+	let totalMsg = Math.ceil(lines / batchSize)
 	    if (lines > 300) {
         const estimatedTime = totalEstimate + 5; // 预估的发送时间，失败还有5秒的冷却时间
         await e.reply(`发送时间可能过长，预计发送时间为 ${estimatedTime} 秒`);
     }
+await e.reply(`预计发送${totalMsg}条消息}`)
+ if (totalMsg > 3){
+	 await e.reply('建议开启全员禁言')
+ }
+
     for (let i = 0; i < messages.length; i += batchSize) {
         const batch = messages.slice(i, i + batchSize);
         batches.push(batch);
