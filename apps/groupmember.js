@@ -115,7 +115,7 @@ async sendBatchedMessages(messages, e) {
         await e.reply(`发送时间可能过长，预计发送时间为 ${estimatedTime} 秒`);
     }
 	 await e.reply(`预计发送时间为 ${estimatedTime} 秒`);
-    await e.reply(`预计发送${totalMsg}条消息}`);
+    await e.reply(`预计发送${totalMsg}条消息`);
     if (totalMsg > 3) {
         await e.reply('建议开启全员禁言');
     }
