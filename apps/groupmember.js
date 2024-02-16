@@ -111,9 +111,31 @@ async sendBatchedMessages(messages, e) {
         const batch = messages.slice(i, i + batchSize);
         batches.push(batch);
     }
-    const forwardMsgs = await Promise.all(batches.map(batch => e.runtime.common.makeForwardMsg(e, batch, "本地群员名单")));
-    await e.reply(forwardMsgs); 
+    
+    for (const batch of batches) {
+        let forwardMsg = await e.runtime.common.makeForwardMsg(e, batch, "本地群员名单");
+        let attempts = 0;
+        let success = false;
+        
+        while (!success && attempts < 3) {
+            let aw = await e.reply(forwardMsg); 
+            if (aw) {
+                success = true;
+            } else {
+                attempts++;
+                if (attempts < 3) {
+                    // 如果发送失败，则重新发送
+                    forwardMsg = await e.runtime.common.makeForwardMsg(e, batch, "本地群员名单");
+                }
+            }
+        }
+        
+        if (!success) {
+            await e.reply('消息被风控');
+        }
+    }
 }
+
 
 
 }
