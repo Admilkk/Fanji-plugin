@@ -105,7 +105,7 @@ export class example2 extends plugin {
 
   // 辅助函数，分批发送消息
 async sendBatchedMessages(messages, e) {
-    const batchSize = 50;
+    const batchSize = 10;
     const batches = [];
     for (let i = 0; i < messages.length; i += batchSize) {
         const batch = messages.slice(i, i + batchSize);
