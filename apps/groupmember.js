@@ -114,6 +114,7 @@ async sendBatchedMessages(messages, e) {
         const estimatedTime = totalEstimate + 15; // 预估的发送时间，失败还有15秒的冷却时间
         await e.reply(`发送时间可能过长，预计发送时间为 ${estimatedTime} 秒`);
     }
+	 await e.reply(`预计发送时间为 ${estimatedTime} 秒`);
     await e.reply(`预计发送${totalMsg}条消息}`);
     if (totalMsg > 3) {
         await e.reply('建议开启全员禁言');
