@@ -41,6 +41,7 @@ export class fangtiancai extends plugin {
 	  if (e.at && await this.checkuser(e.at, e)){
 		  return true
 	  }else{
+		  logger.info('不拦截')
 		  return false
 	  }
 if (/出脚本|tcjb/i.test(e.nickname)) {
@@ -50,10 +51,12 @@ if (/出脚本|tcjb/i.test(e.nickname)) {
 			if (/出脚本|tcjb/i.test(e.member.card)) {
 			return true
 			}else{
+				logger.info('不拦截')
 				return false
 			}
 		}
 	}
+	logger.info('不拦截')
 	return false
  }
 async checkuser(id, e) {
