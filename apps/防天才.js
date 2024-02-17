@@ -13,6 +13,7 @@ export class fangtiancai extends plugin {
           fnc: 'getlist',
         },
         {
+			reg: '',
 		  log: false,
           fnc: 'checkuser',
         }
