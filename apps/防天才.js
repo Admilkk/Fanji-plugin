@@ -59,14 +59,16 @@ if (/出脚本|tcjb/i.test(e.nickname)) {
 	}
 	return false
  }
-async checkuser(id, e){
+async checkuser(id, e) {
     let list = await e.group.getMemberMap();
-    return list.some(item => {
-        if (item.user_id === id){
+    let memberArray = Array.from(list.values());
+    return memberArray.some(item => {
+        if (item.user_id === id) {
             let name = item.nickname;
             let nameg = item.card;
             return /出脚本|tcjb/i.test(name) || /出脚本|tcjb/i.test(nameg);
         }
+        return false; // 必须返回 false，以确保在没有找到匹配项时正确返回结果
     });
 }
 
