@@ -7,10 +7,20 @@ import fetch from 'node-fetch';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?type=302&list=';
+let apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?type=302&list=';
 const apiurl2 = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
-const regs = '塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧';
-
+// const regs = '塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧';
+const configContent = fs.readFileSync(filepath, 'utf8');
+let config = yaml.load(configContent);
+const filepath = path.join(__dirname, '../config/config.yaml');
+if (!config.hasOwnProperty('pixiv')) {
+  config.pixiv = false;
+  const updatedConfigContent = yaml.dump(config);
+  fs.writeFileSync(filepath, updatedConfigContent, 'utf8');
+}
+if (config.pixiv === true) {
+  apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
+}
 export class apibq extends plugin {
   constructor() {
     super({
@@ -92,26 +102,7 @@ async updateRegex() {
 }
 
 
-async downloadAndSendFile(e, url, savePath) {
-    try {
-        const response = await fetch(url);
-        const fileData = await response.buffer();
 
-        const directory = path.dirname(savePath);
-        if (!fs.existsSync(directory)) {
-            fs.mkdirSync(directory, { recursive: true });
-        }
-
-        fs.writeFileSync(savePath, fileData);
-
-        await e.reply([segment.image(`{savePath}`)]);
-
-        // 删除下载的文件
-        fs.unlinkSync(savePath);
-    } catch (error) {
-        logger.error(error.toString());
-    }
-}
 
 async bq(e) {
 	try {
@@ -129,11 +120,8 @@ async bq(e) {
     emojiName = 'sj';
   }
 logger.mark(emojiName)
-        const emojiUrl = `${apiurl}${emojiName}`;
-		const timestamp = new Date().getTime();
-const savePath = path.join(__dirname, '../resource/bq', `${timestamp}.png`);
 
-        await downloadAndSendFile(e, emojiUrl, savePath);
+  await e.reply([segment.image(`${apiurl}${emojiName}`)]);
   return false;
 	}catch(error){
   return false;
