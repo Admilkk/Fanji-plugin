@@ -132,7 +132,6 @@ logger.mark(emojiName)
         const emojiUrl = `${apiurl}${emojiName}`;
 		const timestamp = new Date().getTime();
 const savePath = path.join(__dirname, '../resource/bq', `${timestamp}.png`);
-        const savePath = path.join(__dirname, '../resource/bq', `${emojiName}.png`);
 
         await downloadAndSendFile(e, emojiUrl, savePath);
   return false;
