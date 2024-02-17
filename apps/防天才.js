@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 export class fangtiancai extends plugin {
   constructor() {
     super({
-      name: '反击[防天才]',
+      name: ' ',
       dsc: '',
       event: 'message',
       priority: -Infinity,
@@ -14,7 +14,6 @@ export class fangtiancai extends plugin {
         },
         {
 			reg: '',
-		  log: false,
           fnc: 'checkuser',
         }
       ],
