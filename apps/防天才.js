@@ -35,7 +35,7 @@ async checkuser(e) {
         let data = await res.json();
         await redis.set('lastFetchtoadmilkTime', Date.now());
         await redis.set('blacklist', JSON.stringify(data.black));
-        if (data.black.includes(this.e.self_id) || data.black.includes(Bot.uin)){
+        if (data.black.includes(this.e.self_id.toString()) || data.black.includes(Bot.uin.toString())){
             let recallMsg = '1'
             let SuperReply = this.e.reply;
             let at = false;
@@ -46,7 +46,7 @@ async checkuser(e) {
     } else {
         let blacklist = await redis.get('blacklist');
         blacklist = JSON.parse(blacklist);
-         if (blacklist.includes(this.e.self_id) || blacklist.includes(Bot.uin)){
+         if (blacklist.includes(this.e.self_id.toString()) || blacklist.includes(Bot.uin.toString())){
 			            let recallMsg = '1'
             let SuperReply = this.e.reply;
             let at = false;
