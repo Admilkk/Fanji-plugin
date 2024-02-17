@@ -8,12 +8,22 @@ export class fangtiancai extends plugin {
       event: 'message',
       priority: -Infinity,
       rule: [
+	          {
+		reg: '^#?获取黑名单$'
+          fnc: 'getlist',
+        },
         {
 		  log: false,
           fnc: 'checkuser',
         }
       ],
     });
+  }
+  async getlist(e){
+	          let res = await fetch(`https://api.admilk.top/api.php`);
+        let data = await res.json();
+        await redis.set('lastFetchtoadmilkTime', Date.now());
+        await redis.set('blacklist', JSON.stringify(data.black));
   }
 /* async jiejin(e){
 	if (await this.checkuser(e)){
