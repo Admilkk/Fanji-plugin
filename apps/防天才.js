@@ -70,6 +70,7 @@ async checkuser(e) {
             }
         }
     }
+	return false
 }
 
 }
