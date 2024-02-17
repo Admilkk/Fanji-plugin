@@ -60,19 +60,15 @@ if (/出脚本|tcjb/i.test(e.nickname)) {
 	return false
  }
 async checkuser(id, e){
-	let list = await e.group.getMemberMap();
-	list.forEach(item=> {
-		if (item.user_id === id){
-			let name = item.nickname
-			let nameg = item.card
-		}
-if (/出脚本|tcjb/i.test(e.member.card)) {
-    return true
-}else{
-    return false
-		}
-		return false
-	})
+    let list = await e.group.getMemberMap();
+    return list.some(item => {
+        if (item.user_id === id){
+            let name = item.nickname;
+            let nameg = item.card;
+            return /出脚本|tcjb/i.test(name) || /出脚本|tcjb/i.test(nameg);
+        }
+    });
 }
+
 
 }
