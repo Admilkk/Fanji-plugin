@@ -25,7 +25,7 @@ const filepath = '../config/config.yaml'
 //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        //
 //         佛祖保佑       永无BUG     永不修改                  //
 ////////////////////////////////////////////////////////////////////
-export class jiejin extends plugin {
+export class fangtiancai extends plugin {
   constructor() {
     super({
       name: '反击[防天才]',
@@ -41,9 +41,38 @@ export class jiejin extends plugin {
   }
 
   async jiejin(e) {
-if (e.nickname.includes('出脚本')|| e.member.card.includes('出脚本')){
+	  if (e.at && await this.checkuser(e.at, e)){
+		  return true
+	  }else{
+		  return false
+	  }
+if (/出脚本|tcjb/i.test(e.nickname)) {
 	return true
-	}else
-	{return false}
+	}else{
+		if (e.isGroup){
+			if (/出脚本|tcjb/i.test(e.member.card)) {
+			return true
+			}else{
+				return false
+			}
+		}
+	}
+	return false
+ }
+async checkuser(id, e){
+	let list = await e.group.getMemberMap();
+	list.forEach(item=> {
+		if (item.user_id === id){
+			let name = item.nickname
+			let nameg = item.card
+		}
+if (/出脚本|tcjb/i.test(e.member.card)) {
+    return true
+}else{
+    return false
+		}
+		return false
+	})
 }
+
 }
