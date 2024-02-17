@@ -13,49 +13,39 @@ export class fangtiancai extends plugin {
           fnc: 'getlist',
         },
         {
-			reg: '',
-          fnc: 'checkuser',
+		log: false,
+        fnc: 'checkuser',
         }
       ],
     });
   }
-  async getlist(e){
-        let res = await fetch(`https://api.admilk.top/api.php`);
-        let data = await res.json();
-        await redis.set('lastFetchtoadmilkTime', Date.now());
-        await redis.set('blacklist', JSON.stringify(data.black));
-  }
+async getlist() {
+    let res = await fetch(`https://api.admilk.top/api.php`);
+    let data = await res.json();
+    await redis.set('lastFetchtoadmilkTime', Date.now().toString());
+    await redis.set('blacklist', JSON.stringify(data.black));
+}
 
 async checkuser(e) {
     // 从 Redis 中获取上次获取黑名单数据的时间戳
     let lastFetchTime = await redis.get('lastFetchtoadmilkTime');
     // 如果没有获取过数据或者超过了 5 分钟，则向 API 请求新的黑名单数据
     if (!lastFetchTime || Date.now() - parseInt(lastFetchTime) > 5 * 60 * 1000) {
-        let res = await fetch(`https://api.admilk.top/api.php`);
-        let data = await res.json();
-        await redis.set('lastFetchtoadmilkTime', Date.now());
-        await redis.set('blacklist', JSON.stringify(data.black));
-        if (data.black.includes(this.e.self_id.toString()) || data.black.includes(Bot.uin.toString())){
-            let recallMsg = '1'
-            let SuperReply = this.e.reply;
-            let at = false;
-            this.e.reply = async function (massage , quote = false, data = {}) {
-                return await SuperReply(massage, quote, { at, recallMsg, ...data });
-            }
-        }
-    } else {
-        let blacklist = await redis.get('blacklist');
-        blacklist = JSON.parse(blacklist);
-         if (blacklist.includes(this.e.self_id.toString()) || blacklist.includes(Bot.uin.toString())){
-			            let recallMsg = '1'
-            let SuperReply = this.e.reply;
-            let at = false;
-            this.e.reply = async function (massage , quote = false, data = {}) {
-                return await SuperReply(massage, quote, { at, recallMsg, ...data });
-            }
+        await this.getlist(); // 使用已有的获取数据的函数
+    }
+
+    let blacklist = await redis.get('blacklist');
+    blacklist = JSON.parse(blacklist);
+
+    if (blacklist.includes(this.e.self_id.toString()) || blacklist.includes(Bot.uin.toString())) {
+        let recallMsg = '1'
+        let SuperReply = this.e.reply;
+        let at = false;
+        this.e.reply = async function (massage , quote = false, data = {}) {
+            return await SuperReply(massage, quote, { at, recallMsg, ...data });
         }
     }
-	return false
+    return false;
 }
 
 }
