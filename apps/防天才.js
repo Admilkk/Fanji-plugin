@@ -20,7 +20,7 @@ export class fangtiancai extends plugin {
     });
   }
   async getlist(e){
-	          let res = await fetch(`https://api.admilk.top/api.php`);
+        let res = await fetch(`https://api.admilk.top/api.php`);
         let data = await res.json();
         await redis.set('lastFetchtoadmilkTime', Date.now());
         await redis.set('blacklist', JSON.stringify(data.black));
