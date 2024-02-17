@@ -15,7 +15,7 @@ const apiurl2 = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
 
 // 读取配置文件
 const configContent = fs.readFileSync(filepath, 'utf8');
-let config = yaml.load(configContent);
+let config = yaml.parse(configContent);
 
 // 根据配置文件设置apiurl
 if (!config.hasOwnProperty('pixiv')) {
