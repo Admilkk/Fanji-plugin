@@ -10,26 +10,7 @@ const __dirname = dirname(__filename);
 const apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?type=302&list=';
 const apiurl2 = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
 const regs = '塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧';
-async function downloadAndSendFile(e, url, savePath) {
-    try {
-        const response = await fetch(url);
-        const fileData = await response.buffer();
 
-        const directory = path.dirname(savePath);
-        if (!fs.existsSync(directory)) {
-            fs.mkdirSync(directory, { recursive: true });
-        }
-
-        fs.writeFileSync(savePath, fileData);
-
-        await e.reply([segment.image(`{savePath}`)]);
-
-        // 删除下载的文件
-        fs.unlinkSync(savePath);
-    } catch (error) {
-        logger.error(error.toString());
-    }
-}
 export class apibq extends plugin {
   constructor() {
     super({
@@ -111,7 +92,26 @@ async updateRegex() {
 }
 
 
+async downloadAndSendFile(e, url, savePath) {
+    try {
+        const response = await fetch(url);
+        const fileData = await response.buffer();
 
+        const directory = path.dirname(savePath);
+        if (!fs.existsSync(directory)) {
+            fs.mkdirSync(directory, { recursive: true });
+        }
+
+        fs.writeFileSync(savePath, fileData);
+
+        await e.reply([segment.image(`{savePath}`)]);
+
+        // 删除下载的文件
+        fs.unlinkSync(savePath);
+    } catch (error) {
+        logger.error(error.toString());
+    }
+}
 
 async bq(e) {
 	try {
