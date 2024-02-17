@@ -1,18 +1,23 @@
-import fs from 'fs'
+import fs from 'fs';
 import path from 'path';
 import cm from '../lib/common/CM.js';
 import { fileURLToPath } from 'url';
 import https from 'https';
 import fetch from 'node-fetch';
 import { dirname } from 'path';
+import yaml from 'yaml';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const filepath = path.join(__dirname, '../config/config.yaml'); // 将filepath的定义提前
 let apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?type=302&list=';
 const apiurl2 = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
-// const regs = '塞西莉亚|宇佐纪|斗图|暹罗猫|猫猫|色|茧';
+
+// 读取配置文件
 const configContent = fs.readFileSync(filepath, 'utf8');
 let config = yaml.load(configContent);
-const filepath = path.join(__dirname, '../config/config.yaml');
+
+// 根据配置文件设置apiurl
 if (!config.hasOwnProperty('pixiv')) {
   config.pixiv = false;
   const updatedConfigContent = yaml.dump(config);
