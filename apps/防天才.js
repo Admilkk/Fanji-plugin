@@ -9,7 +9,7 @@ export class fangtiancai extends plugin {
       priority: -Infinity,
       rule: [
 	          {
-		reg: '^#?获取黑名单$'
+		reg: '^#?获取黑名单$',
           fnc: 'getlist',
         },
         {
@@ -25,32 +25,7 @@ export class fangtiancai extends plugin {
         await redis.set('lastFetchtoadmilkTime', Date.now());
         await redis.set('blacklist', JSON.stringify(data.black));
   }
-/* async jiejin(e){
-	if (await this.checkuser(e)){
-		return true
-	}else{
-		return false
-	}
-}
-	 
 
-  async jiejin(e) {
-    if (e.at && await this.checkuser(e.at, e)) {
-      return true;
-    } else {
-      if (/出脚本|tcjb/i.test(e.nickname)) {
-        return true;
-      } else {
-        if (e.isGroup) {
-          if (/出脚本|tcjb/i.test(e.member.card)) {
-            return true;
-          }
-        }
-      }
-    }
-    logger.info('不拦截');
-    return false;
-  }  */
 async checkuser(e) {
     // 从 Redis 中获取上次获取黑名单数据的时间戳
     let lastFetchTime = await redis.get('lastFetchtoadmilkTime');
@@ -84,3 +59,36 @@ async checkuser(e) {
 }
 
 }
+
+
+
+
+
+
+
+/* async jiejin(e){
+	if (await this.checkuser(e)){
+		return true
+	}else{
+		return false
+	}
+}
+	 
+
+  async jiejin(e) {
+    if (e.at && await this.checkuser(e.at, e)) {
+      return true;
+    } else {
+      if (/出脚本|tcjb/i.test(e.nickname)) {
+        return true;
+      } else {
+        if (e.isGroup) {
+          if (/出脚本|tcjb/i.test(e.member.card)) {
+            return true;
+          }
+        }
+      }
+    }
+    logger.info('不拦截');
+    return false;
+  }  */
