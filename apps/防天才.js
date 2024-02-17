@@ -68,7 +68,7 @@ async checkuser(id, e) {
             let nameg = item.card;
             return /出脚本|tcjb/i.test(name) || /出脚本|tcjb/i.test(nameg);
         }
-        return false; // 必须返回 false，以确保在没有找到匹配项时正确返回结果
+        return false;
     });
 }
 
