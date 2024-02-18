@@ -1,4 +1,4 @@
-import cm from '../lib/common/CM.js';
+//import cm from '../lib/common/CM.js';
 import fetch from 'node-fetch';
 export class fangtiancai extends plugin {
   constructor() {
