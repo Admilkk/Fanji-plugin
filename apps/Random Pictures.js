@@ -116,7 +116,7 @@ let num = numMatch ? numMatch[1] : 1;
     }
 
     messages.push(...imageUrls.map((image) => [segment.image(image.url), image.info]));
-    const forwardMsg = cm.mfm(e, messages, '点击查看涩图');
+    const forwardMsg = e.runtime.common.makeForwardMsg(e, messages, '点击查看涩图');
 
     let aw = await e.reply(forwardMsg);
 
