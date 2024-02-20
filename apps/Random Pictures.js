@@ -101,7 +101,7 @@ let num = numMatch ? numMatch[1] : 1;
 
     for (const item of result.data) {
       const imageUrl = item.urls.original;
-      const imageInfo = `标题: ${item.title}\n作者: ${item.author}\nPID: ${item.pid}\nUID: ${item.uid}\n标签: ${item.tags.join(', ')}\n`;
+      const imageInfo = `标题: ${item.title}\n作者: ${item.author}\nPID: ${item.pid}\nUID: ${item.uid}\n}\n`;/*标签: ${item.tags.join(', ')*/
       imageUrls.push({ url: imageUrl, info: imageInfo });
     }
 
