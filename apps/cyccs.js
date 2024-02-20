@@ -1,4 +1,4 @@
-﻿export class chuo extends plugin {
+export class chuo extends plugin {
   constructor() {
     super({
       name: '戳一111111',
@@ -21,7 +21,7 @@
       e.reply('?');
       return true;
     }
-    if (e.target_id !== Bot.uin && e.operator_id !== Bot.uin) {
+    if (e.target_id !== e.self_id && e.operator_id !== e.self_id) {
       try {
         const FKey = `${e.operator_id}5AFE${e.target_id}`;
         // logger.info(Fkey)
