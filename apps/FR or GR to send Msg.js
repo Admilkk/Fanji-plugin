@@ -25,7 +25,7 @@ export class qf extends plugin {
 	  if (e.isMaster || await cm.check(e.user_id)){
 	  let msg = e.msg.match(/^#一键群发(.*)?$/)
 	  if (!msg[1]){
-		  await e.reply('加上需要发送的内容')/* 或者发送‘取消’ */
+		  await e.reply('加上需要发送的内容')
 		  // this.setContext('PICKGR')
 	  }else{
 	  msg = msg[1]
@@ -43,7 +43,7 @@ export class qf extends plugin {
 	  	  if (e.isMaster || await cm.check(e.user_id)){
 	  	  let msg = e.msg.match(/^#一键私发(.*)?$/)
 		  	  if (!msg[1]){
- await e.reply('加上需要发送的内容')/* 或者发送‘取消’ */
+ await e.reply('加上需要发送的内容')
 		  // this.setContext('PICKGR')
 	  }else{
 	  msg = msg[1]
