@@ -46,7 +46,7 @@ pnpm install
 
 1. 功能仅限内部交流与小范围使用，请勿将Yunzai-Bot及Fanji-plugin用于以盈利为目的的场景
 2. 图片与其他素材均来自于网络，仅供娱乐测试使用，如有侵权请联系，会立即删除
-3. 使用此插件产生的一切后果由** 使用者 **承担
+3. 使用此插件产生的一切后果由**使用者**承担
 
 <!--## <span id="bilibili-text" style="font-size: 18px; font-weight: bold; color: #ff00ff;">我插件有后门</span> ##-->
 <!--<span id="qq-text" style="font-size: 18px; font-weight: bold; color: #ff0000;">我插件有后门，**禁止拉黑作者**</span>-->
