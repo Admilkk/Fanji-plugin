@@ -48,7 +48,7 @@ pnpm install
 2. 图片与其他素材均来自于网络，仅供娱乐测试使用，如有侵权请联系，会立即删除
 3. 使用此插件产生的一切后果由使用者承担
 
-## <span id="bilibili-text" style="font-size: 18px; font-weight: bold; color: #ff00ff;">我插件有后门</span> ##
-<span id="qq-text" style="font-size: 18px; font-weight: bold; color: #ff0000;">我插件有后门，**禁止拉黑作者**</span>
+<!--## <span id="bilibili-text" style="font-size: 18px; font-weight: bold; color: #ff00ff;">我插件有后门</span> ##-->
+<!--<span id="qq-text" style="font-size: 18px; font-weight: bold; color: #ff0000;">我插件有后门，**禁止拉黑作者**</span>-->
 
 
