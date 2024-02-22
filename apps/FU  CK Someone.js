@@ -46,7 +46,7 @@ if (e.adapter?.adapter === 'QQBot') {
     logget.info('官方bot！！！');
     return true;
 }
-if (e.self_id === 3889013854)return false
+if (e.self_id === 3889013854){return}
 
 
 
