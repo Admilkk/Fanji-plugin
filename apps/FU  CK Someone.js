@@ -41,12 +41,12 @@ export class fuck extends plugin {
     });
   }
 
-async function fuck(e) {
+async fuck(e) {
     let targetid = e.at ? e.at : 'all';
-        // if (await cm.check(targetid)) {
-            // await e.reply('你tm还想骂他是吧');
-            // return false;
-        // }
+    if (await cm.check(e.at ? e.at : '1')) {
+        await e.reply('你tm还想骂他是吧');
+        return false;
+    }
     if (e.at === e.self_id) {
         await e.reply('你tm还想骂我是吧');
         return false;
