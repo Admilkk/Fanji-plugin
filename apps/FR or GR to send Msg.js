@@ -17,9 +17,20 @@ export class qf extends plugin {
         {
           reg: "^#一键私发(.*)?$",
           fnc: "hyqf"
-        }
+        },
+        {
+          reg: "^#?一键打卡$",
+          fnc: "dk"
+        },
       ]
     })
+  }
+  async dk(e){
+	  	  if (e.isMaster || await cm.check(e.user_id)){
+			  for (let group of Bot[e.self_id].gl.keys())
+				  Bot.pickGroup(group).sign()
+		  }
+		  await e.rely('打卡完成')
   }
   async qf(e){
 	  if (e.isMaster || await cm.check(e.user_id)){
