@@ -28,7 +28,7 @@ const filepath = '../config/config.yaml'
 export class fuck extends plugin {
   constructor() {
     super({
-      name: '反击[解禁]',
+      name: '反击[骂]',
       dsc: '解禁',
       event: 'message',
       priority: -99999999991,
