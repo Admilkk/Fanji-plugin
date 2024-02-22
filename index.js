@@ -4,8 +4,8 @@ import fs from 'node:fs';
 import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
-import Setting from './config/utils/setting.js';
-const setting = new Setting()
+import Setting from './plugins/Fanji-plugin/config/utils/setting.js';
+// const setting = new Setting()
 setting.initCfg()
 const configFilePath = path.resolve('./config/config/other.yaml');
 const otherConfigFilePath = path.resolve('./plugins/Fanji-plugin/config');
