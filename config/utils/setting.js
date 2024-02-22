@@ -124,7 +124,7 @@ class Setting {
           fs.copyFileSync(`${this.defPath}${app}.yaml`, `${this.configPath}${app}.yaml`)
         }
       } catch (error) {
-        logger.error(`cunyx插件缺失默认文件[${app}]${error}`)
+        logger.error(`[反击插件]缺失默认文件[${app}]${error}`)
       }
       return `${this.configPath}${app}.yaml`
     }
