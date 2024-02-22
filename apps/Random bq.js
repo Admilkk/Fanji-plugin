@@ -10,22 +10,22 @@ import yaml from 'yaml';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const filepath = path.join(__dirname, '../config/config.yaml'); // 将filepath的定义提前
-let apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?type=302&list=';
+let apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
 const apiurl2 = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
 
 // 读取配置文件
-const configContent = fs.readFileSync(filepath, 'utf8');
-let config = yaml.parse(configContent);
+// const configContent = fs.readFileSync(filepath, 'utf8');
+// let config = yaml.parse(configContent);
 
 // 根据配置文件设置apiurl
-if (!config.hasOwnProperty('pixiv')) {
-  config.pixiv = false;
-  const updatedConfigContent = yaml.dump(config);
-  fs.writeFileSync(filepath, updatedConfigContent, 'utf8');
-}
-if (config.pixiv === true) {
-  apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
-}
+// if (!config.hasOwnProperty('pixiv')) {
+  // config.pixiv = false;
+  // const updatedConfigContent = yaml.dump(config);
+  // fs.writeFileSync(filepath, updatedConfigContent, 'utf8');
+// }
+// if (config.pixiv === true) {
+  // apiurl = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
+// }
 export class apibq extends plugin {
   constructor() {
     super({
