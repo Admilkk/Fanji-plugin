@@ -30,7 +30,7 @@ export class qf extends plugin {
 			  for (let group of Bot[e.self_id].gl.keys())
 				  Bot.pickGroup(group).sign()
 		  }
-		  await e.rely('打卡完成')
+		  await e.reply('打卡完成')
   }
   async qf(e){
 	  if (e.isMaster || await cm.check(e.user_id)){

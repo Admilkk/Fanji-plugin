@@ -34,6 +34,11 @@ export const helpList = [
         title: '#一键禁言@xxx 123',
         desc: '可以不带@，改成#一键禁言123 123'
       },
+	        {
+        icon: 28,
+        title: '#一键打卡',
+        desc: '在Bot在的全部群打卡'
+      },
       {
         icon: 28,
         title: '#骂@xxx',
