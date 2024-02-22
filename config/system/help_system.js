@@ -36,6 +36,11 @@ export const helpList = [
       },
       {
         icon: 28,
+        title: '#骂@xxx',
+        desc: '字面意思，但是千万别忘了at哦~'
+      },
+      {
+        icon: 28,
         title: '补充说明',
         desc: '第二个123指的是时间单位为秒可以不带'
       },
