@@ -43,7 +43,8 @@ export class fuck extends plugin {
 
 async fuck(e) {
 if (e.adapter?.adapter === 'QQBot') {
-    return false;
+	logget.info('官方bot！！！')
+    return true;
 }
 
 
