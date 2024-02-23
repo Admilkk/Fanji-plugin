@@ -40,9 +40,9 @@ this.task = [
       let msg = e.msg.match(/^#?(开启|关闭)(一键)?(群)?打卡$/)
       msg = msg[1]? msg[1] : false
 if (msg === '开启'){
-          await redis.set('Fanji:daka', true);  
+          await redis.set('Fanji:daka', 'true');  
 }else{
-    await redis.set('Fanji:daka', false);  
+    await redis.set('Fanji:daka', 'false');  
 }
 }
   async dk(e, isauto = false){
@@ -55,7 +55,7 @@ if (msg === '开启'){
               		  await e.reply('打卡完成')
                             }
             }else{
-                let daka = await this.GetredisKey('Fanji:daka', false)
+                let daka = await this.GetredisKey('Fanji:daka', 'false')
 if (daka){
     			  for (let group of Bot[e.self_id].gl.keys()){
 				  Bot.pickGroup(group).sign()
