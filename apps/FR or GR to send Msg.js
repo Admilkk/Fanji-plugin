@@ -22,15 +22,49 @@ export class qf extends plugin {
           reg: "^#?一键打卡$",
           fnc: "dk"
         },
+        {
+          reg: "^#?(开启|关闭)(一键)?(群)?打卡$",
+          fnc: "kqdk"
+        },
       ]
     })
+this.task = [ 
+  {
+	      cron: '5 0 0 * * ?',
+    name: '[反击插件]一键打卡',
+    fnc: () => this.dk(this.e, true),
+  },
   }
-  async dk(e){
-	  	  if (e.isMaster || await cm.check(e.user_id)){
-			  for (let group of Bot[e.self_id].gl.keys())
+  async kqdk (e) {
+      let msg = e.msg.match(/^#?(开启|关闭)(一键)?(群)?打卡$/)
+      msg = msg[1]? msg[1] : false
+if (msg === '开启'){
+          await redis.set('Fanji:daka', true);  
+}else{
+    await redis.set('Fanji:daka', false);  
+}
+}
+  async dk(e, isauto = false){
+	
+                if (!isauto){
+                      	  if (e.isMaster || await cm.check(e.user_id)){
+			  for (let group of Bot[e.self_id].gl.keys()){
 				  Bot.pickGroup(group).sign()
-		  }
-		  await e.reply('打卡完成')
+              }
+              		  await e.reply('打卡完成')
+                            }
+            }else{
+                let daka = await this.GetredisKey('Fanji:daka', false)
+if (daka){
+    			  for (let group of Bot[e.self_id].gl.keys()){
+				  Bot.pickGroup(group).sign()
+              }
+}else{
+    return;
+}
+               
+            }
+            
   }
   async qf(e){
 	  if (e.isMaster || await cm.check(e.user_id)){
@@ -91,4 +125,13 @@ async PICKFR(){
 		 await this.e.runtime.common.sleep(500)
 	  }
   }
+  async GetredisKey(key, defaultValue) {  
+    const value = await redis.get(key);   
+    if (value === null) {  
+      await redis.set(key, defaultValue);  
+      return defaultValue;  
+    } else {  
+      return value;  
+    }  
+}
 }
