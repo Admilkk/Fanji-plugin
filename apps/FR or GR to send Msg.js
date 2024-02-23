@@ -35,6 +35,7 @@ this.task = [
     fnc: () => this.dk(this.e, true),
   },
 ];
+  }
   async kqdk (e) {
       let msg = e.msg.match(/^#?(开启|关闭)(一键)?(群)?打卡$/)
       msg = msg[1]? msg[1] : false
@@ -133,6 +134,5 @@ async PICKFR(){
     } else {  
       return value;  
     }  
-}
 }
 }
