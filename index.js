@@ -70,7 +70,7 @@ watcher.on('change', async () => {
 logger.info('\x1b[34m---------加载插件中---------\x1b[0m');
 
 await (async () => {
-  const defConfigFolderPath = './plugins/Fanji-plugin/def_config';
+ /*  const defConfigFolderPath = './plugins/Fanji-plugin/def_config';
 
   try {
     // pluginConfig 文件夹已存在，强制复制 def_config 下的所有文件，排除 config.yaml
@@ -103,7 +103,7 @@ await (async () => {
     const msg = '创建和复制配置文件夹时出错：' + error.message;
     logger.error(msg);
   }
-
+ */
   await removeBlackQQ();
 
   logger.info('加载插件完成');
