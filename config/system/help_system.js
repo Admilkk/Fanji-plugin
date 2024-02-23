@@ -41,6 +41,16 @@ export const helpList = [
       },
       {
         icon: 28,
+        title: '#开启一键打卡',
+        desc: '凌晨在Bot在的全部群打卡'
+      },
+      {
+        icon: 28,
+        title: '#关闭一键打卡',
+        desc: '关闭凌晨在Bot在的全部群打卡'
+      },
+      {
+        icon: 28,
         title: '#骂@xxx',
         desc: '字面意思，但是千万别忘了at哦~'
       },
