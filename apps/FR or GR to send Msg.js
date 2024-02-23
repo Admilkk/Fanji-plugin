@@ -41,8 +41,10 @@ this.task = [
       msg = msg[1]? msg[1] : false
 if (msg === '开启'){
           await redis.set('Fanji:daka', 'true');  
+          e.reply('成功')
 }else{
     await redis.set('Fanji:daka', 'false');  
+      e.reply('成功')
 }
 }
   async dk(e, isauto = false){
