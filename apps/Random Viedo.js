@@ -119,14 +119,12 @@ async viedo(e, apiUrl, defaultSavePath) {
 }
 
 async ffmpeg() {
-let res = await exec('ffmpeg -h');
-if (res.includes('help')) {
-    return false;
-} else {
-        this.reply('请先安装FFmpeg');
-    return true;
-}
-
+        let ret = await execSync('git --version', { encoding: 'utf-8' })
+        if (!ret || !ret.includes('help')) {
+            await this.reply('请先安装ffmpeg')
+            return false
+        }
+        return true
 }
 
 }
