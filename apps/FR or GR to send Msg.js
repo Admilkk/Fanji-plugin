@@ -58,7 +58,7 @@ if (msg === '开启'){
                             }
             }else{
                 let daka = await this.GetredisKey('Fanji:daka', 'false')
-if (daka){
+if (daka === 'true'){
     			  for (let group of Bot[e.self_id].gl.keys()){
 				  Bot.pickGroup(group).sign()
               }
