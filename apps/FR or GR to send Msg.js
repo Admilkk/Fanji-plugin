@@ -78,7 +78,7 @@ if (daka === 'true'){
 	  }else{
 	  msg = msg[1]
 	  for (let group of Bot.gl.keys()){
-		  Bot.pickGroup(group).sendMsg(msg)
+		  Bot[e.self_id].pickGroup(group).sendMsg(msg)
 		  		await  e.runtime.common.sleep(500)
 	  }
 	  }
@@ -96,7 +96,7 @@ if (daka === 'true'){
 	  }else{
 	  msg = msg[1]
 	  for (let friend of Bot.fl.keys()){
-		  Bot.pickFriend(friend).sendMsg(msg)
+		  Bot[e.self_id].pickFriend(friend).sendMsg(msg)
 		  		 await e.runtime.common.sleep(500)
 	  }
 	  }
