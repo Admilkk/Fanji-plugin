@@ -120,7 +120,7 @@ async viedo(e, apiUrl, defaultSavePath) {
 
 async ffmpeg() {
        let res = await exec('ffmpeg -h');
-       if (res.includes(help)){
+       if (res.includes('help')){
         return false;
        }else{
         this.reply('请先安装FFmpeg');
