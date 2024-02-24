@@ -57,11 +57,24 @@ if (msg === '开启'){
               		  await e.reply('打卡完成')
                             }
             }else{
+                let uins = Bot.uin.toString(); 
+ uins = uins.split(','); 
+
+
+
+
                 let daka = await this.GetredisKey('Fanji:daka', 'false')
 if (daka === 'true'){
-    			  for (let group of Bot[e.self_id].gl.keys()){
-				  Bot.pickGroup(group).sign()
-              }
+for (let uin of uins) {
+    // 检查uin中是否包含英文字符
+    if (/^[a-zA-Z]+$/.test(uin)) {
+        continue;
+    }
+    for (let group of Bot[uin].gl.keys()) {
+        Bot.pickGroup(group).sign();
+    }
+}
+
 }else{
     return;
 }
