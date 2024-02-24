@@ -121,10 +121,10 @@ async viedo(e, apiUrl, defaultSavePath) {
 async ffmpeg() {
     try {
         await exec('ffmpeg -h');
-        return true;
+        return false;
     } catch (error) {
         console.error('请先安装FFmpeg');
-        return false;
+        return true;
     }
 }
 
