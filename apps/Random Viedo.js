@@ -122,9 +122,9 @@ async ffmpeg() {
         let ret = await execSync('git -h', { encoding: 'utf-8' })
         if (!ret || !ret.includes('version')) {
             await this.reply('请先安装ffmpeg')
-            return false
+            return true
         }
-        return true
+        return false
 }
 
 }
