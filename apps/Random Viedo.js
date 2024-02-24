@@ -119,8 +119,8 @@ async viedo(e, apiUrl, defaultSavePath) {
 }
 
 async ffmpeg() {
-        let ret = await execSync('git --version', { encoding: 'utf-8' })
-        if (!ret || !ret.includes('help')) {
+        let ret = await execSync('git -h', { encoding: 'utf-8' })
+        if (!ret || !ret.includes('version')) {
             await this.reply('请先安装ffmpeg')
             return false
         }
