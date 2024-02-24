@@ -66,17 +66,17 @@ export class apiviedo extends plugin {
   }
 async hs(e) {
 	let aw = await this.ffmpeg()
-	if (!aw){return}
+	if (aw){return}
 	await this.viedo(e, apiurl, path.join(__dirname, '../resource/hsviedo'))
 }
 async bs(e) {
 	let aw = await this.ffmpeg()
-	if (!aw){return}
+	if (aw){return}
 	await this.viedo(e, apiurl2, path.join(__dirname, '../resource/bsviedo'))
 }
 async xjj(e){
 		let aw = await this.ffmpeg()
-	if (!aw){return}
+	if (aw){return}
 	await this.viedo(e, 'https://api.yunxiyuanyxy.xyz/plus/?type=302', path.join(__dirname, '../resource/xjjviedo'))
 }
 /* async jh (e) {
@@ -119,11 +119,11 @@ async viedo(e, apiUrl, defaultSavePath) {
 }
 
 async ffmpeg() {
-    try {
-        await exec('ffmpeg -h');
+       let res = await exec('ffmpeg -h');
+       if (res.includes(help)){
         return false;
-    } catch (error) {
-        console.error('请先安装FFmpeg');
+       }else{
+        this.reply('请先安装FFmpeg');
         return true;
     }
 }
