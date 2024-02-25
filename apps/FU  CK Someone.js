@@ -42,16 +42,16 @@ export class fuck extends plugin {
   }
 
 async fuck(e) {
-if (e.adapter?.adapter === 'QQBot') {
+/*if (e.adapter?.adapter === 'QQBot') {
     logget.info('官方bot！！！');
     return true;
-}
+}*/
 if (e.self_id === 3889013854){return}
 
 
 
 
-    let targetid = e.at ? e.at : 'all';
+    let targetid = e.at ? e.at : '123456';
     if (await cm.check(e.at ? e.at : '1')) {
         await e.reply('你tm还想骂他是吧');
         return false;
