@@ -4,10 +4,9 @@ export class chuo extends plugin {
       name: '戳一111111',
       dsc: '戳一戳触发效果',
       event: 'notice.group.poke',
-      priority: -91,
+      priority: -Infinity,
       rule: [
         {
-          reg: '',
           fnc: 'chuoyichu',
         },
 
@@ -41,6 +40,7 @@ export class chuo extends plugin {
     } else {
       return false;
     }
+    return false
   }
 
 
