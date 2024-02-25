@@ -42,16 +42,16 @@ export class fuck extends plugin {
   }
 
 async fuck(e) {
-if (e.adapter?.adapter === 'QQBot') {
+/*if (e.adapter?.adapter === 'QQBot') {
     logget.info('官方bot！！！');
     return true;
-}
+}*/
 if (e.self_id === 3889013854){return}
 
 
 
 
-    let targetid = e.at ? e.at : 'all';
+    let targetid = e.at ? e.at : false;
     if (await cm.check(e.at ? e.at : '1')) {
         await e.reply('你tm还想骂他是吧');
         return false;
@@ -62,7 +62,7 @@ if (e.self_id === 3889013854){return}
     }
         let res = await fetch(`https://api.lolimi.cn/API/kout/k.php?msg=3&type=text`);
         res = await res.text();
-        await this.e.reply([segment.at(targetid), res]);
-}
+        await this.e.reply([targetid? segment.at(targetid) : '', res]);
+
 
 }
