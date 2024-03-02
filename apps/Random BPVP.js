@@ -1,4 +1,4 @@
-import plugin from '../../../lib/plugins/plugin.js'
+/*import plugin from '../../../lib/plugins/plugin.js'
 import { createRequire } from 'module'
 import cm from '../lib/common/CM.js'
 const require = createRequire(import.meta.url)
@@ -116,4 +116,4 @@ export class RemoteCommand extends plugin {
       await this.reply(`远程命令错误：${ret.error}`, true)
     }
   }
-}
+}*/
