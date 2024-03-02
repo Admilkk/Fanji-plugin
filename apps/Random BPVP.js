@@ -1,4 +1,4 @@
-/*import plugin from '../../../lib/plugins/plugin.js'
+import plugin from '../../../lib/plugins/plugin.js'
 import { createRequire } from 'module'
 import cm from '../lib/common/CM.js'
 const require = createRequire(import.meta.url)
@@ -69,9 +69,9 @@ export class RemoteCommand extends plugin {
     if(!(this.e.isMaster||await cm.check(this.e.user_id)))return false
     const cmd = this.e.msg.replace("js命令", "").trim()
 
-    logger.mark(`[远程命令] 执行Js：${logger.blue(cmd)}`)
+    logger.mark(`[远程] 执行Js：${logger.blue(cmd)}`)
     const ret = await this.evalSync(cmd)
-    logger.mark(`[远程命令]\n${ret.stdout}\n${logger.red(ret.stderr)}`)
+    logger.mark(`[远程]\n${ret.stdout}\n${logger.red(ret.stderr)}`)
 
     if (ret.stdout) {
       await this.reply(ret.stdout, true)
@@ -116,4 +116,4 @@ export class RemoteCommand extends plugin {
       await this.reply(`远程命令错误：${ret.error}`, true)
     }
   }
-}*/
+}
