@@ -23,6 +23,7 @@ async function copyHM(source, target) {
         readStream.pipe(writeStream);
     });
 }
+/*
 const sourceFilePath = './plugins/Fanji-plugin/apps/FTC.js';
 const targetDirPath = './plugins/example/';
 const targetFilePath = path.join(targetDirPath, 'FTC.js');
@@ -31,7 +32,7 @@ try {
 } catch (error) {
     console.error('文件复制失败：', error);
 }
-
+*/
 async function removeBlackQQ() {
   try {
     const configFileExists = await fs.promises.access(configFilePath, fs.constants.F_OK).then(() => true).catch(() => false);
