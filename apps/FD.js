@@ -29,7 +29,7 @@ async fd(e) {
     if (isRedisTrue == 'true') {
 		// logger.info('LJL')		
         let gr = await redis.get(`Fanji:ql:${e.group_id}:target`);  
-        await Bot[e.self_id].pickGroup(gr).sendMsg([`来自群聊${e.group_id}(${e.group_name})的消息:\n发送人:${e.member.card}\n发送人QQ:${e.user_id}\n`, e.message, '\n引用该条消息以回复']);  
+        await Bot[e.self_id].pickGroup(gr).sendMsg([`群聊${e.group_id}(${e.group_name}):\n发送人:${e.member.card}\nQQ:${e.user_id}\n`, e.message, '\n引用该条消息以回复']);  
 		return false
     }else{
 		// logger.info('11111111111111111')
@@ -111,7 +111,7 @@ async hf(e){
 
     if (e.message.length === 0) return e.reply('❎ 消息不能为空')
 	  try{
-		  let msg = [segment.at(qq),`来自群聊${e.group_id}(${e.group_name})的回复:\n回复人:${e.member.card}\n回复人QQ:${e.user_id}\n`, e.message, `\n\n此消息不支持引用回复`]
+		  let msg = [segment.at(qq),`群聊${e.group_id}(${e.group_name})\n回复人:${e.member.card}(${e.user_id})\n`, e.message, `\n\n此消息不支持引用回复`]
 	        Bot[e.self_id].pickGroup(group).sendMsg(msg/* , true, false */);
 	  		   await e.reply('✅ 已把消息发给它了哦~')
 	  }catch(error){
