@@ -91,7 +91,7 @@ for (let uin of uins) {
 		  // this.setContext('PICKGR')
 	  }else{
 	  msg = msg[1]
-      		e.message[0].text = e.message[0].text.replace(/#|一键群发/g, '').trim()
+      /*	e.message[0].text = e.message[0].text.replace(/#|一键群发/g, '').trim()
               	  if (/\d/.test(msgs[0])) {
         e.message[0].text = msgs.slice(1).join(' ')
       } else {
@@ -100,10 +100,10 @@ for (let uin of uins) {
     
     if (!e.message[0].text) e.message.shift()
 
-    if (e.message.length === 0) return e.reply('❎ 消息不能为空')
+    if (e.message.length === 0) return e.reply('❎ 消息不能为空')*/
 	  for (let group of Bot[e.self_id].gl.keys()){
-		  Bot[e.self_id].pickGroup(group).sendMsg(e.message)
-		  		await  e.runtime.common.sleep(500)
+		  Bot[e.self_id].pickGroup(group).sendMsg(msg)
+		  		await  e.runtime.common.sleep(5000)
 	  }
 	  }
   }else{
@@ -120,7 +120,7 @@ for (let uin of uins) {
 		  // this.setContext('PICKGR')
 	  }else{
 	  msg = msg[1]
-      e.message[0].text = e.message[0].text.replace(/#|一键私发/g, '').trim()
+     /* e.message[0].text = e.message[0].text.replace(/#|一键私发/g, '').trim()
       	  if (/\d/.test(msgs[0])) {
         e.message[0].text = msgs.slice(1).join(' ')
       } else {
@@ -129,10 +129,10 @@ for (let uin of uins) {
     
     if (!e.message[0].text) e.message.shift()
 
-    if (e.message.length === 0) return e.reply('❎ 消息不能为空')
+    if (e.message.length === 0) return e.reply('❎ 消息不能为空')*/
 	  for (let friend of Bot[e.self_id].fl.keys()){
-		  Bot[e.self_id].pickFriend(friend).sendMsg(e.message)
-		  		 await e.runtime.common.sleep(500)
+		  Bot[e.self_id].pickFriend(friend).sendMsg(msg)
+		  		 await e.runtime.common.sleep(5000)
 	  }
 	  }
   }else{
