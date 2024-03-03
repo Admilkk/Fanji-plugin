@@ -16,7 +16,7 @@ export default class cte extends plugin {
                 },
                 {
 					reg: '',
-					// log: false,
+					 log: false,
                     fnc: 'hf',
                 },
             ],
@@ -72,6 +72,14 @@ async awa(e){
 		await e.reply(`开启完成，对应群号${this.e.msg}`)
 		this.finish('awa')
 }  
+/**
+ * 椰奶插件的回复函数
+ * 椰奶插件：
+ * https://gitee.com/yeyang52/yenai-plugin
+ * 对应函数位置：
+ * https://gitee.com/yeyang52/yenai-plugin/blob/master/apps/handle.js
+ * Cv人：Admilk
+ */
 async hf(e){
 	if (!e.source){return false}
     let qq = ''
@@ -90,7 +98,7 @@ async hf(e){
 		group = await redis.get(`Fanji:ql:gt:${this.e.group_id}`)
 		// e.message[0].text = e.message[0].text.replace(/#|回复/g, '').trim()
       } else {
-        return e.reply(['❎ 请检查是否引用正确'])
+       return false
       }
 	  if (/\d/.test(msgs[0])) {
         e.message[0].text = msgs.slice(1).join(' ')
