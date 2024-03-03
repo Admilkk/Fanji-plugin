@@ -31,7 +31,7 @@ export const helpList = [
 	list: [
 	{
 		icon: 25,
-		title: '#开启/关闭群消息互通'
+		title: '#开启/关闭群消息互通',
 		desc: '开启或者关闭'
 	}
 	]
