@@ -95,7 +95,6 @@ for (let uin of uins) {
               	  if (/\d/.test(msgs[0])) {
         e.message[0].text = msgs.slice(1).join(' ')
       } else {
-        qq = msgs[1]
         e.message[0].text = msgs.slice(2).join(' ')
       }
     
@@ -125,7 +124,6 @@ for (let uin of uins) {
       	  if (/\d/.test(msgs[0])) {
         e.message[0].text = msgs.slice(1).join(' ')
       } else {
-        qq = msgs[1]
         e.message[0].text = msgs.slice(2).join(' ')
       }
     
