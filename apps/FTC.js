@@ -12,10 +12,10 @@ export class fangtiancai extends plugin {
 		reg: '^#?获取黑名单$',
           fnc: 'getlist',
         },
-        {
-		log: false,
-        fnc: 'checkuser',
-        }
+       // {
+		//log: false,
+        //fnc: 'checkuser',
+        //}
       ],
     });
   }
