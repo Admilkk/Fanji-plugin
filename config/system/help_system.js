@@ -27,6 +27,15 @@ export const helpCfg = {
 
 export const helpList = [
   {
+	group: '群消息互通',
+	list: [
+	{
+		icon: 25,
+		title: '#开启/关闭群消息互通'
+		desc: '开启或者关闭'
+	}
+	]
+  } , {
     group: '实用工具',
     list: [
       {
