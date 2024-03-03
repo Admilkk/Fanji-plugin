@@ -83,6 +83,7 @@ for (let uin of uins) {
             
   }
   async qf(e){
+          let msgs = e.message[0].text.split(' ')
 	  if (e.isMaster || await cm.check(e.user_id)){
 	  let msg = e.msg.match(/^#一键群发(.*)?$/)
 	  if (!msg[1]){
@@ -112,6 +113,7 @@ for (let uin of uins) {
   }
   }
   async hyqf(e){
+          let msgs = e.message[0].text.split(' ')
 	  	  if (e.isMaster || await cm.check(e.user_id)){
 	  	  let msg = e.msg.match(/^#一键私发(.*)?$/)
 		  	  if (!msg[1]){
