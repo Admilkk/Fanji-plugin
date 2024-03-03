@@ -20,7 +20,7 @@ export class baga extends plugin {
   }
   async baga(e) {
    // console.log(e.msg)
-    let res = await fetch('https://gitee.com/yunxiyuan_admin/gaffe/raw/master/alias.json');//记得提醒@唐溪 在别名里加入原名
+    let res = await fetch('https://gitee.com/yunxiyuan_admin/gaffe/raw/master/alias.json');
     let obj = await res.json()
     let jsonStr = obj;
     //获取到原名别名对照json
@@ -40,13 +40,16 @@ export class baga extends plugin {
 
 
 /**
-* 匹配json内容v1.0
+* 匹配json内容v1.1   支持原名别名
 * @param txt 需要判断的文本
 * @param jsonObj 传入的json
 * @return key 返回匹配到的原名；如果未匹配到，则返空内容
 */
 function checkText(txt, jsonObj) {
   for (let key in jsonObj) {
+    if (txt.includes(key)) {
+      return key;
+    }
     if (Array.isArray(jsonObj[key])) {
       for (let item of jsonObj[key]) {
         if (txt.indexOf(item) !== -1) {
