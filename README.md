@@ -1,6 +1,5 @@
 <div align="center">
-# 非常对不起
-是我的锅，没有做APi的超时处理
+# 非常对不起,是我的锅，没有做APi的超时处理
 # Fanji-plugin
 # 反击不是机器人反击他人的意思！
 [![Gitee](https://img.shields.io/badge/Gitee-反击插件-black?style=flat-square&logo=gitee)](https://gitee.com/adrae/Fanji-plugin) [![云崽bot](https://img.shields.io/badge/云崽-v3-black?style=flat-square&logo=dependabot)](https://gitee.com/Le-niao/Yunzai-Bot) [![喵崽](https://img.shields.io/badge/喵崽-black?style=flat-square&logo=dependabot)](https://gitee.com/yoimiya-kokomi/Miao-Yunzai) [![Group](https://img.shields.io/badge/群号-792873018-red?style=flat-square&logo=GroupMe&logoColor=white)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ekuBxRh4wSSP315nn3gcBjWUI0bP3qQ4&authKey=c6orpTMGTM2JmAzGJvRslzhFH803%2Bcbp0%2B28Bpwr5E7oDtFZVO9isRjbugzbh%2FgR&noverify=0&group_code=792873018)<a href='https://gitee.com/adrae/Fanji-plugin/stargazers'><img src='https://gitee.com/adrae/Fanji-plugin/badge/star.svg?theme=dark' alt='star'></img></a>
