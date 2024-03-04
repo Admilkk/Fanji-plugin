@@ -1,3 +1,7 @@
+# 非常抱歉
+是我的锅，没有做APi的超时处理
+但是到底是谁闲的没事打我服务器啊
+
 <div align="center">
 
 # Fanji-plugin
