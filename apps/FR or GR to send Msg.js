@@ -5,7 +5,7 @@ import cm from '../lib/common/CM.js'
 export class qf extends plugin {
   constructor() {
     super({
-      name: "",
+      name: "反击插件[便携操作]",
       dsc: "",
       event: "message",
       priority: 10,
