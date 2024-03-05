@@ -39,7 +39,7 @@ export class apibq extends plugin {
           fnc: 'allbq'
         },
         {
-          reg: '^#?((随机)(.*)(表情)?|随机表情)$', 
+          reg: '^#?((随机)?(.*)(表情)?|随机表情)$', 
           fnc: 'bq'
         },
         {
