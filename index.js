@@ -71,40 +71,6 @@ watcher.on('change', async () => {
 logger.info('\x1b[34m---------加载插件中---------\x1b[0m');
 
 await (async () => {
- /*  const defConfigFolderPath = './plugins/Fanji-plugin/def_config';
-
-  try {
-    // pluginConfig 文件夹已存在，强制复制 def_config 下的所有文件，排除 config.yaml
-    const files = await fs.promises.readdir(defConfigFolderPath);
-
-    // 遍历文件并强制复制到 pluginConfig 文件夹
-    for (const file of files) {
-      const sourcePath = path.join(defConfigFolderPath, file);
-      const destPath = path.join(otherConfigFilePath, file);
-
-      // 如果目标文件存在，则跳过当前循环
-      if (file === 'config.yaml' && await fs.promises.access(path.join(otherConfigFilePath, 'config.yaml')).then(() => true).catch(() => false)) {
-        continue;
-      }
-
-      try {
-        // 删除目标文件
-        await fs.promises.unlink(destPath);
-      } catch (unlinkError) {
-        // 如果文件不存在，忽略错误
-      }
-
-      // 复制文件
-      await fs.promises.copyFile(sourcePath, destPath);
-      logger.info(chalk.cyan('[Fanji-plugin]'), `复制${file}配置文件完成`);
-    }
-
-    logger.info('强制复制配置文件完成');
-  } catch (error) {
-    const msg = '创建和复制配置文件夹时出错：' + error.message;
-    logger.error(msg);
-  }
- */
   await removeBlackQQ();
 
   logger.info('加载插件完成');
