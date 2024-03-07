@@ -60,13 +60,13 @@ async zz(e) {
       const keys = Object.keys(data);
       this.keysString = keys.join('|');
       logger.mark('[反击][bq]获取正则');
-      this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})(表情)?|随机表情)`, 'i');
+      this.rule[1].reg = new RegExp(`^#?((随机)?(${this.keysString})(表情)?|随机表情)$`, 'i');
 
       // 保存当前时间为上次更新时间
       await redis.set('last_updatezz_time', now);
 
       // 保存正则表达式
-      await redis.set('stored_regex', `#?((随机)?(${this.keysString})(表情)?|随机表情)`);
+      await redis.set('stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
     } catch(error) {
       await e.reply('error connect to API');
       await e.reply(error.message);
@@ -85,13 +85,13 @@ async updateRegex() {
       const keys = Object.keys(data);
       this.keysString = keys.join('|');
       logger.mark('[反击][bq]获取正则');
-      this.rule[1].reg = new RegExp(`#?((随机)?(${this.keysString})(表情)?|随机表情)`, 'i');
+      this.rule[1].reg = new RegExp(`^#?((随机)?(${this.keysString})(表情)?|随机表情)$`, 'i');
 
       // 保存当前时间为上次更新时间
       await redis.set('last_updatezz_time', now);
 
       // 保存正则表达式
-      await redis.set('stored_regex', `#?((随机)?(${this.keysString})(表情)?|随机表情)`);
+      await redis.set('stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
     } else {
       const storedRegex = await redis.get('stored_regex');
       if (storedRegex) {
