@@ -277,7 +277,7 @@ async bs(e) {
 
           fs.writeFileSync(imagePath, buffer, 'binary');
 
-          const forwardMsg = await cm.mfm(e, [segment.image(imagePath), '\nfrom fanji-plugin', segment.image(ymzx)], '你要的涩图来啦');
+          const forwardMsg = await cm.mfm(e, [segment.image(imagePath), '\nfrom 反击插件'], '你要的涩图来啦');
   res = await fetch(`${tosendurl2}${key}&url=${url.pics}`);
   const data = await res.json();
 
