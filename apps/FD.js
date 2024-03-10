@@ -95,6 +95,7 @@ async awa(e){
  * Cv人：Admilk
  */
 async hf(e){
+    if (!e.isGroup) return false
 	if (!e.source){return false}
     let qq = ''
     let group = ''
