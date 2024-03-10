@@ -41,7 +41,7 @@ let aw = this.e.at ? this.e.at : match[2];
         }
     }
     const message = [];
-    const groupList = Array.from(await Bot[e.self_id].gl.values());
+    const groupList = Array.from(await Bot[this.e.self_id].gl.values());
     for (const group of groupList) {
        let success = Bot[e.self_id].pickGroup(group.group_id).muteMember(aw, time);
         let is_admin = group.admin_flag
