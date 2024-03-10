@@ -1,0 +1,192 @@
+import loader from '../../../lib/plugins/loader.js'
+/**
+ * Uc-plugin重载函数
+ * 来自
+ * https://gitee.com/UCPr251/UC-plugin/blob/master/apps/reloadJSs.js
+ */
+const watcher = {}
+export default class UCReloadJSs extends UCPlugin {
+  constructor(e) {
+    super({
+      e,
+      name: 'UC-reloadJSs',
+      dsc: '重载UC插件',
+    })
+  }
+
+  async init(force) {
+    if (UCPr.isWatch || force) {
+      ing = true
+      await reloadJSs()
+      await reloadEvents('Event')
+      await reloadEvents('groupAdmin')
+      const watch = await Data.watchDir(Path.apps, async (newAppPath) => {
+        const jsName = Path.basename(newAppPath)
+        if (JSs.has(jsName)) return
+        const parentDirName = Path.basename(Path.dirname(newAppPath))
+        let watch
+        if (parentDirName === 'groupAdmin' || parentDirName === 'Event') {
+          log.yellow(`新增${parentDirName}插件：${jsName}`)
+          import(`file:///${newAppPath}?${Date.now()}`).catch(err => log.error(err))
+          watch = Data.watch(newAppPath, (path) => {
+            log.whiteblod(`修改${parentDirName}插件${Path.basename(path)}`)
+            import(`file:///${path}?${Date.now()}`).catch(err => log.error(err))
+          })
+          JSs.add(jsName)
+        } else {
+          log.yellow('新增插件：' + jsName)
+          await common.sleep(0.1)
+          await loadJs(newAppPath)
+          watch = Data.watch(newAppPath, reloadJS.bind(loader, newAppPath))
+        }
+        watcher[jsName] = watch
+      })
+      watch.on('unlink', async (delAppPath) => {
+        const parentDirName = Path.basename(Path.dirname(delAppPath))
+        const jsName = Path.basename(delAppPath)
+        if (parentDirName === 'groupAdmin' || parentDirName === 'Event') {
+          log.yellow(`删除${parentDirName}插件：${jsName}`)
+          const name = 'UC-' + jsName.replace('.js', '')
+          for (const event in UCPr.event) {
+            Data.remove(UCPr.event[event], name, 'name')
+          }
+        } else {
+          log.yellow('删除插件：' + jsName)
+          await unloadJs(delAppPath)
+          await cancelTask(delAppPath)
+        }
+        watcher[jsName].close()
+        delete watcher[jsName]
+        delete UCPr.watcher[delAppPath]
+        JSs.delete(jsName)
+      })
+      if (Check.file(Path.get('components', 'reloadModule.js'))) {
+        import('file:///' + Path.get('components', 'reloadModule.js')).then(res => res.default())
+      }
+      log.red(`总计载入UC插件${JSs.size}项功能`)
+    }
+  }
+
+}
+
+/**
+ * 重载除reloadJSs.js以外全部JS
+ * @param {boolean} [isWatch=true] 重载后是否监听，默认监听
+ * @returns 重载JS个数
+ */
+async function reloadJSs(isWatch = true) {
+  const _JSs = file.readdirSync(Path.apps, { type: '.js', removes: 'reloadJSs.js' })
+  for (const _JS of _JSs) {
+    const jsPath = Path.get('apps', _JS)
+    await reloadJS(jsPath)
+    if (isWatch) {
+      const watch = Data.watch(jsPath, reloadJS.bind(loader, jsPath))
+      watcher[_JS] = watch
+    }
+  }
+  return _JSs.length
+}
+
+/**
+ * 载入js并按照优先级重新排序
+ * @param {string} jsPath 需要载入的JS路径
+ */
+export async function loadJs(jsPath) {
+  try {
+    const temp = await import(`file:///${jsPath}?${Date.now()}`)
+    const app = temp.default ?? temp[Object.keys(temp)[0]]
+    if (!app?.prototype) return
+    const plugin = new app()
+    log.purple('[载入插件]' + '名称：' + plugin.name ?? '无', '优先级：' + plugin.priority ?? '无')
+    const jsName = Path.basename(jsPath)
+    if (plugin.task.name) {
+      Data.loadTask(plugin.task)
+      const taskName = plugin.task.name ?? plugin.name
+      log.blue(`[载入任务]${taskName} ${plugin.task.cron}`)
+    }
+    JSs.add(jsName)
+    try {
+      plugin.init && plugin.init()
+    } catch (err) {
+      log.error(err)
+    }
+    loader.priority.push({
+      class: app,
+      key: Path.Plugin_Name,
+      name: plugin.name,
+      priority: plugin.priority
+    })
+  } catch (err) {
+    log.error('载入插件错误：', err)
+  }
+  order()
+}
+
+/**
+ * 卸载JS并删除其定时任务
+ * @param {string} jsPath 需要卸载的JS路径
+ */
+export async function unloadJs(jsPath) {
+  const name = 'UC-' + Path.parse(jsPath).name
+  const del = Data.remove(loader.priority, name, 'name')[0]
+  if (del) {
+    if (name === 'UC-qsignRestart' && UCPr.intervalId) {
+      log.blue('清除签名崩溃检测计时器')
+      clearTimeout(UCPr.intervalId)
+    }
+    log.purple('[卸载插件]' + '名称：' + del.name ?? '无', '优先级：' + del.priority ?? '无')
+    const jsName = Path.basename(jsPath)
+    JSs.delete(jsName)
+    await cancelTask(jsPath)
+  }
+}
+
+/**
+ * 取消JS对应的定时任务
+ * @param {string} jsPath JS路径
+ */
+async function cancelTask(jsPath) {
+  Data.cancelTask('UC-' + Path.parse(jsPath).name)
+}
+
+/**
+ * 重载JS插件
+ * @param {string} jsPath JS路径
+ */
+async function reloadJS(jsPath) {
+  await unloadJs(jsPath)
+  await loadJs(jsPath)
+}
+
+/** 插件优先级重新排序 */
+function order() {
+  if (timer) clearTimeout(timer)
+  timer = setTimeout(() => {
+    loader.priority = loader.priority.sort((a, b) => a.priority - b.priority)
+    log.red('刷新插件优先级排序')
+  }, 1500)
+}
+
+/**
+ * 重载Event类插件
+ * @param {'Event'|'groupAdmin'} type
+ * @param {*} isWatch 是否监听
+ * @returns 重载js个数
+ */
+async function reloadEvents(type, isWatch = true) {
+  const _JSs = file.readdirSync(Path[type], { type: '.js' })
+  _JSs.forEach(_JS => {
+    import(`file:///${Path[type]}/${_JS}`).catch(err => log.error(err))
+    JSs.add(_JS)
+  })
+  if (isWatch) {
+    _JSs.forEach(_JS => {
+      const watch = Data.watch(Path.get(type, _JS), (path) => {
+        log.whiteblod(`修改${type}插件${Path.basename(path)}`)
+        import(`file:///${path}?${Date.now()}`).catch(err => log.error(err))
+      })
+      watcher[_JS] = watch
+    })
+  }
+  return _JSs.length
+}
