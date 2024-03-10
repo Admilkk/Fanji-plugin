@@ -24,6 +24,20 @@ export default class cte extends plugin {
 	}
 
 async fd(e) {  
+    		if (e.atall){
+			if (!e.member.is_admin){
+			if (e.group.is_admin){
+			await e.reply('检测到无权限at全体！开始禁言操作')
+			await e.group.recallMsg(e.message_id)
+			await e.group.muteMember(e.user_id, 600)
+			}else{
+				await this.reply(segment.at(this.e.group.info.owner_id))
+				await this.reply(segment.at(this.e.group.info.owner_id))
+				await this.reply([`这个坏人无权限@全体！！！`,segment.at(e.user_id)])
+				await this.reply([`这个坏人无权限@全体！！！`,segment.at(e.user_id)])
+			}
+			}
+		}
     // if (!this.e.isGroup) return false;  
     let isRedisTrue = await redis.get(`Fanji:ql:${e.group_id}`)
     if (isRedisTrue == 'true') {
