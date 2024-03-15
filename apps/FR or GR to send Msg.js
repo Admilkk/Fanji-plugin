@@ -1,8 +1,9 @@
 import plugin from '../../../lib/plugins/plugin.js'
 // import { createRequire } from 'module'
+import Base from '../model/base/Base.js'
 import cm from '../lib/common/CM.js'
 // const require = createRequire(import.meta.url)
-export class qf extends plugin {
+export class qf extends Base {
   constructor() {
     super({
       name: "反击插件[便携操作]",
