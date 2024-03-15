@@ -6,8 +6,8 @@ export function supportGuoba() {
     // 如果你的插件没有在插件库里，那么需要填上补充信息
     // 如果存在的话，那么填不填就无所谓了，填了就以你的信息为准
     pluginInfo: {
-      name: '炸崽插件',
-      title: 'Fanji-plugin',
+      name: 'Fanji-plugin',
+      title: '反击插件',
       author: '@Admilk',
       authorLink: 'https://gitee.com/adrae',
       link: 'https://gitee.com/adrae/Fanji-plugin',
