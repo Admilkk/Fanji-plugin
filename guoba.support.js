@@ -13,7 +13,7 @@ export function supportGuoba() {
       link: 'https://gitee.com/adrae/Fanji-plugin',
       isV3: true,
       isV2: false,
-      description: '主要提供后台管理界面',
+      description: '主要提供清凉图api功能',
       // 显示图标，此为个性化配置
       // 图标可在 https://icon-sets.iconify.design 这里进行搜索
       icon: 'mdi:stove',
