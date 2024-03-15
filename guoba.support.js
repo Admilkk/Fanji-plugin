@@ -1,20 +1,16 @@
-// 懒得适配
-
 import lodash from 'lodash'
 import cfg from "./model/index.js";
-
-// 支持锅巴
 export function supportGuoba() {
   return {
     // 插件信息，将会显示在前端页面
     // 如果你的插件没有在插件库里，那么需要填上补充信息
     // 如果存在的话，那么填不填就无所谓了，填了就以你的信息为准
     pluginInfo: {
-      name: 'btc-memz-plugin',
-      title: 'btc-memz-plugin',
-      author: '@MEMZ @枫叶 @枫林',
-      authorLink: 'https://gitee.com/memz2007',
-      link: 'https://gitee.com/memz2007/btc-memz-plugin',
+      name: '炸崽插件',
+      title: 'Fanji-plugin',
+      author: '@Admilk',
+      authorLink: 'https://gitee.com/adrae',
+      link: 'https://gitee.com/adrae/Fanji-plugin',
       isV3: true,
       isV2: false,
       description: '主要提供后台管理界面',
@@ -27,6 +23,7 @@ export function supportGuoba() {
       // iconPath: path.join(_paths.pluginRoot, 'resources/images/icon.png'),
     },
     // 配置项信息
+    /*
     configInfo: {
       // 配置项 schemas
       schemas: [
@@ -47,6 +44,6 @@ export function supportGuoba() {
         cfg.config.reader.setData(config)
         return Result.ok({}, '保存成功~')
       },
-    },
+    },*/
   }
 }
