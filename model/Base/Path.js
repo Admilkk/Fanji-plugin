@@ -1,7 +1,7 @@
 import path from 'path'
 class Path {
     get qianyuPath() {
-        return process.cwd() + path.join('/plugins/reset-qianyu-plugin/')
+        return process.cwd() + path.join('/plugins/Fanji-plugin/')
     }
 
     get resourcePath() {
