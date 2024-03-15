@@ -1,6 +1,6 @@
 import puppeteer from "../../../lib/puppeteer/puppeteer.js";
 import config from "../model/index.js";
-import Version from "../model/version.js";
+// import Version from "../model/version.js";
 import { Common, Data } from '../components/index.js'
 import lodash from 'lodash'
 import Theme from '../config/system/theme.js'
@@ -22,7 +22,7 @@ export class help extends plugin {
                 }
             ],
         });
-        this.versionData = config.getConfig("version");
+        // this.versionData = config.getConfig("version");
     }
 
     // 异步版本函数
