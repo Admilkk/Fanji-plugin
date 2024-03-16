@@ -42,10 +42,6 @@ export class fuck extends plugin {
   }
 
 async fuck(e) {
-/*if (e.adapter?.adapter === 'QQBot') {
-    logget.info('官方bot！！！');
-    return true;
-}*/
 if (e.self_id === 3889013854){return}
 
 
@@ -60,7 +56,7 @@ if (e.self_id === 3889013854){return}
         await e.reply('你tm还想骂我是吧');
         return false;
     }
-        let res = await fetch(`https://api.lolimi.cn/API/kout/k.php?msg=3&type=text`);
+        let res = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=text`);
         res = await res.text();
         await this.e.reply([segment.at(targetid), res]);
 }
