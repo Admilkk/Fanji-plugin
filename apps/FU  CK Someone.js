@@ -70,8 +70,8 @@ cs = cs[0]
 let response = await fetch('https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=cs');
 let data = await response.json();
 
-for (let line of data.text) {
-    await this.e.reply([segment.at(targetid), line]);
+for (let item of data.text) {
+    await this.e.reply([segment.at(targetid), item]);
 }
 
     }
