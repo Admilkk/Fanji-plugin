@@ -30,7 +30,6 @@ export default class FanjiUNatAll extends plugin {
         }else{
             time = 600
         }
-        if (operate){
             if (isGroup){
                 await redis.set(`Fanji:AT:${this.e.group_id}:time`, time)
                 await e.reply(`本群防at时间已设置为${time}`)
@@ -39,7 +38,6 @@ export default class FanjiUNatAll extends plugin {
             await redis.set(`Fanji:AT:time`, time)
             await e.reply(`全局防at时间设置为${time}`)
         }
-    }
     async q(e){
         if (!e.isMaster) return false
         let operate = e.msg.includes('开启')
