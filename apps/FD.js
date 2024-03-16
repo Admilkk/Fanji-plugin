@@ -6,7 +6,7 @@ export default class cte extends plugin {
             priority: -Infinity,
             rule: [
 							{
-					reg: `#?(开启|关闭)本群消息传递$`,
+					reg: `^#?(开启|关闭)本群消息传递$`,
 					fnc: 'q'
 				},
                 {
