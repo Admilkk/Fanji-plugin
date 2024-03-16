@@ -1,5 +1,5 @@
 import cm from '../lib/common/CM.js';
-export default class UNatAll extends plugin {
+export default class FanjiUNatAll extends plugin {
     constructor() {
         super({
             name: '反击[防at全体]',
