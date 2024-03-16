@@ -64,7 +64,7 @@ export default class FanjiUNatAll extends plugin {
     async fd(e){
         	if (e.atall){
              if (redis.get(`Fanji:AT:kq`) == null) return false;
-             if ( redis.get(`Fanji:AT:kq`) == 'false' && redis.get(`Fanji:AT:kq:${this.e.group_id}`) == 'true')
+             if (redis.get(`Fanji:AT:kq`) == 'false' && redis.get(`Fanji:AT:kq:${this.e.group_id}`) != 'true') return false
              if (redis.get(`Fanji:AT:kq:${this.e.group_id}`) == 'false') return false
 			if (!e.member.is_admin){
 			if (e.group.is_admin){
