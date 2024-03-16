@@ -281,23 +281,22 @@ async uplog() {
     }
 
     logAll = logAll.split('\n');
-
-    let batchSize = 100; // 每批100条日志
-    let batchedLogs = [];
-    let batch = [];
-    for (let str of logAll) {
-        let log = str.split('||')[1];
-        if (!log.includes('Merge branch')) {
-            batch.push(log);
-            if (batch.length === batchSize) {
-                batchedLogs.push(batch);
-                batch = [];
-            }
+let batchSize = 100; // 每批100条日志
+let batchedLogs = [];
+let batch = [];
+for (let str of logAll) {
+    let log = str.split('||')[1].trim(); // 使用trim()方法去除日志的前后空格
+    if (log && !log.includes('Merge branch')) {
+        batch.push(log); // 将每行非空日志作为一个元素推送到batch数组中
+        if (batch.length === batchSize) {
+            batchedLogs.push(batch);
+            batch = [];
         }
     }
-    if (batch.length > 0) {
-        batchedLogs.push(batch);
-    }
+}
+if (batch.length > 0) {
+    batchedLogs.push(batch); // 处理最后一批日志
+}
 
     for (let batchedLog of batchedLogs) {
         await this.sendBatchedMessages(batchedLog, this.e);
