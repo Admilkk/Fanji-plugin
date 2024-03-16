@@ -67,11 +67,13 @@ cs = cs[0]
         res = await res.text();
         await this.e.reply([segment.at(targetid), res]);
     }else{
-                let response = await fetch('https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=20');
-        let data = await response.json();
-        data = data.text.split('\n')
-        for (let line of data)
-        await this.e.reply([segment.at(targetid), data]);
+let response = await fetch('https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=cs');
+let data = await response.json();
+
+for (let line of data.text) {
+    await this.e.reply([segment.at(targetid), line]);
+}
+
     }
 }
 
