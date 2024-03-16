@@ -34,7 +34,7 @@ export class fuck extends plugin {
       priority: -99999999991,
       rule: [
         {
-          reg: /^#?骂(他|她|它|ta)?$/i,
+          reg: /^#?骂(他|她|它|ta)?((\d+)(次))?$/i,
           fnc: 'fuck',
         }
       ],
@@ -46,7 +46,12 @@ if (e.self_id === 3889013854){return}
 
 
 
-
+let css = e.msg.includes(`次`)
+let cs
+if (css){
+cs = e.msg.match(/(\d+)/)
+cs = cs[0]
+}
     let targetid = e.at ? e.at : '123456';
     targetid = e.atall? 'all' : targetid
     if (await cm.check(e.at ? e.at : '1')) {
@@ -57,9 +62,17 @@ if (e.self_id === 3889013854){return}
         await e.reply('你tm还想骂我是吧');
         return false;
     }
+    if (!css){
         let res = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=text`);
         res = await res.text();
         await this.e.reply([segment.at(targetid), res]);
+    }else{
+                let response = await fetch('https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=20');
+        let data = await response.json();
+        data = data.text.split('\n')
+        for (let line of data)
+        await this.e.reply([segment.at(targetid), data]);
+    }
 }
 
 }
