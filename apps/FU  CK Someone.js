@@ -69,9 +69,9 @@ cs = cs[0]
     }else{
 let response = await fetch('https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=cs');
 let data = await response.json();
-
-for (let item of data.text) {
-    await this.e.reply([segment.at(targetid), item]);
+let phrases = data.text.join('').split(',');
+for (let phrase of phrases) {
+    await this.e.reply([segment.at(targetid), phrase.trim()]);
 }
 
     }
