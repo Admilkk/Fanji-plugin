@@ -79,5 +79,6 @@ export default class FanjiUNatAll extends plugin {
 			}
 			}
 		}
+        return false
     }
 }
