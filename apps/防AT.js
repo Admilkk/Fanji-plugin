@@ -15,6 +15,7 @@ export default class FanjiUNatAll extends plugin {
 				},
                 {
 					reg: '',
+                    log: false,
                     fnc: 'fd',
                 }
             ],
