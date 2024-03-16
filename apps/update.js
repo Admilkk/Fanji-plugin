@@ -2,6 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import { createRequire } from 'module'
 import _ from 'lodash'
 import { Restart } from '../../other/restart.js'
+import { update } from '../../other/update.js';
 import common from "../../../lib/common/common.js"
 import cm from "../lib/common/CM.js"
 const require = createRequire(import.meta.url)
