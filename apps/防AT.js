@@ -34,6 +34,7 @@ export default class FanjiUNatAll extends plugin {
             if (isGroup){
                 await redis.set(`Fanji:AT:${this.e.group_id}:time`, time)
                 await e.reply(`本群防at时间已设置为${time}`)
+                return
             }
             await redis.set(`Fanji:AT:time`, time)
             await e.reply(`全局防at时间设置为${time}`)
@@ -47,6 +48,7 @@ export default class FanjiUNatAll extends plugin {
             if (isGroup){
                 await redis.set(`Fanji:AT:kq:${this.e.group_id}`, 'true')
                 await e.reply(`开启本群防at成功`)
+                return
             }
             await redis.set(`Fanji:AT:kq`, 'true')
             await e.reply(`开启全局防at成功`)
@@ -54,6 +56,7 @@ export default class FanjiUNatAll extends plugin {
             if (isGroup){
                 await redis.set(`Fanji:AT:kq:${this.e.group_id}`, 'false')
                 await e.reply(`关闭本群防at成功`)
+                return
             }
             await redis.set(`Fanji:AT:kq`, 'false')
             await e.reply(`关闭全局防at成功`)
