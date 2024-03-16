@@ -21,7 +21,7 @@ export default class FanjiUNatAll extends plugin {
     });
 	}
     async q2(e){
-                if (!e.isMaster) return false
+                if (!(e.isMaster||await cm.check(e.user_id))) return false
         let isGroup = e.msg.includes('本群')
         let time = e.msg.match(/(\d+)/)
         if (time){
@@ -38,7 +38,7 @@ export default class FanjiUNatAll extends plugin {
             await e.reply(`全局防at时间设置为${time}`)
         }
     async q(e){
-        if (!e.isMaster) return false
+          if (!(e.isMaster||await cm.check(e.user_id))) return false
         let operate = e.msg.includes('开启')
         let isGroup = e.msg.includes('本群')
         if (operate){
