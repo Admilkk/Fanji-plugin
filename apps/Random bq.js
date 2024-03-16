@@ -146,7 +146,7 @@ logger.mark(emojiName)
           messages.push(`${key}: ${data[key]}张`);
         }
       }
-	  let forward = await common.makeForwardMsg(e, messages, '全部表情')
+	  let forward = await e.runtime.common.makeForwardMsg(e, messages, '全部表情')
 	  await e.reply(forward)
   }
 }
