@@ -80,3 +80,4 @@ export default class UNatAll extends plugin {
 			}
 		}
     }
+}
