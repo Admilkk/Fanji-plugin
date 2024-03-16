@@ -264,52 +264,21 @@ export class Update extends plugin {
         log = await common.makeForwardMsg(this.e, [log, end], `${plugin}更新日志，共${line}条`)
         return log
       }
-async uplog() {
-    let cm = `cd ./plugins/Fanji-plugin/ && git log  --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%F %T"`
-    let logAll;
-    try {
-        logAll = await execSync(cm, { encoding: 'utf-8' });
-    } catch (error) {
-        logger.error(error.toString());
-        this.reply(error.toString());
-        return;
-    }
+    	async update_log() {
+		let Update_Plugin = new update();
+		Update_Plugin.e = this.e;
+		Update_Plugin.reply = this.reply;
 
-    if (!logAll) {
-        this.reply('获取日志失败');
-        return;
-    }
-
-    logAll = logAll.split('\n');
-let batchSize = 100; // 每批100条日志
-let batchedLogs = [];
-let batch = [];
-for (let str of logAll) {
-    let log = str.split('||')[1].trim(); // 使用trim()方法去除日志的前后空格
-    if (log && !log.includes('Merge branch')) {
-        batch.push(log); // 将每行非空日志作为一个元素推送到batch数组中
-        if (batch.length === batchSize) {
-            batchedLogs.push(batch);
-            batch = [];
-        }
-    }
-}
-if (batch.length > 0) {
-    batchedLogs.push(batch); // 处理最后一批日志
+		if (Update_Plugin.getPlugin('Fanji-plugin')) {
+			this.e.reply(await Update_Plugin.getLog(Plugin_Name));
+		}
+		return true;
+	}
 }
 
-    for (let batchedLog of batchedLogs) {
-        await this.sendBatchedMessages(batchedLog, this.e);
-    }
-}
 
 // 辅助函数，发送批量消息
 async sendBatchedMessages(messages, e) {
     let formattedMessage = messages.join('\n');
     await e.reply(await e.runtime.common.makeForwardMsg(e, formattedMessage, '反击插件更新日志'));
-}
-
-
-
-
 }
