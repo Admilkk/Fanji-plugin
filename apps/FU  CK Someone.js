@@ -67,7 +67,7 @@ cs = cs[0]
         res = await res.text();
         await this.e.reply([segment.at(targetid), res]);
     }else{
-let response = await fetch('https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=cs');  
+let response = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=${cs}`);  
 let data = await response.json();    
 for (let phrase of data.text) {  
     let trimmedPhrase = phrase.trim();  
