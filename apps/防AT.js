@@ -64,8 +64,8 @@ export default class FanjiUNatAll extends plugin {
         	if (e.atall){
                 if (redis.get(`Fanji:AT:time`) == null || !redis.get(`Fanji:AT:time`))
                 redis.set(`Fanji:AT:time`, 600)
-             if (redis.get(`Fanji:AT:kq`) == 'false' && redis.get(`Fanji:AT:kq:${this.e.group_id}`) != 'true') return false
-             if (redis.get(`Fanji:AT:kq:${this.e.group_id}`) == 'false') return false
+             if (redis.get(`Fanji:AT:kq`) == 'false' && redis.get(`Fanji:AT:kq:${this.e.group_id}`) != 'true') return
+             if (!redis.get(`Fanji:AT:kq:${this.e.group_id}`)) return
 			if (!e.member.is_admin){
 			if (e.group.is_admin){
 			await e.reply('检测到无权限at全体！开始禁言操作')
