@@ -48,6 +48,7 @@ if (e.self_id === 3889013854){return}
 
 
     let targetid = e.at ? e.at : '123456';
+    targetid = e.atall? 'all' : targetid
     if (await cm.check(e.at ? e.at : '1')) {
         await e.reply('你tm还想骂他是吧');
         return false;
