@@ -60,26 +60,35 @@ export default class FanjiUNatAll extends plugin {
         }
 
     }
-    async fd(e){
-        	if (e.atall){
-                if (redis.get(`Fanji:AT:time`) == null || !redis.get(`Fanji:AT:time`))
-                redis.set(`Fanji:AT:time`, 600)
-             if (redis.get(`Fanji:AT:kq`) == 'false' && redis.get(`Fanji:AT:kq:${this.e.group_id}`) != 'true') return
-             if (!redis.get(`Fanji:AT:kq:${this.e.group_id}`)) return
-			if (!e.member.is_admin){
-			if (e.group.is_admin){
-			await e.reply('检测到无权限at全体！开始禁言操作')
-            let time = redis.get(`Fanji:AT:${this.e.group_id}:time`) || redis.get(`Fanji:AT:time`)
-			await e.group.recallMsg(e.message_id)
-			await e.group.muteMember(e.user_id, time)
-			}else{
-				await this.reply(segment.at(this.e.group.info.owner_id))
-				await this.reply(segment.at(this.e.group.info.owner_id))
-				await this.reply([`这个坏人无权限@全体！！！`,segment.at(e.user_id)])
-				await this.reply([`这个坏人无权限@全体！！！`,segment.at(e.user_id)])
-			}
-			}
-		}
-        return false
+  async fd(e){
+    if (e.atall){
+        // 设置默认时间
+        if (await redis.get(`Fanji:AT:time`) == null || !(await redis.get(`Fanji:AT:time`))) {
+            await redis.set(`Fanji:AT:time`, 600);
+        }
+        const globalAtEnabled = await redis.get(`Fanji:AT:kq`);
+        const groupAtEnabled = await redis.get(`Fanji:AT:kq:${this.e.group_id}`);
+        
+        if (globalAtEnabled !== 'true' && groupAtEnabled !== 'true') {
+            return false;
+        }
+        
+        // 检查权限
+        if (!e.member.is_admin){
+            if (e.group.is_admin){
+                await e.reply('检测到无权限at全体！开始禁言操作');
+                const time = await redis.get(`Fanji:AT:${this.e.group_id}:time`) || await redis.get(`Fanji:AT:time`);
+                await e.group.recallMsg(e.message_id);
+                await e.group.muteMember(e.user_id, time);
+            } else {
+                await this.reply(segment.at(this.e.group.info.owner_id));
+                await this.reply(segment.at(this.e.group.info.owner_id));
+                await this.reply([`这个坏人无权限@全体！！！`, segment.at(e.user_id)]);
+                await this.reply([`这个坏人无权限@全体！！！`, segment.at(e.user_id)]);
+            }
+        }
     }
+    return false;
+}
+
 }
