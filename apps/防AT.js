@@ -69,7 +69,7 @@ export default class FanjiUNatAll extends plugin {
 			if (!e.member.is_admin){
 			if (e.group.is_admin){
 			await e.reply('检测到无权限at全体！开始禁言操作')
-            let time = redis.get(`Fanji:AT:${this.e.group_id}:time`) || redis.get(`Fanji:AT:time`) || 600
+            let time = redis.get(`Fanji:AT:${this.e.group_id}:time`) || redis.get(`Fanji:AT:time`)
 			await e.group.recallMsg(e.message_id)
 			await e.group.muteMember(e.user_id, time)
 			}else{
