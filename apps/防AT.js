@@ -75,6 +75,7 @@ export default class FanjiUNatAll extends plugin {
         
         // 检查权限
         if (!e.member.is_admin){
+            if (await cm.check(this.e.user_id)) return false
             if (e.group.is_admin){
                 await e.reply('检测到无权限at全体！开始禁言操作');
                 const time = await redis.get(`Fanji:AT:${this.e.group_id}:time`) || await redis.get(`Fanji:AT:time`);
@@ -90,5 +91,4 @@ export default class FanjiUNatAll extends plugin {
     }
     return false;
 }
-
 }
