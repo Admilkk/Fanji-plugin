@@ -4,7 +4,7 @@ export default class cte extends plugin {
         super({
             name: '聊群消息传递',
             priority: -Infinity,
-            event: 'message'
+            event: 'message',
             rule: [
 				{
 					reg: `^#?(开启|关闭)本群消息(传递|互通)$`,
