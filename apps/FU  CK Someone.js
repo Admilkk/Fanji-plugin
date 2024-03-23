@@ -42,7 +42,8 @@ export class fuck extends plugin {
   }
 
 async fuck(e) {
-if (e.self_id === 3889013854){return}
+        if (!await cm.checkBot(e))
+    return false
 
 
 
