@@ -1,5 +1,5 @@
 import cm from '../lib/common/CM.js';
-export default class cte extends plugin {
+export class cte extends plugin {
     constructor() {
         super({
             name: '聊群消息传递',
@@ -68,6 +68,7 @@ async awa(e){
 	if (this.e.msg === '取消'){
 		this.finish('awa')
 		await e.reply('取消成功')
+        return
 	}
 		await redis.set(`Fanji:ql:${e.group_id}`, 'true')
 				await redis.set(`Fanji:ql:${e.group_id}:target`, this.e.msg)
