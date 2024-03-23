@@ -73,6 +73,8 @@ export class apisetu extends plugin {
     });
   }
 async yxy(e) {
+    if (!await cm.checkBot(e))
+    return false
   await e.reply('开始了');
 let numMatch = e.msg.match(/来(\d+)张/);
 let num = numMatch ? numMatch[1] : 1;
@@ -153,6 +155,8 @@ let num = numMatch ? numMatch[1] : 1;
   }
 } */
 async zt(e) {
+        if (!await cm.checkBot(e))
+    return false
   await e.reply('开始了');
   try {
     let num = e.msg.match(/(\d+)/);
@@ -189,6 +193,8 @@ async zt(e) {
 
 
 async bs(e) {
+        if (!await cm.checkBot(e))
+    return false
   try {
     const response = await fetch(apiurl3);
     const buffer = await response.buffer();
@@ -209,6 +215,8 @@ async bs(e) {
     await e.reply([segment.image(apiurl2)]);
   }
   async ptst(e) {
+          if (!await cm.checkBot(e))
+    return false
     try {
       const messages = ['你要的图片']
       messages.push([segment.image(`${apiurl}`)]);
@@ -231,6 +239,8 @@ async bs(e) {
     }
   }
   async r18(e) {
+          if (!await cm.checkBot(e))
+    return false
 	  let res;
     try {
       // 解析命令中的张数，默认为1
