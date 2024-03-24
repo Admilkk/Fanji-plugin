@@ -104,7 +104,7 @@ for (let uin of uins) {
     if (e.message.length === 0) return e.reply('❎ 消息不能为空')*/
 	  for (let group of Bot[e.self_id].gl.keys()){
 		  Bot[e.self_id].pickGroup(group).sendMsg(msg)
-		  		await  e.runtime.common.sleep(5000)
+		  		await  e.runtime.common.sleep(500)
 	  }
 	  }
   }else{
@@ -133,7 +133,7 @@ for (let uin of uins) {
     if (e.message.length === 0) return e.reply('❎ 消息不能为空')*/
 	  for (let friend of Bot[e.self_id].fl.keys()){
 		  Bot[e.self_id].pickFriend(friend).sendMsg(msg)
-		  		 await e.runtime.common.sleep(5000)
+		  		 await e.runtime.common.sleep(500)
 	  }
 	  }
   }else{
