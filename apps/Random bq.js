@@ -66,7 +66,7 @@ async zz(e) {
       await redis.set('last_updatezz_time', now);
 
       // 保存正则表达式
-      await redis.set('stored_regex', this.rule[1].reg);
+      await redis.set('stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
     } catch(error) {
       await e.reply('error connect to API');
       await e.reply(error.message);
@@ -91,7 +91,7 @@ async updateRegex() {
       await redis.set('last_updatezz_time', now);
 
       // 保存正则表达式
-      await redis.set('stored_regex', this.rule[1].reg);
+      await redis.set('stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
     } else {
       const storedRegex = await redis.get('stored_regex');
       if (storedRegex) {
