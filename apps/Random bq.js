@@ -66,7 +66,7 @@ async zz(e) {
       await redis.set('last_updatezz_time', now);
 
       // 保存正则表达式
-      await redis.set('stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
+      await redis.set('stored_regex', this.rule[1].reg);
     } catch(error) {
       await e.reply('error connect to API');
       await e.reply(error.message);
@@ -91,7 +91,7 @@ async updateRegex() {
       await redis.set('last_updatezz_time', now);
 
       // 保存正则表达式
-      await redis.set('stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
+      await redis.set('stored_regex', this.rule[1].reg);
     } else {
       const storedRegex = await redis.get('stored_regex');
       if (storedRegex) {
@@ -121,7 +121,7 @@ async bq(e) {
   }
 
   let emojiName = matchResult[3].replace(/\s+/g, ''); 
-  if (e.msg === '#随机表情' || e.msg === '随机表情') {
+  if (/随机表情/g.test(e.msg)) {
     emojiName = 'sj';
   }
 logger.mark(emojiName)
