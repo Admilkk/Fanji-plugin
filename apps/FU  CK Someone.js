@@ -36,7 +36,7 @@ export class fuck extends plugin {
         {
           reg: /^#?骂(他|她|它|ta)?((\d+)(次))?$/i,
           fnc: 'fuck',
-        }
+        },
         {
           reg: /^#?反击设置骂人(开启|关闭)$/i,
           fnc: 'fuckkg',
@@ -46,6 +46,7 @@ export class fuck extends plugin {
   }
 async fuckkg (e) {
     let aw = e.msg.includes('开启')
+    if (!e.isMaster||!await cm.check(this.e.user_id))
     if (aw)
     redis.set('Fanji:maren', 'true')
     else
@@ -53,7 +54,9 @@ async fuckkg (e) {
 }
 async fuck(e) {
     let kg = await redis.get('Fanji:maren')
-        if (!await cm.checkBot(e)||!kg)
+    if (!kg)
+    return this.reply('骂人未开启，请发送#反击设置骂人开启')
+        if (!await cm.checkBot(e))
     return false
 
 
