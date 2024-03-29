@@ -54,9 +54,10 @@ async fuckkg (e) {
 }
 async fuck(e) {
     let kg = await redis.get('Fanji:maren')
+    kg = kg == 'true'
     if (!kg){
     this.reply('骂人未开启，请发送#反击设置骂人开启')
-    return 
+    return true
     }
         if (!await cm.checkBot(e))
     return false
