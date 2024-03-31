@@ -114,7 +114,7 @@ if (!e.atme && e.at) return false
   } catch (error) {  
     if (error.code === 'ENOENT') {  
       const chineseName = names[pluginsName] || ''; 
-      msg += `${pluginsName}(${chineseName})`;  
+      msg += `${pluginsName}(${chineseName})\n`;  
     }  
   }  
   return true; 
