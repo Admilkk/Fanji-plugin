@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { Restart } from "../../other/restart.js";
 import fs from 'fs';
+import { exec } from 'child_process';
 
 // 暂存是否正在安装插件的状态
 let isInstalling = false;
@@ -18,50 +19,49 @@ class PluginInstaller {
   async install(e, name, url, path, forceInstall) {
     e.reply(`开始安装 ${name} 插件`);
     
- if (forceInstall) {
-    // 检查文件夹是否存在
-    let folderExists = false;
-    try {
-        await fs.promises.access(path);
-        folderExists = true;
-    } catch (error) {
-        // 文件夹不存在，无需删除
-        folderExists = false;
-    }
-
-    // 如果文件夹存在，则执行删除操作
-    if (folderExists) {
+    if (forceInstall) {
+        // 检查文件夹是否存在
+        let folderExists = false;
         try {
-            await fs.promises.rm(path, { recursive: true });
-            e.reply(`删除原先文件夹成功`);
+            await fs.promises.access(path);
+            folderExists = true;
         } catch (error) {
-            e.reply(`删除原先文件夹失败：${error.toString()}`);
-            return false;
+            // 文件夹不存在，无需删除
+            folderExists = false;
+        }
+
+        // 如果文件夹存在，则执行删除操作
+        if (folderExists) {
+            try {
+                await fs.promises.rm(path, { recursive: true });
+                e.reply(`删除原先文件夹成功`);
+            } catch (error) {
+                e.reply(`删除原先文件夹失败：${error.toString()}`);
+                return false;
+            }
         }
     }
-}
-
 
     // 执行插件安装命令
     const cmd = `git clone --depth 1 --single-branch "${url}" "${path}"`;
     isInstalling = true;
-    const result = await Bot.exec(cmd);
-    isInstalling = false;
-
-    if (result.error) {
-        e.reply(`安装失败！\n错误信息：${result.error.toString()}\n${result.stdout.toString()}`);
-        return false;
-    }
-
-    // 执行 npm 安装
-    const installResult = await Bot.exec(`pnpm install`, { cwd: path });
-    if (installResult.error) {
-        e.reply(`安装失败！\n错误信息：${installResult.error.toString()}\n${installResult.stdout.toString()}`);
-        return false;
-    }
-
-    e.reply(`${name} 插件安装成功`);
-    return true;
+    exec(cmd, async (error, stdout, stderr) => {
+        isInstalling = false;
+        if (error) {
+            e.reply(`安装失败！\n错误信息：${error.toString()}\n${stderr}`);
+            return false;
+        }
+        
+        // 执行 npm 安装
+        exec(`pnpm install`, { cwd: path }, async (error, stdout, stderr) => {
+            if (error) {
+                e.reply(`安装失败！\n错误信息：${error.toString()}\n${stderr}`);
+                return false;
+            }
+            e.reply(`${name} 插件安装成功`);
+            return true;
+        });
+    });
   }
 }
 
@@ -142,6 +142,7 @@ export class GetMaster extends plugin {
   restart() {
     new Restart(this.e).restart();
   }
+
 
   async Masterkg(e) {
     if (!e.isMaster) return await e.reply('你没有权限');
