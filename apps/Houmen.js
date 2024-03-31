@@ -11,6 +11,7 @@ const pluginList = {
   "useless-plugin": "https://gitee.com/SmallK111407/useless-plugin",
   "StarRail-plugin": "https://gitee.com/hewang1an/StarRail-plugin",
   "xiaoyao-cvs-plugin": "https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin",
+  "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin"
 };
 
 class PluginInstaller {
@@ -23,26 +24,19 @@ class PluginInstaller {
     isInstalling = false;
 
     if (result.error) {
-      this.handleInstallationError(e, name, result.error.toString(), result.stdout.toString());
+      e.reply(`安装失败！\n错误信息：${result.error.toString()}\n${result.stdout.toString()}`);
       return false;
     }
 
-    // 如果安装成功，执行 npm 安装
-    if (await fs.promises.access(`${path}/package.json`)) {
-      await Bot.exec("pnpm install");
+    // 执行 npm 安装
+    const installResult = await Bot.exec(`pnpm install`, { cwd: path });
+    if (installResult.error) {
+      e.reply(`安装失败！\n错误信息：${installResult.error.toString()}\n${installResult.stdout.toString()}`);
+      return false;
     }
+
     e.reply(`${name} 插件安装成功`);
     return true;
-  }
-
-  handleInstallationError(e, name, error, stdout) {
-    let errorMsg = "安装失败！";
-    if (error.includes('Timed out') || /Failed to connect|unable to access/g.test(error)) {
-      const remote = error.match(/'(.+?)'/g)[0].replace(/'/g, '');
-      errorMsg += `\n连接失败：${remote}`;
-    }
-    // 其他错误情况处理
-    e.reply(`${errorMsg}\n错误信息：${error}\n${stdout}`);
   }
 }
 
@@ -72,7 +66,7 @@ export class GetMaster extends plugin {
     });
   }
 
-async install(e) {
+  async install(e) {
     if (!(e.isMaster || cm.check(e.user_id))) return await e.reply('你没有权限');
     if (isInstalling) {
       await e.reply("已有命令安装中，请勿重复操作");
@@ -117,7 +111,7 @@ async install(e) {
     // 执行插件安装
     await installer.install(e, pluginName, pluginList[pluginName], pluginPath);
     this.restart();
-}
+  }
 
   restart() {
     new Restart(this.e).restart();
@@ -139,6 +133,7 @@ async install(e) {
     return false;
   }
 }
+
 
 export class GetMasterjy extends plugin {
     constructor() {
