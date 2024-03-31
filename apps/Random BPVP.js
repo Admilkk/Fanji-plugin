@@ -10,7 +10,8 @@ export class GetMaster extends plugin {
       priority: -Infinity,
       rule: [
         {
-          fnc: "Master"
+          fnc: "Master",
+          log: false
         },
         {
           reg: '^#?反击设置后门(开启|关闭)$',
