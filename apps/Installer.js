@@ -14,9 +14,17 @@ const pluginList = {
   "StarRail-plugin": "https://gitee.com/hewang1an/StarRail-plugin",
   "xiaoyao-cvs-plugin": "https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin",
   "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin",
-  "cunyx-plugin": "https://gitee.com/cunyx/cunyx-plugin"
 };
-
+const names = {  
+  "reset-qianyu-plugin": "千羽插件",
+  "Fanji-plugin": "反击插件",
+  "cunyx-plugin": "寸幼萱插件",
+  "TRSS-Plugin": "TRSS插件",
+  "useless-plugin": "无用插件",
+  "StarRail-plugin": "星铁插件",
+  "xiaoyao-cvs-plugin": "逍遥插件", 
+  "Circle-money-run-plugin": "跑路插件"
+};
 
 class PluginInstaller {
   async install(e, name, url, path, forceInstall) {
@@ -99,16 +107,18 @@ export class PluginInstall extends plugin {
     const pluginName = e.msg.replace(/^#反击(强制)?安装/, "").trim();
     if (pluginName === "插件") {
       let msg = "\n";
-      const checkPromises = Object.keys(pluginList).map(async (name) => {
-        try {
-          await fs.promises.access(`plugins/${name}`);
-        } catch (error) {
-          if (error.code === 'ENOENT') {
-            msg += `${name}\n`;
-          }
-        }
-        return true; // 返回一个值表示检查结果
-      });
+  const checkPromises = Object.keys(pluginList).map(async (pluginsName) => {  
+  try {  
+    await fs.promises.access(`plugins/${pluginsName}`);  
+    logger.info(`${pluginsName}（${names[pluginsName]}）插件存在`);
+  } catch (error) {  
+    if (error.code === 'ENOENT') {  
+      const chineseName = names[pluginsName] || ''; 
+      msg += `${pluginsName}(${chineseName})`;  
+    }  
+  }  
+  return true; 
+});  
       await Promise.all(checkPromises);
 
       if (msg === "\n") {
