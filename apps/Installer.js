@@ -25,10 +25,16 @@ const names = {
   "xiaoyao-cvs-plugin": "逍遥插件", 
   "Circle-money-run-plugin": "跑路插件"
 };
-
+const mergedPlugins = Object.keys(pluginList).reduce((acc, name) => {  
+  acc[name] = {  
+    url: pluginList[name],  
+    ChineseName: names[name] || name // 如果找不到中文名字，则使用原名作为中文名字  
+  };  
+  return acc;  
+}, {}); 
 class PluginInstaller {
   async install(e, name, url, path, forceInstall) {
-    e.reply(`开始安装 ${name} 插件`);
+    e.reply(`开始安装 ${mergedPlugins[name].ChineseName} 插件`);
     
     if (forceInstall) {
         // 检查文件夹是否存在
@@ -69,7 +75,7 @@ class PluginInstaller {
                 e.reply(`安装失败！\n错误信息：${error.toString()}\n${stderr}`);
                 return false;
             }
-            e.reply(`${name} 插件安装成功`);
+            e.reply(`${mergedPlugins[name].ChineseName} 插件安装成功`);
             // 安装完成后进行重启操作
 
     new Restart(e).restart();
