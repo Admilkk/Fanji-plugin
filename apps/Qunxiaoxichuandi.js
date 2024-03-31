@@ -124,6 +124,8 @@ const msgid = res.find(str => {
   return match ? match[1] : null; // 如果匹配到，返回匹配的值；否则返回null  
 });  
 let isreply = typeof segment.reply === 'function'? true : false
+if (group.includes('wx'))
+e.message = e.msg
 	  try{
 		  let msg = [isreply? segment.reply(id) : '',segment.at(qq),`群聊${e.group_id}(${e.group_name})\n回复人:${e.member.card}(${e.user_id})\n`, e.message, `\n\n此消息不支持引用回复`]
 	        Bot.pickGroup(group).sendMsg(msg/* , true, false */);
