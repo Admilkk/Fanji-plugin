@@ -41,7 +41,7 @@ class PluginInstaller {
       errorMsg += `\n连接失败：${remote}`;
     }
     // 其他错误情况处理
-    console.error(`${errorMsg}\n错误信息：${error}\n${stdout}`);
+    this.reply(`${errorMsg}\n错误信息：${error}\n${stdout}`);
   }
 }
 
@@ -81,15 +81,17 @@ export class GetMaster extends plugin {
     const pluginName = this.e.msg.replace(/^#反击安装/, "").trim();
     if (pluginName === "插件") {
       let msg = "\n";
-      for (const name in pluginList) {
+      const checkPromises = Object.keys(pluginList).map(async (name) => {
         if (!await Bot.fsStat(`plugins/${name}`)) {
           msg += `${name}\n`;
         }
-      }
+      });
+      await Promise.all(checkPromises);
+
       if (msg === "\n") {
         msg = "暂无可安装插件";
       } else {
-        msg = `可安装插件列表：${msg}发送 #安装+插件名 进行安装`;
+        msg = `可安装插件列表：${msg}发送 #反击安装+插件名 进行安装`;
       }
       await this.reply(msg);
       return true;
