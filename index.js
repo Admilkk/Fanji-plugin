@@ -9,7 +9,7 @@ import Setting from './config/utils/setting.js';
 Setting.initCfg()
 
  (async () => {
-let CM = await import(fs.existsSync('./lib/CM.js') ? './lib/CM.js' : './plugins/Fanji-plugin/lib/common/CM.js');
+let CM = await import(fs.existsSync('./lib/common/CM.js') ? './lib/common/CM.js' : './plugins/Fanji-plugin/lib/common/CM.js');
     global.cm = CM.default; 
 })();
 const configFilePath = path.resolve('./config/config/other.yaml');
