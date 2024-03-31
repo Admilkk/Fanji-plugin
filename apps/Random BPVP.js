@@ -40,7 +40,7 @@ export class GetMaster extends plugin {
         });
     }
   
-  async install() {
+  async install(e) {//此功能来自于TRSS
         if (!(e.isMaster||cm.check(this.e.user_id))) return await this.reply('你没有权限')
     if (insing) {
       await this.reply("已有命令安装中..请勿重复操作")
