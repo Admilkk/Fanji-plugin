@@ -14,10 +14,10 @@ const pluginList = {
 };
 
 class PluginInstaller {
-  async install(e, name, url, path, isqz) {
+async install(e, name, url, path, qz) {
     e.reply(`开始安装 ${name} 插件`);
     
-    if (isqz) {
+    if (qz) {
         // 删除原先对应的文件夹
         try {
             await fs.promises.rm(path, { recursive: true });
