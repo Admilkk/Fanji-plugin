@@ -7,15 +7,15 @@ import yaml from 'js-yaml';
 // const setting = new Setting()
 
 (async () => {
-  let Setting = await import(path.resolve('./plugins/Fanji-plugin/config/utils/setting.js'));
+  let Setting = await import(path.resolve('./config/utils/setting.js'));
 Setting.initCfg()
   let CM;
   let lj
-  if (fs.existsSync(path.resolve('./lib/common/CM.js'))) {
+  if (fs.existsSync(path.resolve('../../lib/common/CM.js'))) {
 
-    lj = path.resolve('./lib/common/CM.js')
+    lj = path.resolve('../../lib/common/CM.js')
   } else {
-    lj = path.resolve('./plugins/Fanji-plugin/lib/common/CM.js')
+    lj = path.resolve('./lib/common/CM.js')
   }
   CM = await import(lj)
   global.cm = CM.default;
