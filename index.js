@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
+
 import Setting from './config/utils/setting.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -22,9 +23,9 @@ const __dirname = dirname(__filename);
 
   // 检查文件是否存在
   if (fs.existsSync(libPath)) {
-    lj = libPath;
+    lj = 'file://' + libPath;
   } else {
-    lj = pluginPath;
+    lj = 'file://' + pluginPath;
   }
   try {
     CM = await import(lj);
