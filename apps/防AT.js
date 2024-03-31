@@ -75,7 +75,7 @@ export default class FanjiUNatAll extends plugin {
         }
         
         // 检查权限
-        if (!e.member.is_admin){
+        if (!e.member.is_admin && !e.member.is_owner){
             if (await cm.check(this.e.user_id)) return false
             if (e.group.is_admin){
                 await e.reply('检测到无权限at全体！开始禁言操作');
