@@ -12,11 +12,11 @@ export class qf extends plugin {
       priority: 10,
       rule: [
         {
-          reg: "^#一键群发(.*)?$",
+          reg: "^#一键群发",
           fnc: "qf"
         },
         {
-          reg: "^#一键私发(.*)?$",
+          reg: "^#一键私发",
           fnc: "hyqf"
         },
         {
@@ -86,22 +86,14 @@ for (let uin of uins) {
   async qf(e){
           let msgs = e.message[0].text.split(' ')
 	  if (e.isMaster || await cm.check(e.user_id)){
-	  let msg = e.msg.match(/^#一键群发(.*)?$/)
-	  if (!msg[1]){
+	  let msg = e.msg.replace(/(一键群发)/,'').replace(/#/,'')
+	  if (msg = ''){
 		  await e.reply('加上需要发送的内容')
 		  // this.setContext('PICKGR')
 	  }else{
-	  msg = msg[1]
-      /*	e.message[0].text = e.message[0].text.replace(/#|一键群发/g, '').trim()
-              	  if (/\d/.test(msgs[0])) {
-        e.message[0].text = msgs.slice(1).join(' ')
-      } else {
-        e.message[0].text = msgs.slice(2).join(' ')
-      }
-    
+    	e.message[0].text = e.message[0].text.replace(/#|一键群发/g, '').trim()
     if (!e.message[0].text) e.message.shift()
-
-    if (e.message.length === 0) return e.reply('❎ 消息不能为空')*/
+    if (e.message.length === 0) return e.reply('❎ 消息不能为空')
 	  for (let group of Bot[e.self_id].gl.keys()){
 		  Bot[e.self_id].pickGroup(group).sendMsg(msg)
 		  		await  e.runtime.common.sleep(500)
@@ -115,22 +107,14 @@ for (let uin of uins) {
   async hyqf(e){
           let msgs = e.message[0].text.split(' ')
 	  	  if (e.isMaster || await cm.check(e.user_id)){
-	  	  let msg = e.msg.match(/^#一键私发(.*)?$/)
-		  	  if (!msg[1]){
- await e.reply('加上需要发送的内容')
+  let msg = e.msg.replace(/(一键私发)/,'').replace(/#/,'')
+	  if (msg = ''){
+		  await e.reply('加上需要发送的内容')
 		  // this.setContext('PICKGR')
 	  }else{
-	  msg = msg[1]
-     /* e.message[0].text = e.message[0].text.replace(/#|一键私发/g, '').trim()
-      	  if (/\d/.test(msgs[0])) {
-        e.message[0].text = msgs.slice(1).join(' ')
-      } else {
-        e.message[0].text = msgs.slice(2).join(' ')
-      }
-    
+      e.message[0].text = e.message[0].text.replace(/#|一键私发/g, '').trim()
     if (!e.message[0].text) e.message.shift()
-
-    if (e.message.length === 0) return e.reply('❎ 消息不能为空')*/
+    if (e.message.length === 0) return e.reply('❎ 消息不能为空')
 	  for (let friend of Bot[e.self_id].fl.keys()){
 		  Bot[e.self_id].pickFriend(friend).sendMsg(msg)
 		  		 await e.runtime.common.sleep(500)
