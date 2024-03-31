@@ -32,7 +32,7 @@ async fd(e) {
 		// logger.info('LJL')		
         let gr = await redis.get(`Fanji:ql:${e.group_id}:target`);
         
-     let msgrt = await Bot.pickGroup(gr).sendMsg([`群聊${e.group_id}(${e.group_name}):\n发送人:${e.member.card}\nQQ:${e.user_id}\n\n`, e.message, '\n引用该条消息以回复']);  
+     let msgrt = await Bot.pickGroup(gr).sendMsg([`群聊${e.group_id}(${e.group_name}):\n发送人:${e.member.info.card}\nQQ:${e.user_id}\n\n`, e.message, '\n引用该条消息以回复']);  
      await redis.set(`${msgrt.seq}:Fanji:ql:msgid`, msgrt.message_id)
 		return false
     }else{
@@ -126,7 +126,7 @@ const msgid = res.find(str => {
 let isreply = typeof segment.reply === 'function'? true : false
 let wx = /chatroom/i.test(group)
 	  try{
-		  let msg = [wx ? '' :  isreply? segment.reply(id):'',wx? '':segment.at(qq),`群聊${e.group_id}(${e.group_name})\n回复人:${e.member.card}(${e.user_id})\n`, wx ? e.msg:e.message, `\n\n此消息不支持引用回复`]
+		  let msg = [wx ? '' :  isreply? segment.reply(id):'',wx? '':segment.at(qq),`群聊${e.group_id}(${e.group_name})\n回复人:${e.member.info.card}(${e.user_id})\n`, wx ? e.msg:e.message, `\n\n此消息不支持引用回复`]
 	        Bot.pickGroup(group).sendMsg(msg/* , true, false */);
 	  		   await e.reply('✅ 已把消息发给它了哦~')
 	  }catch(error){
