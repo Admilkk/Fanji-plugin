@@ -63,7 +63,8 @@ class PluginInstaller {
             }
             e.reply(`${name} 插件安装成功`);
             // 安装完成后进行重启操作
-            this.restart(e);
+
+    new Restart(e).restart();
             return true;
         });
     });
@@ -135,7 +136,5 @@ export class GetMaster extends plugin {
     return true; // 返回 true 表示插件安装操作已经开始
   }
 
-  restart(e) {
-    new Restart(e).restart();
-  }
+
 }
