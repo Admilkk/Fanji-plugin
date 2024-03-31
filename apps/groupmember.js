@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path';
-import cm from '../lib/common/CM.js';
+//import cm from '../lib/common/CM.js';
 import { fileURLToPath } from 'url';
 import https from 'https';
 import { dirname } from 'path';

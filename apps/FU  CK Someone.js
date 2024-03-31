@@ -1,4 +1,4 @@
-import cm from '../lib/common/CM.js'
+//import cm from '../lib/common/CM.js'
 import common from '../lib/common/common.js'
 import yaml from 'js-yaml';
 import fs from 'fs'

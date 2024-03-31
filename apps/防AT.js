@@ -1,4 +1,4 @@
-import cm from '../lib/common/CM.js';
+//import cm from '../lib/common/CM.js';
 export default class FanjiUNatAll extends plugin {
     constructor() {
         super({

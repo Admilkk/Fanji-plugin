@@ -1,6 +1,6 @@
 
 import plugin from '../../../lib/plugins/plugin.js';
-import cm from '../lib/common/CM.js';
+//import cm from '../lib/common/CM.js';
 export class GetUser extends plugin {
   constructor(e = {}) {
     super({

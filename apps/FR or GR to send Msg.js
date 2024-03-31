@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 // import { createRequire } from 'module'
 // import Base from '../model/base/Base.js'
-import cm from '../lib/common/CM.js'
+//import cm from '../lib/common/CM.js'
 // const require = createRequire(import.meta.url)
 export class qf extends plugin {
   constructor() {

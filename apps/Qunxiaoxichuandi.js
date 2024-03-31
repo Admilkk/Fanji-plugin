@@ -1,4 +1,4 @@
-import cm from '../lib/common/CM.js';
+//import cm from '../lib/common/CM.js';
 export class cte extends plugin {
     constructor() {
         super({

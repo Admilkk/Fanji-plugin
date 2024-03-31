@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
-import cm from '../lib/common/CM.js';
+//import cm from '../lib/common/CM.js';
 import common from '../lib/common/common.js';
 import { fileURLToPath } from 'url';
 import https from 'https';
