@@ -12,7 +12,8 @@ const pluginList = {
   "useless-plugin": "https://gitee.com/SmallK111407/useless-plugin",
   "StarRail-plugin": "https://gitee.com/hewang1an/StarRail-plugin",
   "xiaoyao-cvs-plugin": "https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin",
-  "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin"
+  "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin",
+  "cunyx-plugin": "https://gitee.com/cunyx/cunyx-plugin"
 };
 
 class PluginInstaller {
