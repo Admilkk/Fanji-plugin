@@ -102,7 +102,7 @@ export class PluginInstall extends plugin {
       await e.reply("已有命令安装中，请勿重复操作");
       return false;
     }
-
+if (!e.atme && e.at) return false
     const forceInstall = e.msg.includes('强制');
     const pluginName = e.msg.replace(/^#反击(强制)?安装/, "").trim();
     if (pluginName === "插件") {
