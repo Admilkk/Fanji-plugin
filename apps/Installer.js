@@ -119,7 +119,7 @@ if (!e.atme && e.at) return false
     logger.info(`${pluginsName}（${mergedPlugins[name].ChineseName}）插件存在`);
   } catch (error) {  
     if (error.code === 'ENOENT') {  
-      msg += `${pluginsName}(${mergedPlugins[name].ChineseName})\n`;  
+      msg += `${pluginsName}\n(${mergedPlugins[name].ChineseName})\n`;  
     }  
   }  
   return true; 
