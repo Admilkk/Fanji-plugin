@@ -5,23 +5,27 @@ import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
 import Setting from './config/utils/setting.js';
-// const setting = new Setting()
+
 (async () => {
-  try{
-Setting.initCfg()
-  }catch(error){
-    logger.error('载入CM.js失败',error)
+  try {
+    Setting.initCfg();
+  } catch (error) {
+    logger.error('载入Setting失败', error);
   }
   let CM;
-  let lj
+  let lj;
   if (fs.existsSync(path.resolve('../../lib/common/CM.js'))) {
-
-    lj = path.resolve('../../lib/common/CM.js')
+    lj = '../../lib/common/CM.js';
   } else {
-    lj = path.resolve('./lib/common/CM.js')
+    lj = './lib/common/CM.js';
   }
-  CM = await import(lj)
-  global.cm = CM.default;
+  try {
+    // 使用通用的import语法加载本地模块
+    CM = await import(lj);
+    global.cm = CM.default;
+  } catch (error) {
+    logger.error('载入CM.js失败', error);
+  }
 })();
 
 const configFilePath = path.resolve('./config/config/other.yaml');
