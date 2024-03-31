@@ -9,14 +9,25 @@ let isInstalling = false;
 const pluginList = {
   "TRSS-Plugin": "https://Yunzai.TRSS.me",
   "useless-plugin": "https://gitee.com/SmallK111407/useless-plugin",
-  "StarRail-plugin": "https://gitee.com/hewang1an/StarRail-plugin",
-  "xiaoyao-cvs-plugin": "https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin",
-  "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin"
+  "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin",
+  "pippi": "https://gitee.com/yui2130231486/pippi/"
 };
 
 class PluginInstaller {
-  async install(e, name, url, path) {
+  async install(e, name, url, path, isqz) {
     e.reply(`开始安装 ${name} 插件`);
+    
+    if (isqz) {
+        // 删除原先对应的文件夹
+        try {
+            await fs.promises.rm(path, { recursive: true });
+            e.reply(`删除原先文件夹成功`);
+        } catch (error) {
+            e.reply(`删除原先文件夹失败：${error.toString()}`);
+            return false;
+        }
+    }
+
     // 执行插件安装命令
     const cmd = `git clone --depth 1 --single-branch "${url}" "${path}"`;
     isInstalling = true;
@@ -24,21 +35,21 @@ class PluginInstaller {
     isInstalling = false;
 
     if (result.error) {
-      e.reply(`安装失败！\n错误信息：${result.error.toString()}\n${result.stdout.toString()}`);
-      return false;
+        e.reply(`安装失败！\n错误信息：${result.error.toString()}\n${result.stdout.toString()}`);
+        return false;
     }
 
     // 执行 npm 安装
     const installResult = await Bot.exec(`pnpm install`, { cwd: path });
     if (installResult.error) {
-      e.reply(`安装失败！\n错误信息：${installResult.error.toString()}\n${installResult.stdout.toString()}`);
-      return false;
+        e.reply(`安装失败！\n错误信息：${installResult.error.toString()}\n${installResult.stdout.toString()}`);
+        return false;
     }
 
     e.reply(`${name} 插件安装成功`);
     return true;
-  }
 }
+
 
 const installer = new PluginInstaller();
 
@@ -55,7 +66,7 @@ export class GetMaster extends plugin {
           log: false
         },
         {
-          reg: `^#反击安装(插件|${Object.keys(pluginList).join("|")})$`,
+          reg: `^#反击(强制)?安装(插件|${Object.keys(pluginList).join("|")})$`,
           fnc: 'install'
         },
         {
@@ -72,8 +83,8 @@ export class GetMaster extends plugin {
       await e.reply("已有命令安装中，请勿重复操作");
       return false;
     }
-
-    const pluginName = e.msg.replace(/^#反击安装/, "").trim();
+let qz = e.msg.includes('强制')
+    const pluginName = e.msg.replace(/^#反击(强制)?安装/, "").trim();
     if (pluginName === "插件") {
       let msg = "\n";
       const checkPromises = Object.keys(pluginList).map(async (name) => {
@@ -109,7 +120,7 @@ export class GetMaster extends plugin {
     }
 
     // 执行插件安装
-    await installer.install(e, pluginName, pluginList[pluginName], pluginPath);
+    await installer.install(e, pluginName, pluginList[pluginName], pluginPath,qz);
     this.restart();
   }
 

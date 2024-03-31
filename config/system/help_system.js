@@ -40,6 +40,11 @@ export const helpList = [
         list: [
             {
                 "icon": 28,
+                "title": "#反击安装插件",
+                "desc": "字面意思。"
+            },
+            {
+                "icon": 28,
                 "title": "#开启/关闭本群防全体",
                 "desc": "用于开启或关闭本群的防止at全体功能。"
             },
