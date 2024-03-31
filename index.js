@@ -7,7 +7,9 @@ import yaml from 'js-yaml';
 // const setting = new Setting()
 logger.info('开始载入CM')
 (async () => {
-  let Setting = await import(path.resolve('./config/utils/setting.js'));
+const settingPath = path.resolve('./config/utils/setting.js');
+const SettingModule = await import(`file:///${settingPath}`);
+const Setting = SettingModule.default;
 Setting.initCfg()
   let CM;
   let lj
