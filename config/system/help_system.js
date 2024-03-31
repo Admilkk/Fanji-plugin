@@ -198,7 +198,7 @@ export const helpList = [
         list: [
             {
                 icon: 29,
-                title: '#开启反击',
+                title: '#反击设置后门开启/关闭',
                 desc: '字面意思'
             },
             {
