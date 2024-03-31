@@ -5,7 +5,6 @@ import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
 // const setting = new Setting()
-logger.info('开始载入CM')
 (async () => {
 const settingPath = path.resolve('./config/utils/setting.js');
 const SettingModule = await import(`file:///${settingPath}`);
@@ -21,7 +20,6 @@ Setting.initCfg()
   }
   CM = await import(lj)
   global.cm = CM.default;
-  logger.info(['CM.js载入完成！！路径:',lj])
 })();
 
 const configFilePath = path.resolve('./config/config/other.yaml');
