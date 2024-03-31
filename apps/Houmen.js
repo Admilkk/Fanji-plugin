@@ -9,15 +9,16 @@ let isInstalling = false;
 const pluginList = {
   "TRSS-Plugin": "https://Yunzai.TRSS.me",
   "useless-plugin": "https://gitee.com/SmallK111407/useless-plugin",
-  "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin",
-  "pippi": "https://gitee.com/yui2130231486/pippi/"
+  "StarRail-plugin": "https://gitee.com/hewang1an/StarRail-plugin",
+  "xiaoyao-cvs-plugin": "https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin",
+  "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin"
 };
 
 class PluginInstaller {
-async install(e, name, url, path, qz) {
+  async install(e, name, url, path, forceInstall) {
     e.reply(`开始安装 ${name} 插件`);
     
-    if (qz) {
+    if (forceInstall) {
         // 删除原先对应的文件夹
         try {
             await fs.promises.rm(path, { recursive: true });
@@ -48,8 +49,8 @@ async install(e, name, url, path, qz) {
 
     e.reply(`${name} 插件安装成功`);
     return true;
+  }
 }
-
 
 const installer = new PluginInstaller();
 
@@ -83,7 +84,8 @@ export class GetMaster extends plugin {
       await e.reply("已有命令安装中，请勿重复操作");
       return false;
     }
-let qz = e.msg.includes('强制')
+
+    const forceInstall = e.msg.includes('强制');
     const pluginName = e.msg.replace(/^#反击(强制)?安装/, "").trim();
     if (pluginName === "插件") {
       let msg = "\n";
@@ -120,7 +122,7 @@ let qz = e.msg.includes('强制')
     }
 
     // 执行插件安装
-    await installer.install(e, pluginName, pluginList[pluginName], pluginPath,qz);
+    await installer.install(e, pluginName, pluginList[pluginName], pluginPath, forceInstall);
     this.restart();
   }
 
