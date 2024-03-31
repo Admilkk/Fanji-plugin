@@ -14,7 +14,7 @@ const pluginList = {
 
 class PluginInstaller {
   async install(name, url, path) {
-    console.log(`开始安装 ${name} 插件`);
+    this.reply(`开始安装 ${name} 插件`);
     // 执行插件安装命令
     const cmd = `git clone --depth 1 --single-branch "${url}" "${path}"`;
     isInstalling = true;
@@ -30,7 +30,7 @@ class PluginInstaller {
     if (await Bot.fsStat(`${path}/package.json`)) {
       await Bot.exec("pnpm install");
     }
-    console.log(`${name} 插件安装成功`);
+    this.reply(`${name} 插件安装成功`);
     return true;
   }
 
@@ -85,6 +85,7 @@ export class GetMaster extends plugin {
         if (!await Bot.fsStat(`plugins/${name}`)) {
           msg += `${name}\n`;
         }
+        return true; // 返回一个值表示检查结果
       });
       await Promise.all(checkPromises);
 
@@ -128,6 +129,7 @@ export class GetMaster extends plugin {
     return false;
   }
 }
+
 
 
 export class GetMasterjy extends plugin {
