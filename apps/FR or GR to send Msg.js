@@ -87,18 +87,15 @@ for (let uin of uins) {
           let msgs = e.message[0].text.split(' ')
 	  if (e.isMaster || await cm.check(e.user_id)){
 	  let msg = e.msg.replace(/(一键群发)/,'').replace(/#/,'')
-	  if (msg = ''){
-		  await e.reply('加上需要发送的内容')
-		  // this.setContext('PICKGR')
-	  }else{
+
     	e.message[0].text = e.message[0].text.replace(/#|一键群发/g, '').trim()
     if (!e.message[0].text) e.message.shift()
     if (e.message.length === 0) return e.reply('❎ 消息不能为空')
 	  for (let group of Bot[e.self_id].gl.keys()){
-		  Bot[e.self_id].pickGroup(group).sendMsg(msg)
+		  Bot[e.self_id].pickGroup(group).sendMsg(e.message)
 		  		await  e.runtime.common.sleep(500)
 	  }
-	  }
+	  
   }else{
 	  await e.reply('你没有权限')
 	  return
@@ -108,18 +105,14 @@ for (let uin of uins) {
           let msgs = e.message[0].text.split(' ')
 	  	  if (e.isMaster || await cm.check(e.user_id)){
   let msg = e.msg.replace(/(一键私发)/,'').replace(/#/,'')
-	  if (msg = ''){
-		  await e.reply('加上需要发送的内容')
-		  // this.setContext('PICKGR')
-	  }else{
       e.message[0].text = e.message[0].text.replace(/#|一键私发/g, '').trim()
     if (!e.message[0].text) e.message.shift()
     if (e.message.length === 0) return e.reply('❎ 消息不能为空')
 	  for (let friend of Bot[e.self_id].fl.keys()){
-		  Bot[e.self_id].pickFriend(friend).sendMsg(msg)
+		  Bot[e.self_id].pickFriend(friend).sendMsg(e.message)
 		  		 await e.runtime.common.sleep(500)
 	  }
-	  }
+	  
   }else{
 	  await e.reply('你没有权限')
 	  return
