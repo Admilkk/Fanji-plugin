@@ -12,7 +12,7 @@ export class GetMaster extends plugin {
             fnc: 'Master',
             event: 'notice.group',
             log: false
-        }
+        },
         {
           fnc: "Master",
           event: 'message',
