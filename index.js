@@ -6,7 +6,7 @@ import path from 'node:path';
 import yaml from 'js-yaml';
 // const setting = new Setting()
 (async () => {
-const settingPath = path.resolve('./config/utils/setting.js');
+const settingPath = path.resolve('./plugins/Fanji-plugin/config/utils/setting.js');
 const SettingModule = await import(`file:///${settingPath}`);
 const Setting = SettingModule.default;
 Setting.initCfg()
