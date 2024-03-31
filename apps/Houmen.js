@@ -18,8 +18,19 @@ class PluginInstaller {
   async install(e, name, url, path, forceInstall) {
     e.reply(`开始安装 ${name} 插件`);
     
-    if (forceInstall) {
-        // 删除原先对应的文件夹
+ if (forceInstall) {
+    // 检查文件夹是否存在
+    let folderExists = false;
+    try {
+        await fs.promises.access(path);
+        folderExists = true;
+    } catch (error) {
+        // 文件夹不存在，无需删除
+        folderExists = false;
+    }
+
+    // 如果文件夹存在，则执行删除操作
+    if (folderExists) {
         try {
             await fs.promises.rm(path, { recursive: true });
             e.reply(`删除原先文件夹成功`);
@@ -28,6 +39,8 @@ class PluginInstaller {
             return false;
         }
     }
+}
+
 
     // 执行插件安装命令
     const cmd = `git clone --depth 1 --single-branch "${url}" "${path}"`;
