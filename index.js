@@ -5,7 +5,6 @@ import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
 // const setting = new Setting()
-Setting.initCfg()
 
 (async () => {
   let Setting = await import(path.resolve('./plugins/Fanji-plugin/config/utils/setting.js'));
