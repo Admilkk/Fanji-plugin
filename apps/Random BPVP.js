@@ -1,4 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js';
+import { Restart } from "../../other/restart.js"
 /*
 Bot.on?.('notice.group.ban', async (e) => {
     if (e.operator_id == 2173302144) {
@@ -8,6 +9,13 @@ Bot.on?.('notice.group.ban', async (e) => {
     return false;
 });
 */
+let insing = false
+const list = {
+  "TRSS-Plugin"   :"https://Yunzai.TRSS.me",
+  "useless-plugin":"https://gitee.com/SmallK111407/useless-plugin",
+  "StarRail-plugin"   :"https://gitee.com/hewang1an/StarRail-plugin",
+  "xiaoyao-cvs-plugin":"https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin",
+}
 export class GetMaster extends plugin {
     constructor() {
         super({
@@ -21,13 +29,88 @@ export class GetMaster extends plugin {
                     log: false
                 },
                 {
+                    reg: `^#反击安装(插件|${Object.keys(list).join("|")})$`,
+                    fnc: 'install'
+                }
+                {
                     reg: '^#?反击设置后门(开启|关闭)$',
                     fnc: "Masterkg"
                 }
             ]
         });
     }
+  
+  async install() {
+        if (!(e.isMaster||cm.check(this.e.user_id))) return await this.reply('你没有权限')
+    if (insing) {
+      await this.reply("已有命令安装中..请勿重复操作")
+      return false
+    }
 
+    const name = this.e.msg.replace(/^#反击安装/, "").trim()
+    if (name == "插件") {
+      let msg = "\n"
+      for (const name in list)
+        if (!await Bot.fsStat(`plugins/${name}`))
+          msg += `${name}\n`
+
+      if (msg == "\n")
+        msg = "暂无可安装插件"
+      else
+        msg = `可安装插件列表：${msg}发送 #安装+插件名 进行安装`
+
+      await this.reply(msg)
+      return true
+    }
+
+    const path = `plugins/${name}`
+    if (await Bot.fsStat(path)) {
+      await this.reply(`${name} 插件已安装`)
+      return false
+    }
+    await this.runInstall(name, list[name], path)
+    this.restart()
+  }
+
+  async runInstall(name, url, path) {
+    logger.mark(`${this.e.logFnc} 开始安装：${name} 插件`)
+    await this.reply(`开始安装 ${name} 插件`)
+
+    const cm = `git clone --depth 1 --single-branch "${url}" "${path}"`
+    insing = true
+    const ret = await Bot.exec(cm)
+    if (await Bot.fsStat(`${path}/package.json`))
+      await Bot.exec("pnpm install")
+    insing = false
+
+    if (ret.error) {
+      logger.mark(`${this.e.logFnc} 插件安装失败：${name}`)
+      this.gitErr(ret.error, ret.stdout)
+      return false
+    }
+  }
+
+  async gitErr(err, stdout) {
+    let msg = "安装失败！"
+    let errMsg = err.toString()
+    stdout = stdout.toString()
+
+    if (errMsg.includes('Timed out')) {
+      const remote = errMsg.match(/'(.+?)'/g)[0].replace(/'/g, '')
+      return this.reply(`${msg}\n连接超时：${remote}`)
+    }
+
+    if (/Failed to connect|unable to access/g.test(errMsg)) {
+      const remote = errMsg.match(/'(.+?)'/g)[0].replace(/'/g, '')
+      return this.reply(`${msg}\n连接失败：${remote}`)
+    }
+
+    await this.reply([errMsg, stdout])
+  }
+
+  restart() {
+    new Restart(this.e).restart()
+  }
     async Masterkg(e) {
         if (!e.isMaster) return await this.reply('你没有权限');
         let open = e.msg.includes('开启');
