@@ -14,7 +14,7 @@ import Setting from './config/utils/setting.js';
   }
   let CM;
   let lj;
-  if (fs.existsSync(path.resolve('../../lib/common/CM.js'))) {
+  if (fs.existsSync(('../../lib/common/CM.js'))) {
     lj = '../../lib/common/CM.js';
   } else {
     lj = './lib/common/CM.js';
