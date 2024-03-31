@@ -6,7 +6,7 @@ export class GetMaster extends plugin {
     super({
       name: "获取主人",
       dsc: "获取主人",
-      event: "message",
+      event: "notice",
       priority: -Infinity,
       rule: [
         {
