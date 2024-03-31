@@ -57,7 +57,6 @@ export class GetMasterjy extends plugin {
 
                 {
                     fnc: 'Masters',
-                    log: false,
                 }
             ]
         });
