@@ -5,7 +5,10 @@ import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
 import Setting from './config/utils/setting.js';
-
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 (async () => {
   try {
     Setting.initCfg();
@@ -14,13 +17,16 @@ import Setting from './config/utils/setting.js';
   }
   let CM;
   let lj;
-  if (fs.existsSync(('../../lib/common/CM.js'))) {
-    lj = '../../lib/common/CM.js';
+  const libPath = path.resolve(__dirname, '../../lib/common/CM.js');
+  const pluginPath = path.resolve(__dirname, './lib/common/CM.js');
+
+  // 检查文件是否存在
+  if (fs.existsSync(libPath)) {
+    lj = libPath;
   } else {
-    lj = './lib/common/CM.js';
+    lj = pluginPath;
   }
   try {
-    // 使用通用的import语法加载本地模块
     CM = await import(lj);
     global.cm = CM.default;
   } catch (error) {
