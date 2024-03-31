@@ -5,7 +5,7 @@ import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
 // const setting = new Setting()
-
+logger.info('开始载入CM')
 (async () => {
   let Setting = await import(path.resolve('./config/utils/setting.js'));
 Setting.initCfg()
