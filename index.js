@@ -10,12 +10,16 @@ import yaml from 'js-yaml';
   let Setting = await import(path.resolve('./plugins/Fanji-plugin/config/utils/setting.js'));
 Setting.initCfg()
   let CM;
+  let lj
   if (fs.existsSync(path.resolve('./lib/common/CM.js'))) {
-    CM = await import(path.resolve('./lib/common/CM.js'));
+
+    lj = path.resolve('./lib/common/CM.js')
   } else {
-    CM = await import(path.resolve('./plugins/Fanji-plugin/lib/common/CM.js'));
+    lj = path.resolve('./plugins/Fanji-plugin/lib/common/CM.js')
   }
+  CM = await import(lj)
   global.cm = CM.default;
+  logger.info(['CM.js载入完成！！路径:',lj])
 })();
 
 const configFilePath = path.resolve('./config/config/other.yaml');
