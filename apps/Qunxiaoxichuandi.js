@@ -32,7 +32,7 @@ async fd(e) {
 		// logger.info('LJL')		
         let gr = await redis.get(`Fanji:ql:${e.group_id}:target`);
         
-     let msgrt = await Bot.pickGroup(gr).sendMsg([`群聊${e.group_id}(${e.group_name}):\n发送人:${e.member.card}\nQQ:${e.user_id}\n`, e.message, '\n引用该条消息以回复']);  
+     let msgrt = await Bot.pickGroup(gr).sendMsg([`群聊${e.group_id}(${e.group_name}):\n发送人:${e.member.card}\nQQ:${e.user_id}\n\n`, e.message, '\n引用该条消息以回复']);  
      await redis.set(`${msgrt.seq}:Fanji:ql:msgid`, msgrt.message_id)
 		return false
     }else{
