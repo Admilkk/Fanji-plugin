@@ -4,12 +4,14 @@ import fs from 'node:fs';
 import chokidar from 'chokidar';
 import path from 'node:path';
 import yaml from 'js-yaml';
+import Setting from './config/utils/setting.js';
 // const setting = new Setting()
 (async () => {
-const settingPath = path.resolve('./plugins/Fanji-plugin/config/utils/setting.js');
-const SettingModule = await import(`file:///${settingPath}`);
-const Setting = SettingModule.default;
+  try{
 Setting.initCfg()
+  }catch(error){
+    logger.error('载入CM.js失败',error)
+  }
   let CM;
   let lj
   if (fs.existsSync(path.resolve('../../lib/common/CM.js'))) {
