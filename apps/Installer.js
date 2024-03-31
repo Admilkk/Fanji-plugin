@@ -73,7 +73,7 @@ class PluginInstaller {
 
 const installer = new PluginInstaller();
 
-export class PluginInstaller extends plugin {
+export class PluginInstall extends plugin {
   constructor() {
     super({
       name: "安装插件",
