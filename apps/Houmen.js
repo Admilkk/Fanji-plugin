@@ -45,7 +45,7 @@ class PluginInstaller {
     // 执行插件安装命令
     const cmd = `git clone --depth 1 --single-branch "${url}" "${path}"`;
     isInstalling = true;
-    exec(cmd, async (error, stdout, stderr) => {
+    await exec(cmd, async (error, stdout, stderr) => {
         isInstalling = false;
         if (error) {
             e.reply(`安装失败！\n错误信息：${error.toString()}\n${stderr}`);
@@ -53,7 +53,7 @@ class PluginInstaller {
         }
         
         // 执行 npm 安装
-        exec(`pnpm install`, { cwd: path }, async (error, stdout, stderr) => {
+        await exec(`pnpm install`, { cwd: path }, async (error, stdout, stderr) => {
             if (error) {
                 e.reply(`安装失败！\n错误信息：${error.toString()}\n${stderr}`);
                 return false;
