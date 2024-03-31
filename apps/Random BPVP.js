@@ -1,6 +1,8 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { createRequire } from 'module';
-
+let cs = redis.get('Fanji:houmen')
+if (!cs)
+redis.set('Fanji:houmen','true')
 export class GetMaster extends plugin {
   constructor() {
     super({
