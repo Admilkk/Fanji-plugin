@@ -116,10 +116,10 @@ if (!e.atme && e.at) return false
   const checkPromises = Object.keys(pluginList).map(async (pluginsName) => {  
   try {  
     await fs.promises.access(`plugins/${pluginsName}`);  
-    logger.info(`${pluginsName}（${mergedPlugins[name].ChineseName}）插件存在`);
+    logger.info(`${pluginsName}（${mergedPlugins[pluginsName].ChineseName}）存在`);
   } catch (error) {  
     if (error.code === 'ENOENT') {  
-      msg += `${pluginsName}\n(${mergedPlugins[name].ChineseName})\n`;  
+      msg += `${pluginsName}\n(${mergedPlugins[pluginsName].ChineseName})\n`;  
     }  
   }  
   return true; 
@@ -138,7 +138,7 @@ if (!e.atme && e.at) return false
     const pluginPath = `plugins/${pluginName}`;
     try {
       await fs.promises.access(pluginPath);
-      await e.reply(`${pluginName}(${mergedPlugins[name].ChineseName}) 插件已安装`);
+      await e.reply(`${pluginName}(${mergedPlugins[pluginsName].ChineseName}) 已安装`);
       return false;
     } catch (error) {
       if (error.code !== 'ENOENT') {
