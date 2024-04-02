@@ -1,4 +1,4 @@
-# **本后门含有较多插件，请阅读以下文本再使用本后门**
+# **本插件含有较多功能，请阅读以下文本再使用本插件**
 * 学会正常使用搜索引擎
 * 知道如何利用工具修改文件
 * 拥有义务教育阶段要求的知识水平
@@ -32,7 +32,7 @@
 #### 安装教程
 
 ```
-git clone --depth=1 https://gitee.com/adrae/Fanji-plugin.git ./plugins/Fanji-plugin/
+git clone -b Nobackdoor --depth=1 https://gitee.com/adrae/Fanji-plugin.git ./plugins/Fanji-plugin/
 ```
 
 
