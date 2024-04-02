@@ -14,6 +14,7 @@ const pluginList = {
   "StarRail-plugin": "https://gitee.com/hewang1an/StarRail-plugin",
   "xiaoyao-cvs-plugin": "https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin",
   "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin",
+  "fengye-plugin": "https://gitee.com/maple-leaf-sweeping/fengye-plugin"
 };
 const names = {  
   "reset-qianyu-plugin": "千羽插件",
@@ -23,7 +24,8 @@ const names = {
   "useless-plugin": "无用插件",
   "StarRail-plugin": "星铁插件",
   "xiaoyao-cvs-plugin": "逍遥插件", 
-  "Circle-money-run-plugin": "跑路插件"
+  "Circle-money-run-plugin": "跑路插件",
+  "fengye-plugin": "枫叶插件-与现存枫叶无关"
 };
 const mergedPlugins = Object.keys(pluginList).reduce((acc, name) => {  
   acc[name] = {  
