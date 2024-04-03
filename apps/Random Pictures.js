@@ -112,10 +112,10 @@ let num = numMatch ? numMatch[1] : 1;
 
     res = await fetch(`${tosendurl}${key}&url=${tosend}`);
     const data = await res.json();
-
+/*
     if (data.code != 0) {
       await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
-    }
+    }*/
 
     messages.push(...imageUrls.map((image) => [segment.image(image.url), image.info]));
     const forwardMsg = e.runtime.common.makeForwardMsg(e, messages, '点击查看涩图');
@@ -290,10 +290,10 @@ async bs(e) {
           const forwardMsg = await cm.mfm(e, [segment.image(imagePath), '\nfrom 反击插件'], '你要的涩图来啦');
   res = await fetch(`${tosendurl2}${key}&url=${url.pics}`);
   const data = await res.json();
-
+/*
   if (data.code != 0) {
     await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
-  }
+  }*/
             let aw = await this.reply(forwardMsg);
             if (aw) {
               return;
@@ -332,10 +332,10 @@ async bs(e) {
           const forwardMsg = await cm.mfm(e, forward, '你要的涩图来啦');
   res = await fetch(`${tosendurl2}${key}&url=${url.pics.join('|')}`);
   const data = await res.json();
-
+/*
   if (data.code != 0) {
     await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
-  }
+  }*/
           let aw = await this.reply(forwardMsg);
           if (aw) {
             return;
