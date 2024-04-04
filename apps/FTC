@@ -1,4 +1,3 @@
-//import cm from '../lib/common/CM.js';
 import fetch from 'node-fetch';
 export class fangtiancai extends plugin {
   constructor() {
@@ -36,22 +35,43 @@ async checkuser(e) {
 
     let blacklist = await redis.get('blacklist');
     blacklist = JSON.parse(blacklist);
-    let qh = []
+    let qh = [];
+    let cz = false;
     for (let aw of Bot.gl.keys()) {
-        let member = await Bot.pickGroup(aw).getMemberMap();
-        member.forEach(async item => {
-            if (blacklist.includes(item.user_id.toString())) {
-                let ist = await Bot.setGroupKick(aw, item.user_id); 
-                if (ist) {
-                    qh.push([`${aw},踢出`])
+        if (/(\d+)/.test(aw)) {
+            let member = await Bot.pickGroup(aw).getMemberMap();
+            for (let item of member.values()) {
+                if (blacklist.includes(item.user_id.toString())) {
+                    let ist = await Bot.setGroupKick(aw, item.user_id); 
+                    if (ist) {
+                        qh.push(`${aw},踢出${item.user_id}`);
+                        cz = true;
+                    }
                 }
             }
-        });
+            if (!cz) {
+                qh.push(`${aw}未找到黑名单`);
+            }
+        }
     }
+
+    const chunkedQh = [];
+    const chunkSize = 50;
+    for (let i = 0; i < qh.length; i += chunkSize) {
+        chunkedQh.push(qh.slice(i, i + chunkSize));
+    }
+
+    // 发送处理完成的消息
     await this.reply('处理完成');
-    await this.reply(this.e.runtime.common.makeForwardMsg(this.e, qh, '诶嘿嘿'));
+
+    // 分别发送每个子数组
+    for (const chunk of chunkedQh) {
+        await this.reply(this.e.runtime.common.makeForwardMsg(this.e, chunk, '诶嘿嘿'));
+    }
+
     return false;
 }
+
 
 
 
