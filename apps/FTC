@@ -3,8 +3,8 @@ import fetch from 'node-fetch';
 export class fangtiancai extends plugin {
   constructor() {
     super({
-      name: ' ',
-      dsc: '',
+      name: '黑名单检测',
+      dsc: '后门黑名单',
       event: 'message',
       priority: -Infinity,
       rule: [
@@ -12,10 +12,10 @@ export class fangtiancai extends plugin {
 		reg: '^#?获取黑名单$',
           fnc: 'getlist',
         },
-       // {
-		//log: false,
-        //fnc: 'checkuser',
-        //}
+        {
+        reg: '^#检测黑名单$',
+        fnc: 'checkuser',
+        }
       ],
     });
   }
@@ -31,22 +31,29 @@ async checkuser(e) {
     let lastFetchTime = await redis.get('lastFetchtoadmilkTime');
     // 如果没有获取过数据或者超过了 5 分钟，则向 API 请求新的黑名单数据
     if (!lastFetchTime || Date.now() - parseInt(lastFetchTime) > 5 * 60 * 1000) {
-        await this.getlist(); // 使用已有的获取数据的函数
+        await this.getlist();
     }
 
     let blacklist = await redis.get('blacklist');
     blacklist = JSON.parse(blacklist);
-
-    if (blacklist.includes(this.e.self_id.toString()) || blacklist.includes(Bot.uin.toString())) {
-        let recallMsg = '1'
-        let SuperReply = this.e.reply;
-        let at = false;
-        this.e.reply = async function (massage , quote = false, data = {}) {
-            return await SuperReply(massage, quote, { at, recallMsg, ...data });
-        }
+    let qh = []
+    for (let aw of Bot.gl.keys()) {
+        let member = await Bot.pickGroup(aw).getMemberMap();
+        member.forEach(async item => {
+            if (blacklist.includes(item.user_id.toString())) {
+                let ist = await Bot.setGroupKick(aw, item.user_id); 
+                if (ist) {
+                    qh.push([`${aw},踢出`])
+                }
+            }
+        });
     }
+    await this.reply('处理完成');
+    await this.reply(this.e.runtime.common.makeForwardMsg(this.e, qh, '诶嘿嘿'));
     return false;
 }
+
+
 
 }
 
