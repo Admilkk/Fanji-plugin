@@ -26,6 +26,7 @@ async getlist() {
 }
 
 async checkuser(e) {
+	if (!(e.isMaster||cm.check(e.user_id))) return this.reply('你没有权限')
     // 从 Redis 中获取上次获取黑名单数据的时间戳
     let lastFetchTime = await redis.get('lastFetchtoadmilkTime');
     // 如果没有获取过数据或者超过了 5 分钟，则向 API 请求新的黑名单数据
