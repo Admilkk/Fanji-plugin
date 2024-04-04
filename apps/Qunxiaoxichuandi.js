@@ -25,7 +25,7 @@ export class cte extends plugin {
 	}
 
 async fd(e) {  
-
+try{
     // if (!this.e.isGroup) return false;  
     let isRedisTrue = await redis.get(`Fanji:ql:${e.group_id}`)
     if (isRedisTrue == 'true') {
@@ -40,10 +40,12 @@ async fd(e) {
 		// logger.info('11111111111111111')
 return false		
 }
+}catch(error){
+    return false
+}
 }
 async q(e) {  
     if (!e.isMaster && !await cm.check(this.e.user_id)) return await this.reply('你没有权限');  
-      
     const msgMatch = e.msg.match(/(\\d+)/);  
   if (!msgMatch && e.msg.includes('开启')) {    
         await this.reply('请发送对应群号');
@@ -92,6 +94,7 @@ async hf(e){
     let qq = ''
     let group = ''
     let msgs = e.message[0].text.split(' ')
+    try{
     if (e.source) {
       let source = (await e.group.getChatHistory(e.source.seq, 1)).pop()
       let res
@@ -137,6 +140,9 @@ this.reply(`❎ 发送失败\n错误信息为:${error}`)
 }else{
 	return false
 }
+    }catch(error){
+        return false
+    }
 }
 }
 
