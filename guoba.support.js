@@ -22,28 +22,5 @@ export function supportGuoba() {
       // 如果想要显示成图片，也可以填写图标路径（绝对路径）
       // iconPath: path.join(_paths.pluginRoot, 'resources/images/icon.png'),
     },
-    // 配置项信息
-    /*
-    configInfo: {
-      // 配置项 schemas
-      schemas: [
-        {
-          field: 'hasten',
-          label: '插件加速',
-          bottomHelpMessage: '是否需要启用插件加速(让您的崽快人一等)',
-          component: 'Switch',
-        },
-      ],
-      // 设置配置的方法（前端点确定后调用的方法）
-      setConfigData(data, {Result}) {
-        let config = {}
-        for (let [keyPath, value] of Object.entries(data)) {
-          lodash.set(config, keyPath, value)
-        }
-        config = lodash.merge({}, cfg.merged, config)
-        cfg.config.reader.setData(config)
-        return Result.ok({}, '保存成功~')
-      },
-    },*/
   }
 }
