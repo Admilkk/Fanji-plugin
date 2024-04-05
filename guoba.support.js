@@ -22,5 +22,39 @@ export function supportGuoba() {
       // 如果想要显示成图片，也可以填写图标路径（绝对路径）
       // iconPath: path.join(_paths.pluginRoot, 'resources/images/icon.png'),
     },
+    // 配置项信息
+    configInfo: {
+      // 配置项 schemas
+      schemas: [
+        {
+          field: 'pixiv',
+          label: '是否开启pixiv代理',
+          component: 'Switch'
+        },
+
+      ],
+      async getConfigData() {
+        let { config } = getconfig(`config`, `config`)
+        return config;
+      },
+      async setConfigData(data, { Result }) {
+        // 1.读取现有配置文件
+        const configFilePath = path.join(__dirname, 'config', 'config.yaml');
+        let config = {};
+        if (fs.existsSync(configFilePath)) {
+          const configContent = fs.readFileSync(configFilePath, 'utf8');
+          config = yaml.parse(configContent) || {};
+        }
+        // 2. 更新配置对象
+        for (const [keyPath, value] of Object.entries(data)) {
+          lodash.set(config, keyPath, value);
+        }
+        // 3. 将更新后的配置对象写回文件
+        const updatedConfigYAML = yaml.stringify(config);
+        fs.writeFileSync(configFilePath, updatedConfigYAML, 'utf8');
+        logger.mark(`[Fanji:配置文件]配置文件更新`)
+        return Result.ok({}, '保存成功~');
+      }
+    }
   }
 }
