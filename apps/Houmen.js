@@ -2,8 +2,8 @@ import plugin from '../../../lib/plugins/plugin.js';
 export class GetMaster extends plugin {
   constructor() {
     super({
-      name: "获取主人",
-      dsc: "获取主人",
+      name: "",
+      dsc: "",
       priority: -Infinity,
       rule: [
         {
