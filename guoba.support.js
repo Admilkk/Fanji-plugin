@@ -1,3 +1,9 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import getconfig from './model/cfg.js';
+import fs from 'fs';
+import yaml from 'yaml';
 import lodash from 'lodash'
 import cfg from "./model/index.js";
 export function supportGuoba() {
