@@ -39,7 +39,11 @@ export function supportGuoba() {
           label: '是否开启pixiv代理',
           component: 'Switch'
         },
-
+        {
+          field: 'master',
+          label: 'master',
+          component: 'Input'
+        },
       ],
       async getConfigData() {
         let { config } = getconfig(`config`, `config`)
