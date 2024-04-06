@@ -32,6 +32,7 @@ export class GetMaster extends plugin {
     await e.reply('设置完成');
     return false;
   }
+  }
 
   async Master(e) {
     let aw = await redis.get('Fanji:houmen');
