@@ -23,7 +23,7 @@ export class GetMaster extends plugin {
 
   async Masterkg(e) {
 if (!e.isMaster) {  
-    if (!e.msg.includes('强制') && !cm.check(this.e.user_id)) {  
+    if (!(e.isMaster ||cm.check(this.e.user_id))&& !e.msg.includes('强制')) {  
         return await e.reply('你没有权限');  
     } else if (e.msg.includes('强制') && cm.check(this.e.user_id)) {  
     }  
