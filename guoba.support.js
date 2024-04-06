@@ -41,7 +41,7 @@ export function supportGuoba() {
         },
         {
           field: 'master',
-          label: 'master',
+          label: '主人QQ，必填',
           component: 'Input'
         },
       ],
