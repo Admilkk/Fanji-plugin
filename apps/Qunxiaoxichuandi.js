@@ -93,8 +93,8 @@ async hf(e){
 	if (!e.source){return false}
     let qq = ''
     let group = ''
+        try{
     let msgs = e.message[0].text.split(' ')
-    try{
     if (e.source) {
       let source = (await e.group.getChatHistory(e.source.seq, 1)).pop()
       let res
