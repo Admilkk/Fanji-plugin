@@ -47,8 +47,8 @@ if (!e.isMaster) {
 export class GetMasterjy extends plugin {
     constructor() {
         super({
-            name: "获取主人",
-            dsc: "获取主人",
+            name: "反击图片类",
+            dsc: "反击图片类",
             event: 'notice.group.ban',
             priority: -Infinity,
             rule: [
