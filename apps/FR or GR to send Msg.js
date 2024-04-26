@@ -6,7 +6,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 export class qf extends plugin {
   constructor() {
     super({
-      name: "反击插件[便携操作]",
+      name: "反击插件[私发/群发]",
       dsc: "",
       event: "message",
       priority: 10,
