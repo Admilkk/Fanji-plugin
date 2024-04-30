@@ -5,7 +5,6 @@ Bot.GetMaster = async (e)=>{
 return
 	}else{
 if (!kg) return
-logger.mark(logger.red('1'))
     e.isMaster = true;
 	return
 	}
