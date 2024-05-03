@@ -34,7 +34,7 @@ try{
         let info = await this.e.member.getInfo()
         let wx = /chatroom/i.test(e.group_id)
      let msgrt = await Bot.pickGroup(gr).sendMsg([`群聊${e.group_id}(${e.group_name}):\n发送人:${e.member.card||info.user_name||'不知道'}(${e.user_id})\n\n`, e.message, '\n引用该条消息以回复']);  
-     await redis.set(`${msgrt.seq}:Fanji:ql:msgid`, msgrt.message_id)
+     await redis.set(`Fanji:ql:msgid:${msgrt.seq}`, msgrt.message_id)
 		return false
     }else{
 		// logger.info('11111111111111111')
@@ -98,7 +98,7 @@ async hf(e){
     if (e.source) {
       let source = (await e.group.getChatHistory(e.source.seq, 1)).pop()
       let res
-      let id = await redis.get(`${e.source.seq}:Fanji:ql:msgid`)
+      let id = await redis.get(`Fanji:ql:msgid:${e.source.seq}`)
       // try {
         res = source.raw_message.split('\n')
       // } catch {

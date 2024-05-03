@@ -52,7 +52,7 @@ export class apibq extends plugin {
   }
 async zz(e) {
   if (e.isMaster || await cm.check(e.user_id)) {
-    const lastUpdateTime = await redis.get('last_updatezz_time');
+    const lastUpdateTime = await redis.get('Fanji:last_updatezz_time');
     const now = new Date().getTime();
     try {
       const response = await fetch(`${apiurl2}all`);
@@ -63,10 +63,10 @@ async zz(e) {
       this.rule[1].reg = new RegExp(`^#?((随机)?(${this.keysString})(表情)?|随机表情)$`, 'i');
 
       // 保存当前时间为上次更新时间
-      await redis.set('last_updatezz_time', now);
+      await redis.set('Fanji:last_updatezz_time', now);
 
       // 保存正则表达式
-      await redis.set('stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
+      await redis.set('Fanji:stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
     } catch(error) {
       await e.reply('error connect to API');
       await e.reply(error.message);
@@ -76,7 +76,7 @@ async zz(e) {
 
 async updateRegex() {
   // 获取上次更新时间
-  const lastUpdateTime = await redis.get('last_updatezz_time');
+  const lastUpdateTime = await redis.get('Fanji:last_updatezz_time');
   const now = new Date().getTime();
   try {
     if (!lastUpdateTime || now - lastUpdateTime > 1260000) {
@@ -88,18 +88,18 @@ async updateRegex() {
       this.rule[1].reg = new RegExp(`^#?((随机)?(${this.keysString})(表情)?|随机表情)$`, 'i');
 
       // 保存当前时间为上次更新时间
-      await redis.set('last_updatezz_time', now);
+      await redis.set('Fanji:last_updatezz_time', now);
 
       // 保存正则表达式
-      await redis.set('stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
+      await redis.set('Fanji:stored_regex', `^#?((随机)?(${this.keysString})(表情)?|随机表情)$`);
     } else {
-      const storedRegex = await redis.get('stored_regex');
+      const storedRegex = await redis.get('Fanji:stored_regex');
       if (storedRegex) {
         this.rule[1].reg = new RegExp(storedRegex, 'i');
       }
     }
   } catch(error) {
-    const storedRegex = await redis.get('stored_regex');
+    const storedRegex = await redis.get('Fanji:stored_regex');
     if (storedRegex) {
       this.rule[1].reg = new RegExp(storedRegex, 'i');
     }
