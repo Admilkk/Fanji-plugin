@@ -31,7 +31,7 @@ export class apibq extends plugin {
     super({
       name: '反击',
       dsc: '反击!!!!',
-      event: 'message',
+      event: 'messages',
       priority: -9999999999999999999999999999999999999999999999991,
       rule: [
         {
