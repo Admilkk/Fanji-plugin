@@ -108,10 +108,10 @@ let num = numMatch ? numMatch[1] : 1;
     }
 
     allImageLinks = imageUrls.map((image) => `${image.info}\n${image.url}`).join('\n\n');
-    tosend = imageUrls.length === 1 ? imageUrls[0].url : imageUrls.map((image) => image.url).join('|');
+   // tosend = imageUrls.length === 1 ? imageUrls[0].url : imageUrls.map((image) => image.url).join('|');
 
-    res = await fetch(`${tosendurl}${key}&url=${tosend}`);
-    const data = await res.json();
+  //  res = await fetch(`${tosendurl}${key}&url=${tosend}`);
+    //const data = await res.json();
 /*
     if (data.code != 0) {
       await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
@@ -288,8 +288,8 @@ async bs(e) {
           fs.writeFileSync(imagePath, buffer, 'binary');
 
           const forwardMsg = await cm.mfm(e, [segment.image(imagePath), '\nfrom 反击插件'], '你要的涩图来啦');
-  res = await fetch(`${tosendurl2}${key}&url=${url.pics}`);
-  const data = await res.json();
+ // res = await fetch(`${tosendurl2}${key}&url=${url.pics}`);
+  //const data = await res.json();
 /*
   if (data.code != 0) {
     await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
@@ -330,8 +330,8 @@ async bs(e) {
           const forward = messages;
 
           const forwardMsg = await cm.mfm(e, forward, '你要的涩图来啦');
-  res = await fetch(`${tosendurl2}${key}&url=${url.pics.join('|')}`);
-  const data = await res.json();
+ // res = await fetch(`${tosendurl2}${key}&url=${url.pics.join('|')}`);
+ // const data = await res.json();
 /*
   if (data.code != 0) {
     await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
