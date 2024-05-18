@@ -36,7 +36,7 @@ if (config.pixiv === true) {
 export class apisetu extends plugin {
   constructor() {
     super({
-      name: '反击',
+      name: '反击[sese]',
       dsc: '反击!!!!',
       event: 'message',
       priority: -9999999999999999999999999999999999999999999999991,

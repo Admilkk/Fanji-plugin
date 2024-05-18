@@ -29,7 +29,7 @@ const apiurl2 = 'https://api.yunxiyuanyxy.xyz/emoji/?list=';
 export class apibq extends plugin {
   constructor() {
     super({
-      name: '反击',
+      name: '反击[表情]',
       dsc: '反击!!!!',
       event: 'messages',
       priority: -9999999999999999999999999999999999999999999999991,
