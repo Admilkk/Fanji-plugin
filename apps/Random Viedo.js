@@ -55,7 +55,7 @@ export class apiviedo extends plugin {
           fnc: 'jh'
         }, */
         {
-            reg: '^$?随机慢摇视频$',
+            reg: '^#?随机慢摇视频$',
             fnc: 'manyao'
         },
 		{
