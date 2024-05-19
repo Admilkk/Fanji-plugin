@@ -54,12 +54,21 @@ export class apiviedo extends plugin {
           reg: `^#?(${originalValues.join('|')})$`,
           fnc: 'jh'
         }, */
+        {
+            reg: '^$?随机慢摇视频$',
+            fnc: 'manyao'
+        },
 		{
           reg: /^#?查看全部(随机)?视频(类型)?/,
           fnc: 'ck'
         }
       ],
     });
+  }
+  async manyao(e){
+      	let aw = await this.ffmpeg()
+	if (aw){return}
+      await this.viedo(e,'http://api.yujn.cn/api/manyao.php',path.join(__dirname, '../resource/manyaoviedo'))
   }
   async ck(e){
 	  e.reply(originalValues.join('\n'))
