@@ -66,16 +66,13 @@ const watchAndRemoveBlackQQ = async () => {
 
 watchAndRemoveBlackQQ();
     const startTime = Date.now();
+	logger.info(`[Fanji-plugin] 开始加载插件`);
     const { apps: loadedApps, loadedFilesCount: count, loadedFilesCounterr: counterr } = await appsOut({ AppsName: 'apps' });
+	const endTime = Date.now();
     apps = loadedApps;
     loadedFilesCount = count;
     loadedFilesCounterr = counterr;
-    const endTime = Date.now();
-    logger.info(logger.red(`[Fanji-plugin] 共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`));
-    logger.info(`[Fanji-plugin] 插件加载完成，耗时 ${endTime - startTime} 毫秒`);
-    logger.info('===========================================');
-    logger.info(logger.green(('插件交流群: 792873018')));
-    logger.info('===========================================\n');
+    logger.info(logger.red(`\n\n\n		[Fanji-plugin] 共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败\n		[Fanji-plugin] 插件加载完成，耗时 ${endTime - startTime} 毫秒\n		===========================================\n		${logger.green('插件交流群: 792873018')}\n		===========================================\n\n\n`));
 export { apps };
 
 async function loadCM() {
@@ -95,62 +92,59 @@ async function loadCM() {
     }
   }
 }
-
 async function appsOut({ AppsName }) {
   const firstName = path.join('plugins', AppName);
   const filepath = path.resolve(firstName, AppsName);
-let loadedFilesCount = 0;
-let loadedFilesCounterr = 0;
-  const jsFilePaths = await traverseDirectory(filepath);
-
-  logger.info(`[Fanji-plugin] 开始加载插件`);
-
+  let loadedFilesCount = 0;
+  let loadedFilesCounterr = 0;
   const apps = {};
 
-  await Promise.all(jsFilePaths.map(async (item) => {
-    try {
-      let allExport;
-      if (moduleCache.has(item)) {
-        allExport = moduleCache.get(item);
-      } else {
-        const address = new URL(`file://${item}`).href;
-        allExport = await import(address);
-        moduleCache.set(item, allExport);
-      }
-      for (const key of Object.keys(allExport)) {
-        if (typeof allExport[key] === 'function' && allExport[key].prototype) {
-          if (!apps.hasOwnProperty(key)) {
-            apps[key] = allExport[key];
-          } else {
-            logger.info(`[Fanji-plugin] 已存在 class ${key} 同名导出: ${item}`);
+  try {
+    const jsFilePaths = await traverseDirectory(filepath);
+    await Promise.all(jsFilePaths.map(async (item) => {
+      try {
+        const allExport = moduleCache.has(item)
+          ? moduleCache.get(item)
+          : await import(`file://${item}`);
+
+        for (const key of Object.keys(allExport)) {
+          if (typeof allExport[key] === 'function' && allExport[key].prototype) {
+            if (!apps.hasOwnProperty(key)) {
+              apps[key] = allExport[key];
+            } else {
+              logger.info(`[Fanji-plugin] 已存在 class ${key} 同名导出: ${item}`);
+            }
           }
         }
+        loadedFilesCount++;
+      } catch (error) {
+        logger.error(`[Fanji-plugin] 加载 ${item} 文件失败: ${error.message}`);
+        loadedFilesCounterr++;
       }
-      loadedFilesCount++;
-    } catch (error) {
-      logger.error(`[Fanji-plugin] 加载 ${item} 文件失败: ${error.message}`);
-      loadedFilesCounterr++;
-    }
-  }));
+    }));
+  } catch (error) {
+    logger.error('读取插件目录失败:', error.message);
+  }
 
   return { apps, loadedFilesCount, loadedFilesCounterr };
-};
+}
 
 async function traverseDirectory(dir) {
   try {
     const files = await fs.readdir(dir, { withFileTypes: true });
-    const paths = await Promise.all(files.map(async (file) => {
+    const jsFiles = [];
+    for await (const file of files) {
       const pathname = path.join(dir, file.name);
       if (file.isDirectory()) {
-        return traverseDirectory(pathname);
+        jsFiles.push(...await traverseDirectory(pathname));
       } else if (file.name.endsWith('.js')) {
-        return pathname;
+        jsFiles.push(pathname);
       }
-      return null;
-    }));
-    return paths.flat().filter(Boolean);
+    }
+    return jsFiles;
   } catch (error) {
     logger.error('读取插件目录失败:', error.message);
     return [];
   }
 }
+
