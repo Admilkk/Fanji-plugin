@@ -66,17 +66,15 @@ const watchAndRemoveBlackQQ = async () => {
 
 watchAndRemoveBlackQQ();
     const startTime = Date.now();
-
     const { apps: loadedApps, loadedFilesCount: count, loadedFilesCounterr: counterr } = await appsOut({ AppsName: 'apps' });
     apps = loadedApps;
     loadedFilesCount = count;
     loadedFilesCounterr = counterr;
-
     const endTime = Date.now();
-    logger.info(`[Fanji-plugin] 共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`);
+    logger.info(logger.red(`[Fanji-plugin] 共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`));
     logger.info(`[Fanji-plugin] 插件加载完成，耗时 ${endTime - startTime} 毫秒`);
     logger.info('===========================================');
-    logger.info('插件交流群: 792873018');
+    logger.info(logger.green(('插件交流群: 792873018')));
     logger.info('===========================================\n');
 export { apps };
 
@@ -106,7 +104,6 @@ let loadedFilesCounterr = 0;
   const jsFilePaths = await traverseDirectory(filepath);
 
   logger.info(`[Fanji-plugin] 开始加载插件`);
-  logger.info('===========================================');
 
   const apps = {};
 
