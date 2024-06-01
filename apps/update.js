@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { createRequire } from 'module'
 import _ from 'lodash'
-import { Restart } from '../../other/restart.js'
+import { update as Update } from "../../other/update.js"
 import common from "../../../lib/common/common.js"
 //import cm from "../lib/common/CM.js"
 const require = createRequire(import.meta.url)
@@ -52,28 +52,13 @@ export class Update extends plugin {
             ]
         })
     }
-    async update() {
-        if (!(this.e.isMaster || await cm.check(this.e.user_id))) { return true }
-        if(this.e.at && !this.e.atme) return false
-        /** 检查是否正在更新中 */
-        if (uping) {
-            await this.reply('已有命令更新中..请勿重复操作')
-            return
-        }
-        /** 检查git安装 */
-        if (!(await this.checkGit())) return
-        const isForce = this.e.msg.includes('强制')
-        /** 执行更新 */
-        await this.runUpdate(isForce)
-        /** 是否需要重启 */
-        if (this.isUp) {
-            // await this.reply("更新完毕，请重启云崽后生效")
-            setTimeout(() => this.restart(), 2000)
-        }
-    }
-    restart() {
-        new Restart(this.e).restart()
-    }
+     async update(e = this.e) {
+    e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新Fanji-plugin`
+    const up = new Update(e)
+    up.e = e
+    return up.update()
+  }
+
     async runUpdate(isForce) {
         const _path = './plugins/Fanji-plugin/'
         let command = `git -C ${_path} pull --no-rebase`
