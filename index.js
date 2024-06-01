@@ -5,7 +5,7 @@ import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import Setting from './config/utils/setting.js';
-import { AppName } from './app.config.js';
+let AppName = 'Fanji-plugin'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const logger = global.logger || console;
