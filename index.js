@@ -111,12 +111,13 @@ async function appsOut({ AppsName }) {
           if (typeof allExport[key] === 'function' && allExport[key].prototype) {
             if (!apps.hasOwnProperty(key)) {
               apps[key] = allExport[key];
+            loadedFilesCount++;
             } else {
               logger.info(`[Fanji-plugin] 已存在 class ${key} 同名导出: ${item}`);
+            loadedFilesCounterr++;
             }
           }
         }
-        loadedFilesCount++;
       } catch (error) {
         logger.error(`[Fanji-plugin] 加载 ${item} 文件失败: ${error.message}`);
         loadedFilesCounterr++;
