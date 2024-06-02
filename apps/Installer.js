@@ -14,7 +14,10 @@ const pluginList = {
   "StarRail-plugin": "https://gitee.com/hewang1an/StarRail-plugin",
   "xiaoyao-cvs-plugin": "https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin",
   "Circle-money-run-plugin": "https://gitee.com/theqingyao/Circle-money-run-plugin",
-  "fengye-plugin": "https://gitee.com/maple-leaf-sweeping/fengye-plugin"
+  "fengye-plugin": "https://gitee.com/maple-leaf-sweeping/fengye-plugin",
+  "xiaoye-plugin": "https://gitee.com/xiaoye12123/xiaoye-plugin",
+  "ws-plugin": "https://gitee.com/xiaoye12123/ws-plugin",
+  "Shiranai-Plugin": "https://github.com/XasYer/Shiranai-Plugin"
 };
 const names = {  
   "reset-qianyu-plugin": "千羽插件",
@@ -25,18 +28,21 @@ const names = {
   "StarRail-plugin": "星铁插件",
   "xiaoyao-cvs-plugin": "逍遥插件", 
   "Circle-money-run-plugin": "跑路插件",
-  "fengye-plugin": "枫叶插件-与现存枫叶无关"
+  "fengye-plugin": "枫叶插件-与现存枫叶无关",
+  "xiaoye-plugin": "小叶插件",
+  "ws-plugin": "ws插件",
+  "Shiranai-Plugin": "希腊奶插件"
 };
 const mergedPlugins = Object.keys(pluginList).reduce((acc, name) => {  
   acc[name] = {  
     url: pluginList[name],  
-    ChineseName: names[name] || name // 如果找不到中文名字，则使用原名作为中文名字  
+    ChineseName: names[name] || name 
   };  
   return acc;  
 }, {}); 
 class PluginInstaller {
   async install(e, name, url, path, forceInstall) {
-    e.reply(`开始安装 ${mergedPlugins[name].ChineseName} 插件`);
+    e.reply(`开始安装 ${mergedPlugins[name].ChineseName} `);
     
     if (forceInstall) {
         // 检查文件夹是否存在
