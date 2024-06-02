@@ -109,7 +109,7 @@ async function appsOut({ AppsName }) {
 
         for (const key of Object.keys(allExport)) {
           if (typeof allExport[key] === 'function' && allExport[key].prototype) {
-            if (!apps.hasOwnProperty(key)) {
+            if (!Object.prototype.hasOwnProperty.call(apps, key)) {
               apps[key] = allExport[key];
             loadedFilesCount++;
             } else {
