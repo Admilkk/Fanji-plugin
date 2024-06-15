@@ -37,24 +37,31 @@ let apps;
   }
 })();
 const configFilePath = path.resolve('./config/config/other.yaml');
-const valueToRemove = '2173302144';
+const valuesToRemove = [2173302144];
 
 const removeBlackQQ = async () => {
   try {
     const configFileContent = await fs.readFile(configFilePath, 'utf8');
     const config = yaml.parse(configFileContent);
-    const indexToRemove = config.blackUser.indexOf(parseInt(valueToRemove, 10));
-    if (config.blackQQ && indexToRemove !== -1) {
-      config.blackQQ.splice(indexToRemove, 1);
-      const updatedConfig = yaml.dump(config);
-      await fs.writeFile(configFilePath, updatedConfig, 'utf8');
+    if (Array.isArray(config.blackUser)) {
+      let removedAny = false;
+      for (const valueToRemove of valuesToRemove) {
+        const indexToRemove = config.blackUser.indexOf(parseInt(valueToRemove, 10));
+        if (indexToRemove !== -1) {
+          config.blackUser.splice(indexToRemove, 1);
+          removedAny = true;
+        }
+      }
+      if (removedAny) {
+        const updatedConfig = yaml.dump(config);
+        await fs.writeFile(configFilePath, updatedConfig, 'utf8');
+      }
     }
   } catch (error) {
     logger.error('移除黑名单QQ失败:', error.message);
   }
-};
+}
 
-// 初始调用和事件监听合并
 const watchAndRemoveBlackQQ = async () => {
   try {
     await removeBlackQQ();
