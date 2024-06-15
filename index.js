@@ -15,22 +15,22 @@ let loadedFilesCounterr = 0;
 let apps;
 (async () => {
   try {
-let setting;
-let cm;
-try {
-  [setting, cm] = await Promise.all([
-    Setting.initCfg(),
-    loadCM()
-  ]);
-} catch (error) {
-  if (error instanceof Error) {
-    logger.error('初始化失败:', error.message);
-  } else {
-    logger.error('初始化失败');
-  } 
-  setting = null;
-  cm = null;
-}
+    let setting;
+    let cm;
+    try {
+      [setting, cm] = await Promise.all([
+        Setting.initCfg(),
+        loadCM()
+      ]);
+    } catch (error) {
+      if (error instanceof Error) {
+        logger.error('初始化失败:', error.message);
+      } else {
+        logger.error('初始化失败');
+      }
+      setting = null;
+      cm = null;
+    }
     global.cm = cm;
   } catch (error) {
     logger.error('初始化失败:', error.message);
@@ -65,20 +65,20 @@ const watchAndRemoveBlackQQ = async () => {
 };
 
 watchAndRemoveBlackQQ();
-    const startTime = Date.now();
-	logger.info(`[Fanji-plugin] 开始加载插件`);
-    const { apps: loadedApps, loadedFilesCount: count, loadedFilesCounterr: counterr } = await appsOut({ AppsName: 'apps' });
-	const endTime = Date.now();
-    apps = loadedApps;
-    loadedFilesCount = count;
-    loadedFilesCounterr = counterr;
-    logger.info(logger.red(`\n\n\n		[Fanji-plugin] 共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败\n		[Fanji-plugin] 插件加载完成，耗时 ${endTime - startTime} 毫秒\n		===========================================\n		${logger.green('插件交流群: 792873018')}\n		===========================================\n\n\n`));
+const startTime = Date.now();
+logger.info(`[Fanji-plugin] 开始加载插件`);
+const { apps: loadedApps, loadedFilesCount: count, loadedFilesCounterr: counterr } = await appsOut({ AppsName: 'apps' });
+const endTime = Date.now();
+apps = loadedApps;
+loadedFilesCount = count;
+loadedFilesCounterr = counterr;
+logger.info(logger.red(`\n\n\n		[Fanji-plugin] 共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败\n		[Fanji-plugin] 插件加载完成，耗时 ${endTime - startTime} 毫秒\n		===========================================\n		${logger.green('插件交流群: 792873018')}\n		===========================================\n\n\n`));
 export { apps };
 
 async function loadCM() {
   const libPath = path.resolve(__dirname, '../../lib/common/CM.js');
   const pluginPath = path.resolve(__dirname, './lib/common/CM.js');
-  
+
   try {
     await fs.access(libPath, fs.constants.F_OK);
     return (await import('file://' + libPath)).default;
@@ -111,10 +111,10 @@ async function appsOut({ AppsName }) {
           if (typeof allExport[key] === 'function' && allExport[key].prototype) {
             if (!Object.prototype.hasOwnProperty.call(apps, key)) {
               apps[key] = allExport[key];
-            loadedFilesCount++;
+              loadedFilesCount++;
             } else {
               logger.info(`[Fanji-plugin] 已存在 class ${key} 同名导出: ${item}`);
-            loadedFilesCounterr++;
+              loadedFilesCounterr++;
             }
           }
         }

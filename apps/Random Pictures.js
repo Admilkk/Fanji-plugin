@@ -57,27 +57,27 @@ export class apisetu extends plugin {
           reg: /^#?随机(兽耳|furry)(图)?$/i, // 无r18.所以不套转发
           fnc: 'fr',
         },
-		{
+        {
           reg: /^#?(随机)?(白丝|bs)(图)?$/i, // 无r18.所以不套转发
           fnc: 'bs',
         },
-		{
+        {
           reg: /^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i, // 无r18.所以不套转发
           fnc: 'yxy',
         },
-				{
+        {
           reg: /^#?(来(\d+)张)?随机杂(图)?$/i, // 无r18.所以不套转发
           fnc: 'zt',
         }
       ],
     });
   }
-async yxy(e) {
+  async yxy(e) {
     if (!await cm.checkBot(e))
-    return false
-  await e.reply('开始了');
-let numMatch = e.msg.match(/来(\d+)张/);
-let num = numMatch ? numMatch[1] : 1;
+      return false
+    await e.reply('开始了');
+    let numMatch = e.msg.match(/来(\d+)张/);
+    let num = numMatch ? numMatch[1] : 1;
 
 
     let matched = e.msg.match(/^#?(来(\d+)张)?随机(loli)(api)?(图)?(.*)?$/i);
@@ -108,14 +108,14 @@ let num = numMatch ? numMatch[1] : 1;
     }
 
     allImageLinks = imageUrls.map((image) => `${image.info}\n${image.url}`).join('\n\n');
-   // tosend = imageUrls.length === 1 ? imageUrls[0].url : imageUrls.map((image) => image.url).join('|');
+    // tosend = imageUrls.length === 1 ? imageUrls[0].url : imageUrls.map((image) => image.url).join('|');
 
-  //  res = await fetch(`${tosendurl}${key}&url=${tosend}`);
+    //  res = await fetch(`${tosendurl}${key}&url=${tosend}`);
     //const data = await res.json();
-/*
-    if (data.code != 0) {
-      await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
-    }*/
+    /*
+        if (data.code != 0) {
+          await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
+        }*/
 
     messages.push(...imageUrls.map((image) => [segment.image(image.url), image.info]));
     const forwardMsg = e.runtime.common.makeForwardMsg(e, messages, '点击查看涩图');
@@ -125,98 +125,98 @@ let num = numMatch ? numMatch[1] : 1;
     if (!aw) {
       await e.reply('消息被风控！\n' + allImageLinks);
     }
-}
-
-
-
-
-
-
-/* async yxy(e) {
-  await e.reply('开始了');
-  try {
-    let num = e.msg.match(/(\d+)/);
-    num = num && num[1] ? parseInt(num[1], 10) : 1;
-    const messages = ['你要的图来啦'];
-    let res;
-    let imageUrls = []; // 用于存储所有图片链接
-
-      res = await fetch(apiurllol);
-      const imageUrl = await res.text();
-
-    const forwardMsg = cm.mfm(e, messages, '点击查看涩图');
-    let aw = await e.reply(forwardMsg);
-    if (!aw && imageUrls.length > 1) {
-      const allImageLinks = imageUrls.join('\n');
-      await e.reply('消息被风控！\n' + allImageLinks);
-    }
-  } catch (error) {
-    console.error(`Error in yxy function: ${error.message}`);
   }
-} */
-async zt(e) {
-        if (!await cm.checkBot(e))
-    return false
-  await e.reply('开始了');
-  try {
-    let num = e.msg.match(/(\d+)/);
-    num = num && num[1] ? parseInt(num[1], 10) : 1;
-    const messages = ['你要的图来啦'];
-    let res;
-    let imageUrls = []; // 用于存储所有图片链接
-    res = await fetch(`${apiurl5}${num}`);
-    res = await res.json();
 
-    if (res && res.urls && res.urls.length > 0) {
-      for (let i = 0; i < res.urls.length; i++) {
-        const imageUrl = res.urls[i];
-        messages.push([segment.image(imageUrl)]);
-        imageUrls.push(imageUrl);
+
+
+
+
+
+  /* async yxy(e) {
+    await e.reply('开始了');
+    try {
+      let num = e.msg.match(/(\d+)/);
+      num = num && num[1] ? parseInt(num[1], 10) : 1;
+      const messages = ['你要的图来啦'];
+      let res;
+      let imageUrls = []; // 用于存储所有图片链接
+  
+        res = await fetch(apiurllol);
+        const imageUrl = await res.text();
+  
+      const forwardMsg = cm.mfm(e, messages, '点击查看涩图');
+      let aw = await e.reply(forwardMsg);
+      if (!aw && imageUrls.length > 1) {
+        const allImageLinks = imageUrls.join('\n');
+        await e.reply('消息被风控！\n' + allImageLinks);
       }
-    } else {
-      return e.reply('API 返回的数据不正确，未能获取到图片信息。');
+    } catch (error) {
+      console.error(`Error in yxy function: ${error.message}`);
     }
+  } */
+  async zt(e) {
+    if (!await cm.checkBot(e))
+      return false
+    await e.reply('开始了');
+    try {
+      let num = e.msg.match(/(\d+)/);
+      num = num && num[1] ? parseInt(num[1], 10) : 1;
+      const messages = ['你要的图来啦'];
+      let res;
+      let imageUrls = []; // 用于存储所有图片链接
+      res = await fetch(`${apiurl5}${num}`);
+      res = await res.json();
 
-    const forwardMsg = cm.mfm(e, messages, '点击查看涩图');
-    let aw = await e.reply(forwardMsg);
-    if (!aw && imageUrls.length > 1) {
-      const allImageLinks = imageUrls.join('\n');
-      await e.reply('消息被风控！\n' + allImageLinks);
+      if (res && res.urls && res.urls.length > 0) {
+        for (let i = 0; i < res.urls.length; i++) {
+          const imageUrl = res.urls[i];
+          messages.push([segment.image(imageUrl)]);
+          imageUrls.push(imageUrl);
+        }
+      } else {
+        return e.reply('API 返回的数据不正确，未能获取到图片信息。');
+      }
+
+      const forwardMsg = cm.mfm(e, messages, '点击查看涩图');
+      let aw = await e.reply(forwardMsg);
+      if (!aw && imageUrls.length > 1) {
+        const allImageLinks = imageUrls.join('\n');
+        await e.reply('消息被风控！\n' + allImageLinks);
+      }
+    } catch (error) {
+      console.error(`Error in zt function: ${error.message}`);
     }
-  } catch (error) {
-    console.error(`Error in zt function: ${error.message}`);
   }
-}
 
 
 
 
 
-async bs(e) {
-        if (!await cm.checkBot(e))
-    return false
-  try {
-    const response = await fetch(apiurl3);
-    const buffer = await response.buffer();
-    const timestamp = new Date().getTime();
-    const fileName = `${timestamp}.jpg`;
-    const filePath = path.join(__dirname, `../resource/bs/${fileName}`);
+  async bs(e) {
+    if (!await cm.checkBot(e))
+      return false
+    try {
+      const response = await fetch(apiurl3);
+      const buffer = await response.buffer();
+      const timestamp = new Date().getTime();
+      const fileName = `${timestamp}.jpg`;
+      const filePath = path.join(__dirname, `../resource/bs/${fileName}`);
 
-    fs.writeFileSync(filePath, buffer, 'binary');
+      fs.writeFileSync(filePath, buffer, 'binary');
 
-    await e.reply([segment.image(filePath)]);
-  } catch (error) {
-    await e.reply("出现了一点小问题，无法获取白丝图。" + error.message);
+      await e.reply([segment.image(filePath)]);
+    } catch (error) {
+      await e.reply("出现了一点小问题，无法获取白丝图。" + error.message);
+    }
   }
-}
 
 
   async ys(e) {
     await e.reply([segment.image(apiurl2)]);
   }
   async ptst(e) {
-          if (!await cm.checkBot(e))
-    return false
+    if (!await cm.checkBot(e))
+      return false
     try {
       const messages = ['你要的图片']
       messages.push([segment.image(`${apiurl}`)]);
@@ -239,9 +239,9 @@ async bs(e) {
     }
   }
   async r18(e) {
-          if (!await cm.checkBot(e))
-    return false
-	  let res;
+    if (!await cm.checkBot(e))
+      return false
+    let res;
     try {
       // 解析命令中的张数，默认为1
       const match = e.msg.match(/^#?(来(\d+)张)?随机(r18)(图)?$/i);
@@ -288,26 +288,26 @@ async bs(e) {
           fs.writeFileSync(imagePath, buffer, 'binary');
 
           const forwardMsg = await cm.mfm(e, [segment.image(imagePath), '\nfrom 反击插件'], '你要的涩图来啦');
- // res = await fetch(`${tosendurl2}${key}&url=${url.pics}`);
-  //const data = await res.json();
-/*
-  if (data.code != 0) {
-    await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
-  }*/
-            let aw = await this.reply(forwardMsg);
+          // res = await fetch(`${tosendurl2}${key}&url=${url.pics}`);
+          //const data = await res.json();
+          /*
+            if (data.code != 0) {
+              await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
+            }*/
+          let aw = await this.reply(forwardMsg);
+          if (aw) {
+            return;
+          } else {
+
+            aw = await this.reply(forwardMsg)
             if (aw) {
-              return;
+              return
             } else {
-
-              aw = await this.reply(forwardMsg)
-              if (aw) {
-                return
-              } else {
-                await this.reply([`被吞了，图链:${url.pics}`]);
-              }
-
+              await this.reply([`被吞了，图链:${url.pics}`]);
             }
-          
+
+          }
+
         } else {
           // 多张图片的情况
           const imagePromises = url.pics.map(async (imageUrl, index) => {
@@ -330,12 +330,12 @@ async bs(e) {
           const forward = messages;
 
           const forwardMsg = await cm.mfm(e, forward, '你要的涩图来啦');
- // res = await fetch(`${tosendurl2}${key}&url=${url.pics.join('|')}`);
- // const data = await res.json();
-/*
-  if (data.code != 0) {
-    await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
-  }*/
+          // res = await fetch(`${tosendurl2}${key}&url=${url.pics.join('|')}`);
+          // const data = await res.json();
+          /*
+            if (data.code != 0) {
+              await e.reply(`至云溪院API失败，code: ${data.code}, msg: ${data.msg}`);
+            }*/
           let aw = await this.reply(forwardMsg);
           if (aw) {
             return;

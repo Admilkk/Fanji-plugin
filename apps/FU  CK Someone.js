@@ -44,56 +44,56 @@ export class fuck extends plugin {
       ],
     });
   }
-async fuckkg (e) {
+  async fuckkg(e) {
     let aw = e.msg.includes('开启')
-    if (!(e.isMaster||await cm.check(this.e.user_id))) return this.reply('你没有权限')
+    if (!(e.isMaster || await cm.check(this.e.user_id))) return this.reply('你没有权限')
     if (aw)
-    redis.set('Fanji:maren', 'true')
+      redis.set('Fanji:maren', 'true')
     else
-    redis.set('Fanji:maren','false')
-}
-async fuck(e) {
+      redis.set('Fanji:maren', 'false')
+  }
+  async fuck(e) {
     let kg = await redis.get('Fanji:maren')
     kg = kg == 'true'
-    if (!kg){
-    this.reply('骂人未开启，请发送#反击设置骂人开启')
-    return true
+    if (!kg) {
+      this.reply('骂人未开启，请发送#反击设置骂人开启')
+      return true
     }
-        if (!await cm.checkBot(e))
-    return false
+    if (!await cm.checkBot(e))
+      return false
 
 
 
-let css = e.msg.includes(`次`)
-let cs
-if (css){
-cs = e.msg.match(/(\d+)/)
-cs = cs[0]
-}
+    let css = e.msg.includes(`次`)
+    let cs
+    if (css) {
+      cs = e.msg.match(/(\d+)/)
+      cs = cs[0]
+    }
     let targetid = e.at ? e.at : '123456';
-    targetid = e.atall? 'all' : targetid
+    targetid = e.atall ? 'all' : targetid
     if (await cm.check(e.at ? e.at : '1')) {
-        await e.reply('你tm还想骂他是吧');
-        return false;
+      await e.reply('你tm还想骂他是吧');
+      return false;
     }
     if (e.at === e.self_id) {
-        await e.reply('你tm还想骂我是吧');
-        return false;
+      await e.reply('你tm还想骂我是吧');
+      return false;
     }
-    if (!css){
-        let res = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=text`);
-        res = await res.text();
-        await this.e.reply([segment.at(targetid), res]);
-    }else{
-let response = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=${cs}`);  
-let data = await response.json();    
-for (let phrase of data.text) {  
-    let trimmedPhrase = phrase.trim();  
-    await this.e.reply([segment.at(targetid), trimmedPhrase]);  
-}
+    if (!css) {
+      let res = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=text`);
+      res = await res.text();
+      await this.e.reply([segment.at(targetid), res]);
+    } else {
+      let response = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=${cs}`);
+      let data = await response.json();
+      for (let phrase of data.text) {
+        let trimmedPhrase = phrase.trim();
+        await this.e.reply([segment.at(targetid), trimmedPhrase]);
+      }
 
 
     }
-}
+  }
 
 }

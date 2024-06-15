@@ -21,17 +21,17 @@ export class Updates extends plugin {
                 {
                     reg: /^#*(fanji|反击)(插件)?更新日志$/i,
                     fnc: 'uplog'
-                  }
+                }
             ]
         })
     }
-     async update(e = this.e) {
-         if (!(e.isMaster||await cm.check(this.e.user_id))) return
-    e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新Fanji-plugin`
-    const up = new Update(e)
-    up.e = e
-    return up.update()
-  }
+    async update(e = this.e) {
+        if (!(e.isMaster || await cm.check(this.e.user_id))) return
+        e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新Fanji-plugin`
+        const up = new Update(e)
+        up.e = e
+        return up.update()
+    }
 
     async runUpdate(isForce) {
         const _path = './plugins/Fanji-plugin/'
@@ -202,19 +202,19 @@ export class Updates extends plugin {
         let cm = `cd ./plugins/Fanji-plugin/ && git log  -20 --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%F %T"`
         let logAll
         try {
-          logAll = await execSync(cm, { encoding: 'utf-8', windowsHide: true })
+            logAll = await execSync(cm, { encoding: 'utf-8', windowsHide: true })
         } catch (error) {
-          logger.error(error.toString())
-          this.reply(error.toString())
+            logger.error(error.toString())
+            this.reply(error.toString())
         }
         if (!logAll) return false
         logAll = logAll.split('\n')
         let log = []
         for (let str of logAll) {
-          str = str.split('||')
-          if (str[0] == this.oldCommitId) break
-          if (str[1].includes('Merge branch')) continue
-          log.push(str[1])
+            str = str.split('||')
+            if (str[0] == this.oldCommitId) break
+            if (str[1].includes('Merge branch')) continue
+            log.push(str[1])
         }
         let line = log.length
         log = log.join('\n')
@@ -222,52 +222,52 @@ export class Updates extends plugin {
         let end = '更多详细信息，请前往gitee查看\nhttps://gitee.com/adrae/Fanji-plugin'
         log = await common.makeForwardMsg(this.e, [log, end], `${plugin}更新日志，共${line}条`)
         return log
-      }
-async uplog() {
-    let cm = `cd ./plugins/Fanji-plugin/ && git log  --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%F %T"`
-    let logAll;
-    try {
-        logAll = await execSync(cm, { encoding: 'utf-8' });
-    } catch (error) {
-        logger.error(error.toString());
-        this.reply(error.toString());
-        return;
     }
+    async uplog() {
+        let cm = `cd ./plugins/Fanji-plugin/ && git log  --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%F %T"`
+        let logAll;
+        try {
+            logAll = await execSync(cm, { encoding: 'utf-8' });
+        } catch (error) {
+            logger.error(error.toString());
+            this.reply(error.toString());
+            return;
+        }
 
-    if (!logAll) {
-        this.reply('获取日志失败');
-        return;
-    }
+        if (!logAll) {
+            this.reply('获取日志失败');
+            return;
+        }
 
-    logAll = logAll.split('\n');
-let batchSize = 100; // 每批100条日志
-let batchedLogs = [];
-let batch = [];
-for (let str of logAll) {
-    let log = str.split('||')[1].trim(); // 使用trim()方法去除日志的前后空格
-    if (log && !log.includes('Merge branch')) {
-        batch.push(log); // 将每行非空日志作为一个元素推送到batch数组中
-        if (batch.length === batchSize) {
-            batchedLogs.push(batch);
-            batch = [];
+        logAll = logAll.split('\n');
+        let batchSize = 100; // 每批100条日志
+        let batchedLogs = [];
+        let batch = [];
+        for (let str of logAll) {
+            let log = str.split('||')[1].trim(); // 使用trim()方法去除日志的前后空格
+            if (log && !log.includes('Merge branch')) {
+                batch.push(log); // 将每行非空日志作为一个元素推送到batch数组中
+                if (batch.length === batchSize) {
+                    batchedLogs.push(batch);
+                    batch = [];
+                }
+            }
+        }
+        if (batch.length > 0) {
+            batchedLogs.push(batch); // 处理最后一批日志
+        }
+
+        for (let batchedLog of batchedLogs) {
+            await this.sendBatchedMessages(batchedLog, this.e);
         }
     }
-}
-if (batch.length > 0) {
-    batchedLogs.push(batch); // 处理最后一批日志
-}
 
-    for (let batchedLog of batchedLogs) {
-        await this.sendBatchedMessages(batchedLog, this.e);
+    // 辅助函数，发送批量消息
+    async sendBatchedMessages(messages, e) {
+        let formattedMessage = messages.join('\n');
+        formattedMessage = [formattedMessage]
+        await e.reply(await e.runtime.common.makeForwardMsg(e, formattedMessage, '反击插件更新日志'));
     }
-}
-
-// 辅助函数，发送批量消息
-async sendBatchedMessages(messages, e) {
-    let formattedMessage = messages.join('\n');
-  formattedMessage = [formattedMessage]
-    await e.reply(await e.runtime.common.makeForwardMsg(e, formattedMessage, '反击插件更新日志'));
-}
 
 
 
