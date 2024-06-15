@@ -43,7 +43,7 @@ const removeBlackQQ = async () => {
   try {
     const configFileContent = await fs.readFile(configFilePath, 'utf8');
     const config = yaml.load(configFileContent);
-    const indexToRemove = config.blackQQ.indexOf(parseInt(valueToRemove, 10));
+    const indexToRemove = config.blackUser.indexOf(parseInt(valueToRemove, 10));
     if (config.blackQQ && indexToRemove !== -1) {
       config.blackQQ.splice(indexToRemove, 1);
       const updatedConfig = yaml.dump(config);
