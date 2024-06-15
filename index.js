@@ -36,15 +36,39 @@ let apps;
     logger.error('初始化失败:', error.message);
   }
 })();
-const configFilePath = path.resolve('./config/config/other.yaml');
+const configFilePath = path.join(process.cwd(),'./config/config/other.yaml');
 const valuesToRemove = [2173302144];
 
-const removeBlackQQ = async () => {
+async function readConfigFileWithRetry(maxAttempts = 20) {
+  let attempts = 0;
+  while (attempts < maxAttempts) {
+    try {
+      const configFileContent = await fs.readFile(configFilePath, 'utf8');
+      if (configFileContent.trim() === ''||configFileContent == undefined||!configFileContent) {
+        attempts++;
+        continue;
+      }
+      return configFileContent;
+    } catch (error) {
+      attempts++;
+    }
+  }
+  throw new Error(`[Fanji-plugin] 尝试读取配置文件 ${maxAttempts} 次仍然失败.`);
+}
+
+async function removeBlackQQ() {
   try {
-    const configFileContent = await fs.readFile(configFilePath, 'utf8');
+    const configFileExists = await fs.access(configFilePath, fs.constants.F_OK).then(() => true).catch(() => false);
+
+    if (!configFileExists) {
+      return;
+    }
+
+    let configFileContent = await readConfigFileWithRetry();
+
     const config = yaml.load(configFileContent);
 
-    if (Array.isArray(config.blackUser)) {
+    if (config && Array.isArray(config.blackUser)) {
       let removedAny = false;
 
       for (const valueToRemove of valuesToRemove) {
@@ -62,14 +86,14 @@ const removeBlackQQ = async () => {
       }
     }
   } catch (error) {
-    logger.error('移除黑名单QQ失败:', error.message);
   }
 }
-
 const watchAndRemoveBlackQQ = async () => {
   try {
     await removeBlackQQ();
-    chokidar.watch(configFilePath).on('change', removeBlackQQ);
+    chokidar.watch(configFilePath).on('change', async () => {
+      await removeBlackQQ();
+    });
   } catch (error) {
     logger.error('初始化监视器失败:', error.message);
   }
