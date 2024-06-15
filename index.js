@@ -42,16 +42,20 @@ const valuesToRemove = [2173302144];
 const removeBlackQQ = async () => {
   try {
     const configFileContent = await fs.readFile(configFilePath, 'utf8');
-    const config = yaml.parse(configFileContent);
+    const config = yaml.load(configFileContent);
+
     if (Array.isArray(config.blackUser)) {
       let removedAny = false;
+
       for (const valueToRemove of valuesToRemove) {
         const indexToRemove = config.blackUser.indexOf(parseInt(valueToRemove, 10));
+
         if (indexToRemove !== -1) {
           config.blackUser.splice(indexToRemove, 1);
           removedAny = true;
         }
       }
+
       if (removedAny) {
         const updatedConfig = yaml.dump(config);
         await fs.writeFile(configFilePath, updatedConfig, 'utf8');
