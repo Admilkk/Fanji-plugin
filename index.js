@@ -109,13 +109,17 @@ async function appsOut({ AppsName }) {
 
         for (const key of Object.keys(allExport)) {
           if (typeof allExport[key] === 'function' && allExport[key].prototype) {
-            if (!Object.prototype.hasOwnProperty.call(apps, key)) {
-              apps[key] = allExport[key];
-              loadedFilesCount++;
-            } else {
-              logger.info(`[Fanji-plugin] 已存在 class ${key} 同名导出: ${item}`);
-              loadedFilesCounterr++;
+            let className = key;
+            if (Object.prototype.hasOwnProperty.call(apps, className)) {
+              let counter = 1;
+              while (Object.prototype.hasOwnProperty.call(apps, `${className}_${counter}`)) {
+                counter++;
+              }
+              className = `${className}_${counter}`;
+              logger.info(`[Fanji-plugin] 同名导出 ${key} 重命名为 ${className} : ${item}`);
             }
+            apps[className] = allExport[key];
+            loadedFilesCount++;
           }
         }
       } catch (error) {
@@ -129,6 +133,7 @@ async function appsOut({ AppsName }) {
 
   return { apps, loadedFilesCount, loadedFilesCounterr };
 }
+
 
 async function traverseDirectory(dir) {
   try {
