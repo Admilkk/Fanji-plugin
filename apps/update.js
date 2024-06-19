@@ -26,7 +26,7 @@ export class Updates extends plugin {
                 }
             ]
         })
-        global.update = this.update
+        global.updatefj = this.update
     }
     async update(e = this.e, isauto = false) {
         if (isauto) {
