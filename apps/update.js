@@ -25,9 +25,16 @@ export class Updates extends plugin {
                     reg: /^#*(fanji|反击)(插件)?更新日志$/i,
                     fnc: 'uplog'
                 }
-            ]
+            ],
+            task: [
+            {
+                cron: '0 0 0 * * ? ',
+                name: '[Fanji-plugin][自动更新]',
+                fnc: this.update(null,true),
+                log: false
+            }
+        ]
         })
-        global.updatefj = this.update
     }
     async update(e = this.e, isauto = false) {
     if (isauto) {
