@@ -25,11 +25,9 @@ export class Updates extends plugin {
             ]
         })
     }
-    async update(e = this.e,isauto = false) {
-        if (!(e.isMaster || await cm.check(this.e.user_id))&&!isauto) return
-        e.msg = `#${isauto? '强制': e.msg.includes("强制") ? "强制" : ""}更新Fanji-plugin`
-        if (isauto) e.reply = cm.smg
-        if (isauto) this.reply = cm.smg
+    async update(e = this.e) {
+        if (!(e.isMaster || await cm.check(this.e.user_id))) return
+        e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新Fanji-plugin`
         const up = new Update(e)
         up.e = e
         return up.update()
