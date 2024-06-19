@@ -27,14 +27,7 @@ export class Updates extends plugin {
                 }
             ]
         })
-        this.task = [
-            {
-                cron: '0 0 0 * * ? ',
-                name: '[Fanji-plugin][自动更新]',
-                fnc: this.update(null,true),
-                log: false
-            }
-        ]
+
     }
     async update(e = this.e, isauto = false) {
     if (isauto) {
