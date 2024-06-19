@@ -1,6 +1,8 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { createRequire } from 'module'
 import _ from 'lodash'
+import fs from 'fs/promises';
+import path from 'path';
 import { update as Update } from "../../other/update.js"
 import common from "../../../lib/common/common.js"
 //import cm from "../lib/common/CM.js"
@@ -24,14 +26,54 @@ export class Updates extends plugin {
                 }
             ]
         })
+        global.update = this.update
     }
-    async update(e = this.e) {
-        if (!(e.isMaster || await cm.check(this.e.user_id))) return
-        e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新Fanji-plugin`
-        const up = new Update(e)
-        up.e = e
-        return up.update()
+    async update(e = this.e, isauto = false) {
+        if (isauto) {
+            const pluginsDir = path.join(process.cwd(), "/plugins");
+            const pluginNames = await fs.readdir(pluginsDir);
+            const fanjiPluginDir = pluginNames.find(
+                (name) => name.toLowerCase() === "fanji-plugin"
+            );
+            if (!fanjiPluginDir) {
+                cm.smg("[Fanji-plugin][自动更新] 找不到 fanji-plugin 目录", true);
+                return;
+            }
+            const pluginDir = path.join(pluginsDir, fanjiPluginDir);
+            try {
+                await new Promise((resolve, reject) => {
+                    exec("git pull", { cwd: pluginDir }, (error, stdout, stderr) => {
+                        if (error) {
+                            cm.smg(`[Fanji-plugin][自动更新] Git pull 错误: ${error.message}`, true);
+                            reject(error);
+                            return;
+                        }
+                        if (stderr) {
+                            cm.smg(`[Fanji-plugin][自动更新] Git pull 错误输出: ${stderr}`, true);
+                            reject(new Error(stderr));
+                            return;
+                        }
+                        cm.smg(`[Fanji-plugin][自动更新] Git pull 输出: ${stdout}`);
+                        resolve();
+                    });
+                });
+            } catch (error) {
+                cm.smg(`[Fanji-plugin][自动更新] 出现错误: ${error.message}`, true);
+            }
+
+            return;
+        }
+
+        if (!(e.isMaster || (await cm.check(e.user_id)))) return;
+
+        e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新Fanji-plugin`;
+
+        const up = new Update(e);
+        up.e = e;
+        return up.update();
     }
+
+
 
     async runUpdate(isForce) {
         const _path = './plugins/Fanji-plugin/'
