@@ -10,7 +10,7 @@ export default class UCReloadJSs extends UCPlugin {
     super({
       e,
       name: 'UC-reloadJSs',
-      dsc: '重载UC插件',
+      dsc: '重载UC插件',//
     })
   }
 
