@@ -91,9 +91,6 @@ export class fuck extends plugin {
         let trimmedPhrase = phrase.trim();
         await this.e.reply([segment.at(targetid), trimmedPhrase]);
       }
-
-
     }
   }
-
 }

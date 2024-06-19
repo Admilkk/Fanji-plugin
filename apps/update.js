@@ -322,8 +322,4 @@ export class Updates extends plugin {
         formattedMessage = [formattedMessage]
         await e.reply(await e.runtime.common.makeForwardMsg(e, formattedMessage, '反击插件更新日志'));
     }
-
-
-
-
 }
