@@ -53,7 +53,7 @@ export class Updates extends plugin {
                             reject(new Error(stderr));
                             return;
                         }
-                        cm.smg(`[Fanji-plugin][自动更新] Git pull 输出: ${stdout}`);
+                        cm.smg(`[Fanji-plugin][自动更新] ${stdout.includes('已经是最新的')? '已经是最新版反击插件':''}${stdout.includes('Already up to date')? '已经是最新版反击插件':''}\n日志内容:\n ${stdout}`,true);
                         resolve();
                     });
                 });
