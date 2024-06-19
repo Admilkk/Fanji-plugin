@@ -4,7 +4,7 @@ import loader from '../../../lib/plugins/loader.js'
  * 来自
  * https://gitee.com/UCPr251/UC-plugin/blob/master/apps/reloadJSs.js
  */
-const watcher = {}
+const watcher = {}//
 export default class UCReloadJSs extends UCPlugin {
   constructor(e) {
     super({
