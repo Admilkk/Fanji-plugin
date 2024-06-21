@@ -188,22 +188,22 @@ export const helpList = [
         list: [
             {
                 icon: 29,
-                title: '#随机黑丝视频',
+                title: '#黑丝视频',
                 desc: '字面意思'
             },
             {
                 icon: 29,
-                title: '#随机白丝视频',
+                title: '#白丝视频',
                 desc: '字面意思'
             },
             {
                 icon: 29,
-                title: '#随机小姐姐视频',
+                title: '#小姐姐视频',
                 desc: '字面意思'
             },
             {
                 icon: 29,
-                title: '#随机慢摇视频',
+                title: '#慢摇视频',
                 desc: '字面意思'
             },
             {

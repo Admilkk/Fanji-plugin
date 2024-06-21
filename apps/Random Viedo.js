@@ -44,11 +44,11 @@ export class apivideo extends plugin {
       priority: -9999999999999999999999999999999999999999999999991,
       rule: [
         {
-          reg: /^#?随机白丝(视频)?$/i,
+          reg: /^#?(随机)?白丝(视频)?$/i,
           fnc: 'bs',
         },
         {
-          reg: /^#?随机黑丝(视频)?$/i,
+          reg: /^#?(随机)?黑丝(视频)?$/i,
           fnc: 'hs',
         },
         {
@@ -72,11 +72,11 @@ export class apivideo extends plugin {
           fnc: 'perfectBody',
         },
         {
-          reg: /^#?随机(小姐姐)(视频)?$/i,
+          reg: /^#?(随机)?(小姐姐)(视频)?$/i,
           fnc: 'xjj',
         },
         {
-          reg: '^#?随机慢摇视频$',
+          reg: '^#?(随机)?慢摇视频$',
           fnc: 'manyao'
         }
       ],
@@ -84,36 +84,45 @@ export class apivideo extends plugin {
   }
   async manyao(e) {
     await this.requestVideo(e, 'http://api.yujn.cn/api/manyao.php', path.join(__dirname, '../resource/manyaovideo'));
+    return false
   }
   async xjj(e) {
     await this.requestVideo(e, 'https://api.yunxiyuanyxy.xyz/plus/?type=302', path.join(__dirname, '../resource/xjjvideo'));
+    return false
   }
   async bs(e) {
     await this.requestVideo(e, apiurl, path.join(__dirname, '../resource/bsvideo'));
+    return false
   }
 
   async hs(e) {
     await this.requestVideo(e, apiurl2, path.join(__dirname, '../resource/hsvideo'));
+    return false
   }
 
   async manzhan(e) {
     await this.requestVideo(e, apiurl3, path.join(__dirname, '../resource/manzhanvideo'));
+    return false
   }
 
   async welfare(e) {
     await this.requestVideo(e, apiurl4, path.join(__dirname, '../resource/welfarevideo'));
+    return false
   }
 
   async chuanda(e) {
     await this.requestVideo(e, apiurl5, path.join(__dirname, '../resource/chuandavideo'));
+    return false
   }
 
   async dance(e) {
     await this.requestVideo(e, apiurl6, path.join(__dirname, '../resource/dancevideo'));
+    return false
   }
 
   async perfectBody(e) {
     await this.requestVideo(e, apiurl7, path.join(__dirname, '../resource/perfectbodyvideo'));
+    return false
   }
 
   /**
@@ -139,9 +148,9 @@ export class apivideo extends plugin {
       if (deleteAfterSend) {
         await fs.promises.unlink(videoPath);
       }
-      logger.info(`[Fanji-plugin][api视频类]成功从 ${apiUrl} 获取并发送视频`);
+      logger.info(`[Fanji-plugin][api视频类]成功获取并发送视频`);
     } catch (error) {
-      logger.error(`[Fanji-plugin][api视频类] requestVideo 函数出错: ${error.message}`);
+      logger.error(`[Fanji-plugin][api视频类] 视频发送函数出错: ${error}`);
     }
   }
 
