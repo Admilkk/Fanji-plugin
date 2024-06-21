@@ -11,9 +11,16 @@ const { exec, execSync } = require('child_process')
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
-//以下内容防君子不防小人
-let apiurl = '\u0020\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0079\u0075\u006a\u006e\u002e\u0063\u006e\u002f\u0061\u0070\u0069\u002f\u0068\u0065\u0069\u0073\u0069\u0073\u002e\u0070\u0068\u0070\u003f\u0074\u0079\u0070\u0065\u003d\u0076\u0069\u0064\u0065\u006f';
-let apiurl2 = '\u0020\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0061\u0070\u0069\u002e\u0079\u0075\u006a\u006e\u002e\u0063\u006e\u002f\u0061\u0070\u0069\u002f\u0062\u0061\u0069\u0073\u0069\u0073\u002e\u0070\u0068\u0070\u003f\u0074\u0079\u0070\u0065\u003d\u0076\u0069\u0064\u0065\u006f';
+
+// 以下内容防君子不防小人
+let apiurl = 'http://api.yujn.cn/api/baisis.php';
+let apiurl2 = 'http://api.yujn.cn/api/heisis.php';
+let apiurl3 = 'https://api.yujn.cn/api/manzhan.php';
+let apiurl4 = 'https://api.yujn.cn/api/sese_video.php';
+let apiurl5 = 'http://api.yujn.cn/api/chuanda.php';
+let apiurl6 = 'http://api.yujn.cn/api/jjy.php';
+let apiurl7 = 'http://api.yujn.cn/api/wmsc.php';
+
 const filepath = path.join(__dirname, '../config/config.yaml');
 const configContent = fs.readFileSync(filepath, 'utf8');
 let config = yaml.load(configContent);
@@ -21,13 +28,13 @@ const originalValues = [
   '抖音变装', '快手变装', '随机裙子', '甜妹视频', '随机小姐姐', '双倍快乐', 'loli', '玉足',
   '黑丝视频', '白丝视频', '慢摇视频', 'cos系列', '纯情女高', '吊带系列', '完美身材',
   '热舞视频', '穿搭系列', '学姐系列', '卡哇伊', '清纯系列', '汉服系列'
-]
+];
 const correspondingValues = [
   'dybianzhuang', 'ksbianzhuang', 'qunzi', 'tianmei', 'yzxjj', 'shuangbei', 'loli', 'yuzu',
   'heisi', 'baisi', 'manyao', 'cos', 'nvgao', 'diaodai', 'shencai',
   'rewu', 'chuanda', 'xuejie', 'kawayi', 'qingchun', 'hanfu'
+];
 
-]
 export class apivideo extends plugin {
   constructor() {
     super({
@@ -37,12 +44,32 @@ export class apivideo extends plugin {
       priority: -9999999999999999999999999999999999999999999999991,
       rule: [
         {
-          reg: /^#?随机(bs|白丝)(视频)$/i,
+          reg: /^#?随机白丝(视频)?$/i,
           fnc: 'bs',
         },
         {
-          reg: /^#?随机(黑丝|hｓ)(视频)?$/i,
+          reg: /^#?随机黑丝(视频)?$/i,
           fnc: 'hs',
+        },
+        {
+          reg: /^#?漫展视频$/i,
+          fnc: 'manzhan',
+        },
+        {
+          reg: /^#?福利视频$/i,
+          fnc: 'welfare',
+        },
+        {
+          reg: /^#?穿搭视频$/i,
+          fnc: 'chuanda',
+        },
+        {
+          reg: /^#?跳舞视频$/i,
+          fnc: 'dance',
+        },
+        {
+          reg: /^#?完美身材视频$/i,
+          fnc: 'perfectBody',
         },
         {
           reg: /^#?随机(小姐姐)(视频)?$/i,
@@ -55,20 +82,38 @@ export class apivideo extends plugin {
       ],
     });
   }
-
   async manyao(e) {
     await this.requestVideo(e, 'http://api.yujn.cn/api/manyao.php', path.join(__dirname, '../resource/manyaovideo'));
   }
-  async hs(e) {
-    await this.requestVideo(e, apiurl, path.join(__dirname, '../resource/hsvideo'));
-  }
-
-  async bs(e) {
-    await this.requestVideo(e, apiurl2, path.join(__dirname, '../resource/bsvideo'));
-  }
-
   async xjj(e) {
     await this.requestVideo(e, 'https://api.yunxiyuanyxy.xyz/plus/?type=302', path.join(__dirname, '../resource/xjjvideo'));
+  }
+  async bs(e) {
+    await this.requestVideo(e, apiurl, path.join(__dirname, '../resource/bsvideo'));
+  }
+
+  async hs(e) {
+    await this.requestVideo(e, apiurl2, path.join(__dirname, '../resource/hsvideo'));
+  }
+
+  async manzhan(e) {
+    await this.requestVideo(e, apiurl3, path.join(__dirname, '../resource/manzhanvideo'));
+  }
+
+  async welfare(e) {
+    await this.requestVideo(e, apiurl4, path.join(__dirname, '../resource/welfarevideo'));
+  }
+
+  async chuanda(e) {
+    await this.requestVideo(e, apiurl5, path.join(__dirname, '../resource/chuandavideo'));
+  }
+
+  async dance(e) {
+    await this.requestVideo(e, apiurl6, path.join(__dirname, '../resource/dancevideo'));
+  }
+
+  async perfectBody(e) {
+    await this.requestVideo(e, apiurl7, path.join(__dirname, '../resource/perfectbodyvideo'));
   }
 
   /**

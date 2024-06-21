@@ -148,26 +148,6 @@ export const helpList = [
             },
             {
                 icon: 29,
-                title: '#随机黑丝视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#随机白丝视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#随机小姐姐视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#随机慢摇视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
                 title: '#随机loli图',
                 desc: '字面意思'
             },
@@ -202,6 +182,55 @@ export const helpList = [
                 desc: '字面意思'
             }
         ]
+    },
+    {
+        group: '视频API类',
+        list: [
+            {
+                icon: 29,
+                title: '#随机黑丝视频',
+                desc: '字面意思'
+            },
+            {
+                icon: 29,
+                title: '#随机白丝视频',
+                desc: '字面意思'
+            },
+            {
+                icon: 29,
+                title: '#随机小姐姐视频',
+                desc: '字面意思'
+            },
+            {
+                icon: 29,
+                title: '#随机慢摇视频',
+                desc: '字面意思'
+            },
+            {
+                icon: 29,
+                title: '#完美身材视频',
+                desc: '字面意思'
+            },
+            {
+                icon: 29,
+                title: '#跳舞视频',
+                desc: '字面意思'
+            },
+            {
+                icon: 29,
+                title: '#穿搭视频',
+                desc: '字面意思'
+            },
+            {
+                icon: 29,
+                title: '#福利视频',
+                desc: '字面意思'
+            },
+            {
+                icon: 29,
+                title: '#漫展视频',
+                desc: '字面意思'
+            },]
     },
     {
         group: '管理员命令',
