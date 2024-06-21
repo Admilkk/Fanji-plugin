@@ -12,7 +12,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
 
-// 以下内容防君子不防小人
 let apiurl = 'http://api.yujn.cn/api/baisis.php';
 let apiurl2 = 'http://api.yujn.cn/api/heisis.php';
 let apiurl3 = 'https://api.yujn.cn/api/manzhan.php';
