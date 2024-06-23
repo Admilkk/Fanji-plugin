@@ -104,21 +104,7 @@ export const helpList = [
                 desc: '一键给所有人发送内容'
             }
         ]
-    }, {
-        group: '反击相关',
-        list: [
-            {
-                icon: 28,
-                title: '#反击',
-                desc: '被戳一戳之后很生气？那就反击回去！'
-            },
-            {
-                icon: 28,
-                title: '#反击更新',
-                desc: '更新你的反击插件'
-            }
-        ]
-    }, {
+    },{
         group: 'API类',
         list: [
             {
