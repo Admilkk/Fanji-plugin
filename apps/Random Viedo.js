@@ -105,7 +105,11 @@ export class apivideo extends plugin {
   }
 
   async welfare(e) {
-    await this.requestVideo(e, apiurl4, path.join(__dirname, '../resource/welfarevideo'));
+    const url = await fetch(apiurl4)
+    if (!url.ok) return false
+    url = await url.json()
+    url = url.data?.video_mp4
+    await this.requestVideo(e, url, path.join(__dirname, '../resource/welfarevideo'));
     return false
   }
 
@@ -132,6 +136,11 @@ export class apivideo extends plugin {
    * @param {boolean} deleteAfterSend - 发送后是否删除文件
    */
   async requestVideo(e, apiUrl, defaultSavePath, deleteAfterSend = false) {
+    const ffmpeg = ffmpeg()
+    if (ffmpeg) {
+      logger.error('[Fanji-plugin][api视频类] 未安装ffmpeg，无法发送视频')
+      return
+    }
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) {
