@@ -109,7 +109,7 @@ export class apivideo extends plugin {
     if (!url.ok) return false
     url = await url.json()
     url = url.data?.video_mp4
-    await this.requestVideo(e, url, path.join(__dirname, '../resource/welfarevideo'));
+    await this.requestVideo(e, url, path.join(__dirname, '../resource/welfarevideo'),'m3u8');
     return false
   }
 
@@ -135,7 +135,7 @@ export class apivideo extends plugin {
    * @param {string} defaultSavePath - 默认保存路径
    * @param {boolean} deleteAfterSend - 发送后是否删除文件
    */
-  async requestVideo(e, apiUrl, defaultSavePath, deleteAfterSend = false) {
+  async requestVideo(e, apiUrl, defaultSavePath, deleteAfterSend = false,hz = 'mp5') {
     let haveffmpeg = await this.ffmpeg()
     if (haveffmpeg) {
       logger.error('[Fanji-plugin][api视频类] 未安装ffmpeg，无法发送视频')
@@ -149,7 +149,7 @@ export class apivideo extends plugin {
       const videoData = await response.buffer();
       const savePath = defaultSavePath || path.join(__dirname, '../resource/default');
       const timestamp = Date.now();
-      const videoPath = path.join(savePath, `${timestamp}.mp4`);
+      const videoPath = path.join(savePath, `${timestamp}.${hz}`);
       await fs.promises.mkdir(savePath, { recursive: true });
       await fs.promises.writeFile(videoPath, videoData);
       await e.reply([segment.video(videoPath)]);
