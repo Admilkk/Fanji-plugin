@@ -28,6 +28,7 @@ const apiUrls = {
   萝莉视频: 'http://api.yujn.cn/api/luoli.php',
   甜妹视频: 'https://v2.api-m.com/api/meinv?return=302',
   欲梦视频: 'http://api.yujn.cn/api/ndym.php',
+  随机视频: 'https://jx.iqfk.top/api/sjsp.php'
 };
 const baseRegex = '^#?(随机)?';
 //自定义正则
