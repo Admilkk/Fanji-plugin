@@ -54,10 +54,10 @@ export class apivideo extends plugin {
           reg: /^#?漫展视频$/i,
           fnc: 'manzhan',
         },
-        {
-          reg: /^#?福利视频$/i,
-          fnc: 'welfare',
-        },
+     //   {
+      //    reg: /^#?福利视频$/i,
+       //   fnc: 'welfare',
+       // },
         {
           reg: /^#?穿搭视频$/i,
           fnc: 'chuanda',
@@ -109,7 +109,7 @@ export class apivideo extends plugin {
     if (!url.ok) return false
     url = await url.json()
     url = url.data?.video_mp4
-    await this.requestVideo(e, url, path.join(__dirname, '../resource/welfarevideo'),'m3u8');
+    await this.requestVideo(e, url, path.join(__dirname, '../resource/welfarevideo'), 'm3u8');
     return false
   }
 
@@ -128,40 +128,48 @@ export class apivideo extends plugin {
     return false
   }
 
-  /**
+ /**
  * 请求视频数据，并处理保存和发送
  * @param {Object} e - e
  * @param {string} apiUrl - 视频URL
  * @param {string} defaultSavePath - 默认保存路径
- * @param {string} hz -后缀名
+ * @param {string} hz - 后缀名
  * @param {boolean} deleteAfterSend - 发送后是否删除文件
  */
 async requestVideo(e, apiUrl, defaultSavePath, hz = 'mp4', deleteAfterSend = false) {
   let haveffmpeg = await this.ffmpeg(); // 检查是否安装ffmpeg
-  if (haveffmpeg) {
+  if (!haveffmpeg) {
     logger.error('[Fanji-plugin][api视频类] 未安装ffmpeg，无法发送视频');
     return;
   }
-  
+
   try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error(`[Fanji-plugin][api视频类] 从 ${apiUrl} 获取视频失败`);
-    }
-    
-    const videoData = await response.buffer();
     const savePath = defaultSavePath || path.join(__dirname, '../resource/default');
     const timestamp = Date.now();
     let videoPath = path.join(savePath, `${timestamp}.${hz}`);
-    
+
     await fs.promises.mkdir(savePath, { recursive: true });
-    await fs.promises.writeFile(videoPath, videoData);
-    //对m3u8类视频的处理
+
     if (hz === 'm3u8') {
+      // 下载 m3u8 文件及其片段到本地
+      const m3u8Response = await fetch(apiUrl);
+      if (!m3u8Response.ok) {
+        throw new Error(`[Fanji-plugin][api视频类] 从 ${apiUrl} 获取 m3u8 文件失败`);
+      }
+      const m3u8Data = await m3u8Response.text();
+      const m3u8FilePath = path.join(savePath, `${timestamp}.m3u8`);
+      await fs.promises.writeFile(m3u8FilePath, m3u8Data);
+
+      // 修改 m3u8 文件中的片段路径为绝对路径
+      const baseUrl = new URL(apiUrl).origin;
+      const updatedM3u8Data = m3u8Data.replace(/(.*\.ts)/g, `${baseUrl}/$1`);
+      await fs.promises.writeFile(m3u8FilePath, updatedM3u8Data);
+
+      // 转换 m3u8 文件为 mp4
       const convertedVideoPath = path.join(savePath, `${timestamp}.mp4`);
       await new Promise((resolve, reject) => {
-        ffmpeg(videoPath)
-          .outputOptions('-c copy')
+        ffmpeg(m3u8FilePath)
+          .outputOptions('-c:v copy', '-c:a copy', '-bsf:a aac_adtstoasc')
           .output(convertedVideoPath)
           .on('end', () => {
             logger.info(`[Fanji-plugin][api视频类] 视频转换成功: ${convertedVideoPath}`);
@@ -174,14 +182,22 @@ async requestVideo(e, apiUrl, defaultSavePath, hz = 'mp4', deleteAfterSend = fal
           .run();
       });
       videoPath = convertedVideoPath;
+    } else {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`[Fanji-plugin][api视频类] 从 ${apiUrl} 获取视频失败`);
+      }
+      const videoData = await response.buffer();
+      await fs.promises.writeFile(videoPath, videoData);
     }
-    
-    await e.reply([segment.video(videoPath)]);
-    
+
+    let a = await e.reply([segment.video(videoPath)]);
+    if (!a) throw `发送失败\n${a}`
+
     if (deleteAfterSend) {
       await fs.promises.unlink(videoPath);
     }
-    
+
     logger.info(`[Fanji-plugin][api视频类] 成功获取并发送视频`);
   } catch (error) {
     logger.error(`[Fanji-plugin][api视频类] 视频发送函数出错: ${error}`);
@@ -190,7 +206,7 @@ async requestVideo(e, apiUrl, defaultSavePath, hz = 'mp4', deleteAfterSend = fal
 
   /**
    * 检查是否安装了 ffmpeg
-   * @returns {boolean} - 返回 true为未安装 ffmpeg 否则返回 false
+   * @returns {boolean} - 返回 true为安装 ffmpeg 否则返回 false
    */
   async ffmpeg() {
     try {
@@ -198,9 +214,9 @@ async requestVideo(e, apiUrl, defaultSavePath, hz = 'mp4', deleteAfterSend = fal
       if (!ret.includes('version')) {
         throw new Error('未安装 ffmpeg');
       }
-      return false;
-    } catch (error) {
       return true;
+    } catch (error) {
+      return false;
     }
   }
 }
