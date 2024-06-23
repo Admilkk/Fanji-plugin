@@ -1,17 +1,18 @@
 {
-    "name": "Fanji-plugin",
-    "version": "V 1.0.0",
-    "author": "Admilk",
-    "type": "module",
-    "dependencies": {
-        "node-fetch": "^3.3.1",
-        "puppeteer": "^20.2.1",
-        "yaml": "^2.2.2",
+  "name": "Fanji-plugin",
+  "version": "V 1.0.0",
+  "author": "Admilk",
+  "type": "module",
+  "dependencies": {
+    "node-fetch": "^3.3.1",
+    "puppeteer": "^20.2.1",
+    "yaml": "^2.2.2",
     "ioredis": "latest",
     "child_process": "latest",
     "chalk": "latest",
     "chokidar": "latest",
     "js-yaml": "latest",
-"fs-extra": "^10.0.0"
-    }
+    "fs-extra": "^10.0.0",
+    "fluent-ffmpeg": "latest"
+  }
 }
