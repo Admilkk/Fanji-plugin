@@ -23,7 +23,11 @@ const apiUrls = {
   纯欲视频: 'http://newbotai.cn/API/ycyy.php',
   美女视频: 'http://newbotai.cn/API/mnsp.php',
   汉服视频: 'http://newbotai.cn/API/gfhf.php',
-  和服视频: 'http://newbotai.cn/API/rxhf.php'
+  和服视频: 'http://newbotai.cn/API/rxhf.php',
+  动漫视频: 'http://api.yujn.cn/api/dmsp.php',
+  萝莉视频: 'http://api.yujn.cn/api/luoli.php',
+  甜妹视频: 'https://v2.api-m.com/api/meinv?return=302',
+  欲梦视频: 'http://api.yujn.cn/api/ndym.php',
 };
 const baseRegex = '^#?(随机)?';
 //自定义正则
