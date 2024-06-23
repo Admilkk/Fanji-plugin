@@ -123,6 +123,11 @@ export const helpList = [
         list: [
             {
                 icon: 29,
+                title: '#反击视频列表',
+                desc: '查看所有视频列表'
+            },
+            {
+                icon: 29,
                 title: '#随机涩图',
                 desc: '字面意思'
             },
@@ -168,69 +173,10 @@ export const helpList = [
             },
             {
                 icon: 29,
-                title: '随机[表情名字]表情',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#查看全部随机表情',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
                 title: '#随机原神',
                 desc: '字面意思'
             }
         ]
-    },
-    {
-        group: '视频API类',
-        list: [
-            {
-                icon: 29,
-                title: '#黑丝视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#白丝视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#小姐姐视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#慢摇视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#完美身材视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#跳舞视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#穿搭视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#福利视频',
-                desc: '字面意思'
-            },
-            {
-                icon: 29,
-                title: '#漫展视频',
-                desc: '字面意思'
-            },]
     },
     {
         group: '管理员命令',
