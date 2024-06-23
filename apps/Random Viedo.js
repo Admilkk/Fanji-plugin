@@ -136,8 +136,8 @@ export class apivideo extends plugin {
    * @param {boolean} deleteAfterSend - 发送后是否删除文件
    */
   async requestVideo(e, apiUrl, defaultSavePath, deleteAfterSend = false) {
-    const ffmpeg = ffmpeg()
-    if (ffmpeg) {
+    let haveffmpeg = await this.ffmpeg()
+    if (haveffmpeg) {
       logger.error('[Fanji-plugin][api视频类] 未安装ffmpeg，无法发送视频')
       return
     }
