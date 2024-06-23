@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import ffmpeg from 'fluent-ffmpeg'
 import common from '../lib/common/common.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -11,7 +12,6 @@ const { exec, execSync } = require('child_process')
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 let ymzx = path.join(__dirname, `../resource/ymzx.jpg`)
-
 let apiurl = 'http://api.yujn.cn/api/baisis.php';
 let apiurl2 = 'http://api.yujn.cn/api/heisis.php';
 let apiurl3 = 'https://api.yujn.cn/api/manzhan.php';
@@ -129,38 +129,64 @@ export class apivideo extends plugin {
   }
 
   /**
-   * 请求视频数据，并处理保存和发送
-   * @param {Object} e - e
-   * @param {string} apiUrl - 视频URL
-   * @param {string} defaultSavePath - 默认保存路径
-   * @param {boolean} deleteAfterSend - 发送后是否删除文件
-   */
-  async requestVideo(e, apiUrl, defaultSavePath,hz = 'mp4', deleteAfterSend = false,) {
-    let haveffmpeg = await this.ffmpeg()
-    if (haveffmpeg) {
-      logger.error('[Fanji-plugin][api视频类] 未安装ffmpeg，无法发送视频')
-      return
-    }
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error(`[Fanji-plugin][api视频类] 从 ${apiUrl} 获取视频失败`);
-      }
-      const videoData = await response.buffer();
-      const savePath = defaultSavePath || path.join(__dirname, '../resource/default');
-      const timestamp = Date.now();
-      const videoPath = path.join(savePath, `${timestamp}.${hz}`);
-      await fs.promises.mkdir(savePath, { recursive: true });
-      await fs.promises.writeFile(videoPath, videoData);
-      await e.reply([segment.video(videoPath)]);
-      if (deleteAfterSend) {
-        await fs.promises.unlink(videoPath);
-      }
-      logger.info(`[Fanji-plugin][api视频类]成功获取并发送视频`);
-    } catch (error) {
-      logger.error(`[Fanji-plugin][api视频类] 视频发送函数出错: ${error}`);
-    }
+ * 请求视频数据，并处理保存和发送
+ * @param {Object} e - e
+ * @param {string} apiUrl - 视频URL
+ * @param {string} defaultSavePath - 默认保存路径
+ * @param {string} hz -后缀名
+ * @param {boolean} deleteAfterSend - 发送后是否删除文件
+ */
+async requestVideo(e, apiUrl, defaultSavePath, hz = 'mp4', deleteAfterSend = false) {
+  let haveffmpeg = await this.ffmpeg(); // 检查是否安装ffmpeg
+  if (haveffmpeg) {
+    logger.error('[Fanji-plugin][api视频类] 未安装ffmpeg，无法发送视频');
+    return;
   }
+  
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`[Fanji-plugin][api视频类] 从 ${apiUrl} 获取视频失败`);
+    }
+    
+    const videoData = await response.buffer();
+    const savePath = defaultSavePath || path.join(__dirname, '../resource/default');
+    const timestamp = Date.now();
+    let videoPath = path.join(savePath, `${timestamp}.${hz}`);
+    
+    await fs.promises.mkdir(savePath, { recursive: true });
+    await fs.promises.writeFile(videoPath, videoData);
+    //对m3u8类视频的处理
+    if (hz === 'm3u8') {
+      const convertedVideoPath = path.join(savePath, `${timestamp}.mp4`);
+      await new Promise((resolve, reject) => {
+        ffmpeg(videoPath)
+          .outputOptions('-c copy')
+          .output(convertedVideoPath)
+          .on('end', () => {
+            logger.info(`[Fanji-plugin][api视频类] 视频转换成功: ${convertedVideoPath}`);
+            resolve();
+          })
+          .on('error', (err) => {
+            logger.error(`[Fanji-plugin][api视频类] 视频转换出错: ${err}`);
+            reject(err);
+          })
+          .run();
+      });
+      videoPath = convertedVideoPath;
+    }
+    
+    await e.reply([segment.video(videoPath)]);
+    
+    if (deleteAfterSend) {
+      await fs.promises.unlink(videoPath);
+    }
+    
+    logger.info(`[Fanji-plugin][api视频类] 成功获取并发送视频`);
+  } catch (error) {
+    logger.error(`[Fanji-plugin][api视频类] 视频发送函数出错: ${error}`);
+  }
+}
 
   /**
    * 检查是否安装了 ffmpeg
