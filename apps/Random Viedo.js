@@ -105,7 +105,7 @@ export class apivideo extends plugin {
   }
 
   async welfare(e) {
-    const url = await fetch(apiurl4)
+    let url = await fetch(apiurl4)
     if (!url.ok) return false
     url = await url.json()
     url = url.data?.video_mp4
