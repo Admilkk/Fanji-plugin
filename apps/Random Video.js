@@ -49,7 +49,7 @@ export class apivideo extends plugin {
           fnc: 'handleVideoRequest'
         },
         {
-          reg: '#?反击视频(列表|帮助|名单)?',
+          reg: '^#?反击视频(列表|帮助|名单)?',
           fnc: 'apis'
         }
       ]
