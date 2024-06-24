@@ -67,14 +67,15 @@ export class apivideo extends plugin {
   }
 
   async apis(e) {
-    let msg = Object.keys(apiUrls).map(key => {
+    let msg = [];
+    Object.keys(apiUrls).forEach(key => {
       if (customRules[key]) {
-        return `${customRules[key]}\n`;
+        msg.push(`${customRules[key]}`)
       } else {
-        return `#${key}\n`;
+        msg.push(`#${key}`)
       }
     });
-    msg = await this.e.runtime.common.makeForwardMsg(this.e, [msg], '视频列表:\n下面的每条都是视频名字，可以使用#视频名字 来获取视频');
+    msg = await this.e.runtime.common.makeForwardMsg(this.e, msg, '视频列表:\n下面的每条都是视频名字，可以使用#视频名字 来获取视频');
     await this.reply(msg);
     return;
   }
