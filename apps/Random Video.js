@@ -38,6 +38,7 @@ const apiUrls = {
   双马尾视频: 'http://newbotai.cn/API/smwx.php',
   斩男视频: 'http://newbotai.cn/API/zncd.php',
   软妹视频: 'http://newbotai.cn/API/rmxd.php',
+  甜妹变装视频: 'http://newbotai.cn/API/tmbz.php'
 };
 const baseRegex = '^#?(随机)?';
 //自定义正则
