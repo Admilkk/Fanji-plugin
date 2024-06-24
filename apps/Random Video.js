@@ -96,7 +96,7 @@ export class apivideo extends plugin {
       logger.info(`[Fanji-plugin][api视频类]  视频类型: ${videoType}`);
     }
     const apiUrl = apiUrls[videoType];
-    await this.requestVideo(e, apiUrl, path.join(__dirname, `../resource/${videoType}video`));
+    await this.requestVideo(e, apiUrl, path.join(__dirname, `../resource/${videoType}video`),'mp4',true);
     return false;
   }
 
