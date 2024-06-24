@@ -15,20 +15,29 @@ const apiUrls = {
   漫展视频: 'https://api.yujn.cn/api/manzhan.php',
   穿搭视频: 'http://api.yujn.cn/api/chuanda.php',
   跳舞视频: 'http://api.yujn.cn/api/jjy.php',
+  动漫视频: 'http://api.yujn.cn/api/dmsp.php',
+  萝莉视频: 'http://api.yujn.cn/api/luoli.php',
   完美身材视频: 'http://api.yujn.cn/api/wmsc.php',
-  小姐姐视频: 'https://api.yunxiyuanyxy.xyz/plus/?type=302',
+  欲梦视频: 'http://api.yujn.cn/api/ndym.php',
   慢摇视频: 'http://api.yujn.cn/api/manyao.php',
+  随机视频: 'https://jx.iqfk.top/api/sjsp.php',
+  小姐姐视频: 'https://api.yunxiyuanyxy.xyz/plus/?type=302',
+  甜妹视频: 'https://v2.api-m.com/api/meinv?return=302',
   扭胯视频: 'http://newbotai.cn/API/nkxl.php',
   甩裙视频: 'http://newbotai.cn/API/sqxl.php',
   纯欲视频: 'http://newbotai.cn/API/ycyy.php',
   美女视频: 'http://newbotai.cn/API/mnsp.php',
   汉服视频: 'http://newbotai.cn/API/gfhf.php',
   和服视频: 'http://newbotai.cn/API/rxhf.php',
-  动漫视频: 'http://api.yujn.cn/api/dmsp.php',
-  萝莉视频: 'http://api.yujn.cn/api/luoli.php',
-  甜妹视频: 'https://v2.api-m.com/api/meinv?return=302',
-  欲梦视频: 'http://api.yujn.cn/api/ndym.php',
-  随机视频: 'https://jx.iqfk.top/api/sjsp.php'
+  渔网视频: 'http://newbotai.cn/API/xgyw.php',
+  洛丽塔视频: 'http://newbotai.cn/API/lltx.php',
+  帅哥视频: 'http://newbotai.cn/API/sgsp.php',
+  兔女郎视频: 'http://newbotai.cn/API/tnl.php',
+  海王视频: 'http://newbotai.cn/API/hwxl.php',
+  瑜伽视频: 'http://newbotai.cn/API/yjxl.php',
+  双马尾视频: 'http://newbotai.cn/API/smwx.php',
+  斩男视频: 'http://newbotai.cn/API/zncd.php',
+  软妹视频: 'http://newbotai.cn/API/rmxd.php',
 };
 const baseRegex = '^#?(随机)?';
 //自定义正则
@@ -96,7 +105,7 @@ export class apivideo extends plugin {
       logger.info(`[Fanji-plugin][api视频类]  视频类型: ${videoType}`);
     }
     const apiUrl = apiUrls[videoType];
-    await this.requestVideo(e, apiUrl, path.join(__dirname, `../resource/${videoType}video`),'mp4',true);
+    await this.requestVideo(e, apiUrl, path.join(__dirname, `../resource/${videoType}video`), 'mp4', true);
     return false;
   }
 
