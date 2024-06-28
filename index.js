@@ -107,7 +107,7 @@ const endTime = Date.now();
 apps = loadedApps;
 loadedFilesCount = count;
 loadedFilesCounterr = counterr;
-logger.info(logger.red(`\n\n\n		[Fanji-plugin] 共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败\n		[Fanji-plugin] 插件加载完成，耗时 ${endTime - startTime} 毫秒\n		===========================================\n		${logger.green('插件交流群: 792873018')}\n		===========================================\n\n\n`));
+logger.info(logger.red(`\n\n\n		[Fanji-plugin] 共加载了 ${loadedFilesCount} 个函数 ${loadedFilesCounterr} 个失败\n		[Fanji-plugin] 插件加载完成，耗时 ${endTime - startTime} 毫秒\n		===========================================\n		${logger.green('插件交流群: 792873018')}\n		===========================================\n\n\n`));
 export { apps };
 
 async function loadCM() {
