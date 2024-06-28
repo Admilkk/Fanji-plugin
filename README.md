@@ -12,6 +12,9 @@
 
 如果你对具体的查询流程不太了解，可以 ☛[点击这里](https://www.guahao.com/nav)☚ 快速预约正规医院挂号。
 
+## [插件文档](https://doc.admilk.top/)...
+半成品，还有logo和一些内容没写
+
 <div align="center">
 
 # Fanji-plugin
