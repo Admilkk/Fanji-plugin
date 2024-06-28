@@ -169,23 +169,21 @@ async function appsOut({ AppsName }) {
   return { apps, loadedFilesCount, loadedFilesCounterr };
 }
 
-
 async function traverseDirectory(dir) {
   try {
     const files = await fs.readdir(dir, { withFileTypes: true });
     const jsFiles = [];
-    for await (const file of files) {
+    for (const file of files) {
       const pathname = path.join(dir, file.name);
       if (file.isDirectory()) {
         jsFiles.push(...await traverseDirectory(pathname));
-      } else if (file.name.endsWith('.js')) {
+      } else if (file.isFile() && file.name.endsWith('.js')) {
         jsFiles.push(pathname);
       }
     }
     return jsFiles;
   } catch (error) {
-    logger.error('读取插件目录失败:', error.message);
+    console.error('读取插件目录失败:', error.message);
     return [];
   }
 }
-
