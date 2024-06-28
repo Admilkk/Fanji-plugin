@@ -13,7 +13,8 @@
 如果你对具体的查询流程不太了解，可以 ☛[点击这里](https://www.guahao.com/nav)☚ 快速预约正规医院挂号。
 
 <div align="center">
-
+[插件文档](https://doc.admilk.top/)...
+半成品，还有logo和一些内容没写
 # Fanji-plugin
 # 我怎么知道为啥叫反击插件
 [![Gitee](https://img.shields.io/badge/Gitee-反击插件-black?style=flat-square&logo=gitee)](https://gitee.com/adrae/Fanji-plugin) [![云崽bot](https://img.shields.io/badge/云崽-v3-black?style=flat-square&logo=dependabot)](https://gitee.com/Le-niao/Yunzai-Bot) [![喵崽](https://img.shields.io/badge/喵崽-black?style=flat-square&logo=dependabot)](https://gitee.com/yoimiya-kokomi/Miao-Yunzai) [![Group](https://img.shields.io/badge/群号-792873018-red?style=flat-square&logo=GroupMe&logoColor=white)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ekuBxRh4wSSP315nn3gcBjWUI0bP3qQ4&authKey=c6orpTMGTM2JmAzGJvRslzhFH803%2Bcbp0%2B28Bpwr5E7oDtFZVO9isRjbugzbh%2FgR&noverify=0&group_code=792873018)<a href='https://gitee.com/adrae/Fanji-plugin/stargazers'><img src='https://gitee.com/adrae/Fanji-plugin/badge/star.svg?theme=dark' alt='star'></img></a>
