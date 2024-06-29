@@ -316,18 +316,10 @@ export class Updates extends plugin {
         for (let str of logAll) {
             let log = str.split('||')[1].trim(); // 使用trim()方法去除日志的前后空格
             if (log && !log.includes('Merge branch')) {
-                batch.push(log); // 将每行非空日志作为一个元素推送到batch数组中
-                if (batch.length === batchSize) {
-                    batchedLogs.push(batch);
-                    batch = [];
-                }
+                    batchedLogs.push(log);
             }
         }
-        if (batch.length > 0) {
-            batchedLogs.push(batch); // 处理最后一批日志
-        }
-
-        await 拆分消息(batchedLogs.join('\n'),this.e,200)
+        await 拆分消息(batchedLogs,this.e,200)
     }
 }
 async function 拆分消息(messages, e, sl = 100, fh = false) {
