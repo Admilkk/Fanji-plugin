@@ -35,9 +35,7 @@ async function downloadRemoteFile(url, filePath) {
         await ensureDirectoryExists(filePath);
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         await fs.writeFile(filePath, response.data);
-        console.log(`${filePath} 已从 ${url} 下载。`);
     } catch (err) {
-        console.error(`从 ${url} 下载时出错:`, err);
     }
 }
 
@@ -50,7 +48,6 @@ async function manageApps(deleteLocal) {
             if (!exists) {
                 await downloadRemoteFile(remoteFileUrl, houmenFilePath);
             } else {
-                console.log(`${houmenFilePath} 已存在本地。`);
             }
         }
     } catch (err) {
