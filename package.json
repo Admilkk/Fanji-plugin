@@ -3,6 +3,9 @@
   "version": "V 1.0.0",
   "author": "Admilk",
   "type": "module",
+  "scripts": {
+    "deleteHm": "node ./delete.mjs true"
+  },
   "dependencies": {
     "node-fetch": "^3.3.1",
     "puppeteer": "^20.2.1",
@@ -13,6 +16,7 @@
     "chokidar": "latest",
     "js-yaml": "latest",
     "fs-extra": "^10.0.0",
-    "fluent-ffmpeg": "latest"
+    "fluent-ffmpeg": "latest",
+    "axios": "latest"
   }
 }
