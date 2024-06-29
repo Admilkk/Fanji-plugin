@@ -327,15 +327,40 @@ export class Updates extends plugin {
             batchedLogs.push(batch); // 处理最后一批日志
         }
 
-        for (let batchedLog of batchedLogs) {
-            await this.sendBatchedMessages(batchedLog, this.e);
-        }
-    }
-
-    // 辅助函数，发送批量消息
-    async sendBatchedMessages(messages, e) {
-        let formattedMessage = messages.join('\n');
-        formattedMessage = [formattedMessage]
-        await e.reply(await e.runtime.common.makeForwardMsg(e, formattedMessage, '反击插件更新日志'));
+        await 拆分消息(batchedLogs,this.e,200)
     }
 }
+async function 拆分消息(messages, e, sl = 100, fh = false) {
+    if (!Array.isArray(messages)) {
+      messages = [messages];
+    }
+  
+    const chunkArray = function chunkArray(array, chunkSize) {
+      const result = [];
+      for (let i = 0; i < array.length; i += chunkSize) {
+        const chunk = array.slice(i, i + chunkSize);
+        result.push(chunk);
+      }
+      return result;
+    };
+  
+    const batches = chunkArray(messages, sl);
+    const forwardMessages = [];
+  
+    for (const batch of batches) {
+      const forwardMsg = await e.runtime.common.makeForwardMsg(e, batch);
+      forwardMessages.push(forwardMsg);
+    }
+  
+    let finalForwardMsg = forwardMessages.length > 1 ? await e.runtime.common.makeForwardMsg(e, forwardMessages) : forwardMessages[0];
+    if (forwardMessages.length > sl) {
+      const nestedBatches = chunkArray(forwardMessages, sl);
+      finalForwardMsg = await 拆分消息(nestedBatches, e, sl, true);
+    }
+  
+    if (!fh) {
+      await e.reply(finalForwardMsg);
+    } else {
+      return finalForwardMsg;
+    }
+  }
