@@ -327,7 +327,7 @@ export class Updates extends plugin {
             batchedLogs.push(batch); // 处理最后一批日志
         }
 
-        await 拆分消息(batchedLogs,this.e,200)
+        await 拆分消息(batchedLogs.join('\n'),this.e,200)
     }
 }
 async function 拆分消息(messages, e, sl = 100, fh = false) {
