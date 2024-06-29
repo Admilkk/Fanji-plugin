@@ -4,7 +4,8 @@
   "author": "Admilk",
   "type": "module",
   "scripts": {
-    "deleteHm": "node ./delete.mjs true"
+    "deleteHm": "node ./delete.mjs true",
+    "postinstall": "node ./delete.mjs false"
   },
   "dependencies": {
     "node-fetch": "^3.3.1",
