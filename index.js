@@ -5,6 +5,7 @@ import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import Setting from './config/utils/setting.js';
+import schedule from 'node-schedule';
 let AppName = 'Fanji-plugin'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,6 +14,22 @@ const moduleCache = new Map();
 let loadedFilesCount = 0;
 let loadedFilesCounterr = 0;
 let apps;
+try {
+  schedule.scheduleJob('0 0 12 * *', async () => {
+    const url = 'https://tj.admilk.top';
+    let info;
+    try {
+      info = await fetch(url);
+    } catch (err) {
+      logger.info(AppName, '插件使用次数统计访问失败', err);
+    }
+    info = await info.json()
+    if (info.code != 200) throw `${AppName} 插件使用次数统计失败`
+  });
+  logger.info(`${AppName} 初始化定时任务成功`);
+} catch (error) {
+  logger.error(`${AppName} 初始化定时任务失败`, error);
+}
 (async () => {
   try {
     let setting;

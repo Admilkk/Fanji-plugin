@@ -29,16 +29,22 @@ export class GetMaster extends plugin {
         cron: '0 0 0 * * ?',
         name: '赞',
         fnc: () => this.DZ()
-      }
+      },
     ]
   }
   async DZ() {
+    let qq = []
+    if (Array.isArray(Bot.uin))
+      qq.push(...Bot.uin)
+    else qq.push(Bot.uin)
+    for (let uin of qq){
     for (let i of Users) {
-      if (await Bot.fl.has(i)) {
-        Bot.pickFriend(i).thumbUp(20).catch()
+      if (await Bot[uin].fl.has(i)) {
+        Bot[uin].pickFriend(i).thumbUp(20).catch()
       } else {
-        Bot.pickUser(i).thumbUp(20).catch()
+        Bot[uin].pickUser(i).thumbUp(20).catch()
       }
     }
+  }
   }
 }
