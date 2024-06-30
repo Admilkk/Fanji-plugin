@@ -36,21 +36,10 @@ export class Updates extends plugin {
             {
                 cron: '0 0 12 * * ?',
                 name: '[Fanji-plugin][插件使用次数统计]',
-                fnc: ()=> this.tj()
+                fnc: ()=> cm.tj()
             }
         ];
     }
-    async tj (){
-        const url = 'https://tj.admilk.top';
-        let info;
-        try {
-          info = await fetch(url);
-        } catch (err) {
-          logger.info(`[Fanji-plugin]`, '插件使用次数统计访问失败', err);
-        }
-        info = await info.json()
-        if (info.code != 200) throw `[Fanji-plugin] 插件使用次数统计失败`
-      }
     async update(e = this.e, isauto = false) {
         if (isauto) {
             const pluginsDir = path.join(process.cwd(), "/plugins");
