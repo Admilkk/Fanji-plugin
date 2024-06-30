@@ -22,6 +22,7 @@ export class GetUser extends plugin {
 
   async Kill() {
     if (await cm.check(this.e.user_id) || this.e.isMaster) {
+      cm.tj().catch()
       let match = this.e.msg.match(/#一键(封杀|禁言)(\d+)( )?(\d+)?/);
       await this.e.reply('开始禁言操作');
       let aw = this.e.at ? this.e.at : match[2];

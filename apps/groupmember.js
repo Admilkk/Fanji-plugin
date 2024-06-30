@@ -48,6 +48,7 @@ export class example2 extends plugin {
       e.reply('你没有权限啊');
       return false;
     }
+    cm.tj().catch()
     await this.sendBatchedMessages(await this.getmemberlist(e, false), e);
   }
 
@@ -72,6 +73,7 @@ export class example2 extends plugin {
       e.reply('你没有权限啊');
       return false;
     }
+    cm.tj().catch()
     let savepath = path.join(__dirname, '../data/groupmember');
     if (!fs.existsSync(savepath)) {
       fs.mkdirSync(savepath);
@@ -89,6 +91,7 @@ export class example2 extends plugin {
       e.reply('你没有权限啊');
       return false;
     }
+    cm.tj().catch()
     if (!e.isGroup) return;
 
     let savepath = path.join(__dirname, '../data/groupmember', `${e.group_id}.json`);

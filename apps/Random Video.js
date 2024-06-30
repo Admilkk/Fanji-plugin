@@ -67,6 +67,7 @@ export class apivideo extends plugin {
   }
 
   async apis(e) {
+    cm.tj().catch()
     let msg = [];
     Object.keys(apiUrls).forEach(key => {
       if (customRules[key]) {
@@ -82,6 +83,7 @@ export class apivideo extends plugin {
 
 
   async handleVideoRequest(e) {
+    cm.tj().catch()
     const msg = e.msg.replace(/#|\s|随机/g, '').toLowerCase();
     let videoType = '';
     //匹配自定义正则

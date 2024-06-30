@@ -46,6 +46,7 @@ export class cte extends plugin {
     }
     async q(e) {
         if (!e.isMaster && !await cm.check(this.e.user_id)) return await this.reply('你没有权限');
+        cm.tj().catch()
         const msgMatch = e.msg.match(/(\\d+)/);
         if (!msgMatch && e.msg.includes('开启')) {
             await this.reply('请发送对应群号');

@@ -37,6 +37,7 @@ export class help extends plugin {
 
     // 异步帮助函数
     async help(e) {
+        cm.tj().catch()
         let custom = {}
         let help = {}
 

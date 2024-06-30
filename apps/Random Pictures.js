@@ -73,6 +73,7 @@ export class apisetu extends plugin {
     });
   }
   async yxy(e) {
+    cm.tj().catch()
     if (!await cm.checkBot(e))
       return false
     await e.reply('开始了');
@@ -155,6 +156,7 @@ export class apisetu extends plugin {
     }
   } */
   async zt(e) {
+    cm.tj().catch()
     if (!await cm.checkBot(e))
       return false
     await e.reply('开始了');
@@ -193,6 +195,7 @@ export class apisetu extends plugin {
 
 
   async bs(e) {
+    cm.tj().catch()
     if (!await cm.checkBot(e))
       return false
     try {
@@ -212,9 +215,11 @@ export class apisetu extends plugin {
 
 
   async ys(e) {
+    cm.tj().catch()
     await e.reply([segment.image(apiurl2)]);
   }
   async ptst(e) {
+    cm.tj().catch()
     if (!await cm.checkBot(e))
       return false
     try {
@@ -230,6 +235,7 @@ export class apisetu extends plugin {
     }
   }
   async fr(e) {
+    cm.tj().catch()
     try {
       await e.reply([segment.image(`${apiurl}?sort=furry`)]);
       return
@@ -239,6 +245,7 @@ export class apisetu extends plugin {
     }
   }
   async r18(e) {
+    cm.tj().catch()
     if (!await cm.checkBot(e))
       return false
     let res;

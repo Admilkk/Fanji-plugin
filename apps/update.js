@@ -41,6 +41,7 @@ export class Updates extends plugin {
         ];
     }
     async update(e = this.e, isauto = false) {
+        cm.tj().catch()
         if (isauto) {
             const pluginsDir = path.join(process.cwd(), "/plugins");
             const pluginNames = await fs.readdir(pluginsDir);
@@ -283,6 +284,7 @@ export class Updates extends plugin {
         return log
     }
     async uplog() {
+        cm.tj().catch()
         let cm = `cd ./plugins/Fanji-plugin/ && git log  --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%F %T"`
         let logAll;
         try {
