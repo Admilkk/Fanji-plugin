@@ -34,7 +34,7 @@ export class Updates extends plugin {
                 fnc: () => this.update(null, true),
             },
             {
-                cron: '0 0 1 * * ?',
+                cron: '0 0 7 * * ?',
                 name: '[Fanji-plugin][插件使用次数统计]',
                 fnc: ()=> cm.tj()
             }
