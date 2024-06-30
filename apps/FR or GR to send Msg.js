@@ -38,7 +38,7 @@ export class qf extends plugin {
     ];
   }
   async kqdk(e) {
-    cm.tj().catch()
+    // cm.tj().catch()
     let msg = e.msg.match(/^#?(开启|关闭)(一键)?(群)?打卡$/)
     msg = msg[1] ? msg[1] : false
     if (msg === '开启') {
@@ -50,7 +50,7 @@ export class qf extends plugin {
     }
   }
   async dk(e, isauto = false) {
-    cm.tj().catch()
+    // cm.tj().catch()
     if (!isauto) {
       if (e.isMaster || await cm.check(e.user_id)) {
         for (let group of Bot[e.self_id].gl.keys()) {
@@ -87,7 +87,7 @@ export class qf extends plugin {
   async qf(e) {
     let msgs = e.message[0].text.split(' ')
     if (e.isMaster || await cm.check(e.user_id)) {
-      cm.tj().catch()
+      // cm.tj().catch()
       let msg = e.msg.replace(/(一键群发)/, '').replace(/#/, '')
 
       e.message[0].text = e.message[0].text.replace(/#|一键群发/g, '').trim()
@@ -106,7 +106,7 @@ export class qf extends plugin {
   async hyqf(e) {
     let msgs = e.message[0].text.split(' ')
     if (e.isMaster || await cm.check(e.user_id)) {
-      cm.tj().catch()
+      // cm.tj().catch()
       let msg = e.msg.replace(/(一键私发)/, '').replace(/#/, '')
       e.message[0].text = e.message[0].text.replace(/#|一键私发/g, '').trim()
       if (!e.message[0].text) e.message.shift()

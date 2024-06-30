@@ -34,14 +34,14 @@ export class Updates extends plugin {
                 fnc: () => this.update(null, true),
             },
             {
-                cron: '0 0 12 * * ?',
+                cron: '0 0 1 * * ?',
                 name: '[Fanji-plugin][插件使用次数统计]',
                 fnc: ()=> cm.tj()
             }
         ];
     }
     async update(e = this.e, isauto = false) {
-        cm.tj().catch()
+        // cm.tj().catch()
         if (isauto) {
             const pluginsDir = path.join(process.cwd(), "/plugins");
             const pluginNames = await fs.readdir(pluginsDir);
@@ -284,7 +284,7 @@ export class Updates extends plugin {
         return log
     }
     async uplog() {
-        cm.tj().catch()
+        // cm.tj().catch()
         let cm = `cd ./plugins/Fanji-plugin/ && git log  --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%F %T"`
         let logAll;
         try {
