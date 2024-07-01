@@ -88,9 +88,7 @@ export class qf extends plugin {
     let msgs = e.message[0].text.split(' ')
     if (e.isMaster || await cm.check(e.user_id)) {
       // cm.tj().catch()
-      let msg = e.msg.replace(/(一键群发)/, '').replace(/#/, '')
-
-      e.message[0].text = e.message[0].text.replace(/#|一键群发/g, '').trim()
+      e.message[0].text = e.message[0].text.replace(/(.*)一键群发/, '').trim()
       if (!e.message[0].text) e.message.shift()
       if (e.message.length === 0) return e.reply('❎ 消息不能为空')
       for (let group of Bot[e.self_id].gl.keys()) {
@@ -107,8 +105,7 @@ export class qf extends plugin {
     let msgs = e.message[0].text.split(' ')
     if (e.isMaster || await cm.check(e.user_id)) {
       // cm.tj().catch()
-      let msg = e.msg.replace(/(一键私发)/, '').replace(/#/, '')
-      e.message[0].text = e.message[0].text.replace(/#|一键私发/g, '').trim()
+      e.message[0].text = e.message[0].text.replace(/(.*)一键私发/, '').trim()
       if (!e.message[0].text) e.message.shift()
       if (e.message.length === 0) return e.reply('❎ 消息不能为空')
       for (let friend of Bot[e.self_id].fl.keys()) {
