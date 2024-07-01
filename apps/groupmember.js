@@ -43,8 +43,7 @@ export class example2 extends plugin {
   }
 
   async getmember(e) {
-    let aw = await cm.check(e.user_id)
-    if (!aw && !e.isMaster) {
+if (!(e.isMaster || await cm.check(e.user_id))){
       e.reply('你没有权限啊');
       return false;
     }
@@ -68,8 +67,7 @@ export class example2 extends plugin {
   }
 
   async savemember(e) {
-    let aw = await cm.check(e.user_id)
-    if (!aw && !e.isMaster) {
+if (!(e.isMaster || await cm.check(e.user_id))){
       e.reply('你没有权限啊');
       return false;
     }
@@ -86,8 +84,7 @@ export class example2 extends plugin {
   }
 
   async getsavelist(e) {
-    let aw = await cm.check(e.user_id)
-    if (!aw && !e.isMaster) {
+if (!(e.isMaster || await cm.check(e.user_id))){
       e.reply('你没有权限啊');
       return false;
     }

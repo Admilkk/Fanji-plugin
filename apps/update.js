@@ -82,9 +82,7 @@ export class Updates extends plugin {
             return
 
         }
-
-        if (!(e.isMaster || (await cm.check(e.user_id)))) return;
-
+        if (!(e.isMaster || await cm.check(e.user_id))) return;
         e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新Fanji-plugin`;
 
         const up = new Update(e);
