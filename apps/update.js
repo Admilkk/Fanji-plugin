@@ -29,7 +29,7 @@ export class Updates extends plugin {
         })
         this.task = [
             {
-                cron: '0 0 0 * * ?',
+                cron: '0 0 0,12 * * ?',
                 name: '[Fanji-plugin][自动更新]',
                 fnc: () => this.update(null, true),
             },
