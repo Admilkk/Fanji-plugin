@@ -45,7 +45,6 @@ export class example extends plugin {
   }
   async jm(e) {
     const commandPattern = new RegExp(`^#?((?:\\s*(?:${Object.keys(operationsMap).join('|')})\\s*)+)(转换|加密|转化)`, 'i');
-    logger.info(commandPattern)
     const match = e.msg.match(commandPattern);
     if (!match) {
       await e.reply('无效的命令格式\n发送#反击转换帮助 查看帮助');
