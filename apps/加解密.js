@@ -38,7 +38,7 @@ export class example extends plugin {
   }
   async help(e){
     let msg = ['可用操作:']
-    let keys = Object.keys(operationsMap).forEach(key=>msg.push(key))
+    Object.keys(operationsMap).forEach(key=>msg.push(key))
     msg.push('使用#操作名字 转换 文字 即可转换\n示例：#base64转换123\n#md5 base64转换123')
     msg.push('操作是从头开始按顺序执行的,如\n#md5 base64转换123的操作是\n先md5123然后把得到的值base64')
     await e.reply(await e.runtime.common.makeForwardMsg([msg]))
