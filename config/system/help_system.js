@@ -40,6 +40,11 @@ export const helpList = [
         list: [
             {
                 "icon": 28,
+                "title": "#反击转换帮助",
+                "desc": "各种数据加解密操作"
+            },
+            {
+                "icon": 28,
                 "title": "#反击安装插件",
                 "desc": "字面意思。"
             },
@@ -65,7 +70,7 @@ export const helpList = [
             },
             {
                 icon: 28,
-                title: '#一键禁言@xxx 123',
+                title: '#一键禁言@xxx 时间',
                 desc: '可以不带@，改成#一键禁言123 123'
             },
             {
@@ -87,11 +92,6 @@ export const helpList = [
                 icon: 28,
                 title: '#骂@xxx',
                 desc: '字面意思，但是千万别忘了at哦~'
-            },
-            {
-                icon: 28,
-                title: '补充说明',
-                desc: '第二个123指的是时间单位为秒可以不带'
             },
             {
                 icon: 28,
