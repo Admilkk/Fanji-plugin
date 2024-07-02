@@ -26,7 +26,7 @@ export class example extends plugin {
       priority: -99,
       rule: [
         {
-          reg: '^#(.*)(转换|加密|转化)',
+          reg: new RegExp(`^#?((?:\\s*(?:${Object.keys(operationsMap).join('|')})\\s*)+)(转换|加密|转化)`, 'i'),
           fnc: 'jm'
         },
         {
