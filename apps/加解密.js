@@ -26,7 +26,7 @@ export class example extends plugin {
       priority: -99,
       rule: [
         {
-          reg: new RegExp(`^#?((?:\\s*(?:${Object.keys(operationsMap).join('|')})\\s*)+)(转换|加密|转化)`, 'i'),
+          reg: new RegExp(`^#?((?:\\s*(?:${Object.keys(operationsMap).join('|')})\\s*)+)(转换|加密|转化)`, 'is'),
           fnc: 'jm'
         },
         {
@@ -44,7 +44,7 @@ export class example extends plugin {
     await e.reply(await e.runtime.common.makeForwardMsg(this.e,msg))
   }
   async jm(e) {
-    const commandPattern = new RegExp(`^#?((?:\\s*(?:${Object.keys(operationsMap).join('|')})\\s*)+)(转换|加密|转化)`, 'i');
+    const commandPattern = new RegExp(`^#?((?:\\s*(?:${Object.keys(operationsMap).join('|')})\\s*)+)(转换|加密|转化)`, 'is');
     const match = e.msg.match(commandPattern);
     if (!match) {
       await e.reply('无效的命令格式\n发送#反击转换帮助 查看帮助');
