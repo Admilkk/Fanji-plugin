@@ -29,12 +29,12 @@ export class Updates extends plugin {
         })
         this.task = [
             {
-                cron: '0 0 0,12 * * ?',
+                cron: '0 0 0 * * ?',
                 name: '[Fanji-plugin][自动更新]',
                 fnc: () => this.update(null, true),
             },
             {
-                cron: '0 0 8 * * ?',
+                cron: '0 0 1 * * ?',
                 name: '[Fanji-plugin][插件使用次数统计]',
                 fnc: ()=> cm.tj()
             }
@@ -64,7 +64,7 @@ export class Updates extends plugin {
                     if (stdout.includes('已经是最新的') || stdout.includes('Already up to date')) {
                         upcg = true;
                         cm.smg(`[Fanji-plugin][自动更新] 已经是最新版反击插件\n日志内容:\n${stdout}`, true);
-                    } else if (stdout.includes('更新成功') || stdout.includes('Updating') && !stdout.includes('error')) {
+                    } else if (stdout.includes('更新') || stdout.includes('Updating') && !stdout.includes('error')) {
                         upcg = true;
                         cm.smg(`[Fanji-plugin][自动更新] 反击插件更新成功\n日志内容:\n${stdout}`, true);
                     } else {
