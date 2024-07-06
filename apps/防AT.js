@@ -13,11 +13,6 @@ export default class FanjiUNatAll extends plugin {
                     reg: /^#?设置(本群)?防(at|召唤|艾特)?全体时间\s*(\d+)?$/i,
                     fnc: 'q2'
                 },
-                {
-                    reg: '',
-                    log: false,
-                    fnc: 'fd',
-                }
             ],
         });
     }
