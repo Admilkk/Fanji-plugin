@@ -46,7 +46,7 @@ export class fuck extends plugin {
   }
   async fuckkg(e) {
     let aw = e.msg.includes('开启')
-    if (!(e.isMaster || await cm.check(this.e.user_id))) return this.reply('你没有权限')
+    if (!(e.isMaster)) return this.reply('你没有权限')
       // cm.tj().catch()
     if (aw)
       redis.set('Fanji:maren', 'true')
