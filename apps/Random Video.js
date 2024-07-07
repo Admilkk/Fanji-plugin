@@ -21,7 +21,7 @@ const apiUrls = {
   欲梦视频: 'http://api.yujn.cn/api/ndym.php',
   慢摇视频: 'http://api.yujn.cn/api/manyao.php',
   随机视频: 'https://jx.iqfk.top/api/sjsp.php',
-  小姐姐视频: 'https://api.yunxiyuanyxy.xyz/plus/?type=302',
+  小姐姐视频: 'https://api.yunxiyuan.cyou/plus/?type=302',
   甜妹视频: 'https://v2.api-m.com/api/meinv?return=302',
   扭胯视频: 'http://newbotai.cn/API/nkxl.php',
   甩裙视频: 'http://newbotai.cn/API/sqxl.php',

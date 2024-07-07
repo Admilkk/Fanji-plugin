@@ -80,11 +80,11 @@ export class fuck extends plugin {
       return false;
     }
     if (!css) {
-      let res = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=text`);
+      let res = await fetch(`https://api.yunxiyuan.cyou/fuck/?type=text`);
       res = await res.text();
       await this.e.reply([segment.at(targetid), res]);
     } else {
-      let response = await fetch(`https://api.yunxiyuanyxy.xyz/fuck/?type=json&num=${cs}`);
+      let response = await fetch(`https://api.yunxiyuan.cyou/fuck/?type=json&num=${cs}`);
       let data = await response.json();
       for (let phrase of data.text) {
         let trimmedPhrase = phrase.trim();
